@@ -17,6 +17,7 @@ from collect import merge_new  # same duplicate rule as the collector
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 PORT = 8765
+POLL_S = 15            # page refresh interval; the box is queried at most this often
 
 # Alert thresholds - adjust to taste
 UTIL_WARN, UTIL_CRIT = 50, 70                  # channel utilization in % (mean of the last 30 min)
@@ -864,7 +865,7 @@ function render(d){
  // header badge: alarm words only in the Star Trek themes; elsewhere hidden (screen readers still get the status)
  $('alarm').className='alarm'+(d.status=='crit'||d.status=='warn'?' '+d.status:'')+(trek?'':' sr');$('alarm').style.setProperty('--c',st[2]);
  $('alarm').textContent=st[3];
- $('upd').textContent='Aktualisiert '+hms(d.time)+' · Intervall 5 s'+(d.collector_age_min!=null?' · Verlauf vor '+d.collector_age_min+' min gesichert':'');
+ $('upd').textContent='Aktualisiert '+hms(d.time)+' · Intervall __POLL_S__ s'+(d.collector_age_min!=null?' · Verlauf vor '+d.collector_age_min+' min gesichert':'');
  $('sd').textContent=(trek?'Sternzeit '+stardate(d.time):new Date(d.time).toLocaleDateString('de-AT',{weekday:'long',day:'numeric',month:'long',year:'numeric'}))+' · FRITZ!Box-Mesh';
  $('r-status').style.setProperty('--c',st[2]);$('r-status').classList.toggle('warn',d.status=='warn');pill('r-status',st[1]);
  const i=d.internet,u=d.uplink,ap=(b,n)=>b.aps.find(a=>a.ap==n)||{},maxU=b=>Math.max(...b.aps.map(a=>a.util??0));
@@ -973,8 +974,8 @@ addEventListener('hashchange',()=>{lastDev=null;const mac=devMac();$('s-detail')
 const rerender=()=>{last&&render(last);devMac()&&lastDev&&renderDetail(lastDev)};
 addEventListener('resize',rerender);
 $('theme').value=document.documentElement.dataset.theme;if(!$('theme').value)$('theme').value=document.documentElement.dataset.theme='lcars';  // unknown or removed theme
-$('theme').addEventListener('change',e=>{document.documentElement.dataset.theme=e.target.value;try{localStorage.setItem('wlan-theme',e.target.value)}catch(_){}rerender()});dispatchEvent(new HashChangeEvent('hashchange'));setInterval(tick,5000);
-</script></body></html>"""
+$('theme').addEventListener('change',e=>{document.documentElement.dataset.theme=e.target.value;try{localStorage.setItem('wlan-theme',e.target.value)}catch(_){}rerender()});dispatchEvent(new HashChangeEvent('hashchange'));setInterval(tick,__POLL_S__*1000);
+</script></body></html>""".replace("__POLL_S__", str(POLL_S))
 
 
 _cache = {"t": 0.0, "data": None}
@@ -983,10 +984,11 @@ _lock = threading.Lock()
 
 def cached_state():
     with _lock:  # several open tabs must not multiply the load on the FRITZ!Box
-        if time.time() - _cache["t"] > 4:
+        if time.time() - _cache["t"] > POLL_S - 1:
+            t0 = time.time()  # age counts from the start: fetching from the box takes seconds
             data = build_state()
             data["thr_util"], data["thr_rssi"] = UTIL_WARN, RSSI_WARN
-            _cache["data"], _cache["t"] = data, time.time()
+            _cache["data"], _cache["t"] = data, t0
         return _cache["data"]
 
 
