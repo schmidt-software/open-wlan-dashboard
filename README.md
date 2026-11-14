@@ -1,3 +1,5 @@
+![WLAN Dashboard – local WiFi health monitoring](assets/banner.png)
+
 # WLAN Dashboard
 
 Local, read-only health dashboard for a FRITZ!Box mesh (FRITZ!Box + FRITZ!Repeater).
