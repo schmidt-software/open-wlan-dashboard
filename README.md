@@ -20,9 +20,8 @@ maximum rates, Wi-Fi standard, streams, latency, addresses, 24 h signal and rate
 all WLAN events of the device.
 
 Themes: LCARS (default), Klingon, Futuristic, Retro 8Bit, MacBook, Newspaper, Woodworker,
-Pokemon, Unicorn, Coca-Cola, Amiga 500 and Hundertwasser, picked in the header and remembered per browser. A theme is a block of CSS custom properties plus shape
-overrides under `html[data-theme="…"]` in `dashboard.py`; adding one means adding a block and an
-`<option>`.
+Pokemon, Unicorn, Coca-Cola, Amiga 500 and Hundertwasser, picked in the header and remembered
+per browser. See [Themes](#themes) for editing them or adding your own.
 
 Alerts can be acknowledged or muted for 1 h / 24 h; they re-arm automatically when the
 problem gets worse, when a mute expires, or when a resolved problem comes back.
@@ -34,7 +33,11 @@ reads from the FRITZ!Box.
 
 | File | Purpose |
 |---|---|
-| `dashboard.py` | The dashboard: web server on http://127.0.0.1:8765, alert logic, page |
+| `dashboard.py` | The dashboard: web server on http://127.0.0.1:8765, alert logic, data endpoints |
+| `web/index.html` | Page markup |
+| `web/base.css` | Base design (= the LCARS theme): layout, shapes, colour variables, phone layout |
+| `web/app.js` | Page logic: rendering, charts, detail page, acknowledge/mute, theme menu |
+| `themes/*.css` | One file per theme; the theme menu is built from this folder |
 | `collect.py` | Collector for the 24 h history: WLAN log, link quality per device, channel load. Run every 15 min |
 | `live.py` | FRITZ!Box access helpers used by the dashboard (also a minimal standalone traffic view) |
 | `launchd/local.wlan-test.collect.plist` | macOS LaunchAgent template that runs `collect.py` every 15 min |
@@ -67,6 +70,77 @@ reads from the FRITZ!Box.
    ```
 
 Self-test of the alert logic: `python3 dashboard.py --selftest`
+
+## Themes
+
+A theme is one CSS file in `themes/`. The server reads the folder on every page load, so a new
+or edited theme shows up with a browser reload, no restart needed.
+
+```
+themes/
+  lcars.css        registers LCARS, the base design in web/base.css
+  amiga.css        /* theme: Amiga 500 */  html[data-theme="amiga"]{ ... }
+  ...
+```
+
+### Create a theme
+
+1. Copy a theme that is close to what you want, e.g. `cp themes/macbook.css themes/sunset.css`.
+   The file name is the theme id: lowercase letters, digits and `-` only.
+2. Line 1 names it in the menu: `/* theme: Sunset */`. Add `; startrek` to show the Star Trek
+   alarm words ("Gelber Alarm", "Alle Systeme nominal") and the stardate in the header; other
+   themes hide the header badge and show the normal date.
+3. Put every rule inside `html[data-theme="sunset"]{ ... }`, with the id from the file name.
+   Rules for elements use CSS nesting with `&`, e.g. `& .kpi{border-radius:0}`.
+4. Reload the dashboard and pick it from the menu. The menu is sorted by name; LCARS stays first.
+
+Run `python3 dashboard.py --selftest` afterwards: it checks that every theme file has a name.
+
+### Colour variables
+
+Most of a theme is setting these variables; the base design uses them everywhere.
+
+| Variable | Used for |
+|---|---|
+| `--bg`, `--panel` | page background; cards, alert rows, table rows |
+| `--tx`, `--tx2`, `--mut` | main text; secondary text; hints, axis labels |
+| `--o1` `--o2` `--pe` `--li` `--pw` `--sk` `--tan` | accent colours: side bar buttons, section headings, card titles, buttons |
+| `--on` | text on a filled accent or status colour |
+| `--good`, `--warn`, `--crit`, `--info` | status colours: OK (green), warning (**yellow**), critical (**red**), info |
+| `--on-warn` | text on the yellow warning colour (keep it dark) |
+| `--thr` | warning threshold line in the charts (optional, defaults to `--warn`); set a darker tone on light backgrounds |
+| `--s1`, `--s2` | the two chart lines (download/upload, box/repeater) |
+| `--grid`, `--axis` | chart grid and axis lines |
+| `--font`, `--head` | body font; font for headings, numbers and the side bar |
+
+Fonts come from Google Fonts; add a new family to the font link in `web/index.html`.
+
+### Shapes
+
+Beyond colours, a theme can restyle any part of the page. The main classes:
+
+| Class | Part of the page |
+|---|---|
+| `.rail`, `.elbow`, `.pill`, `.fill` | side bar: corner pieces, buttons, filler |
+| `.main > .bar` | coloured bars above and below the content |
+| `.alarm` | header badge (only visible in `startrek` themes) |
+| `.hb` with `::before` / `::after` | section headings and their decorations |
+| `.kpi`, `.big`, `.sm` | summary cards, big numbers, small text |
+| `.alert`, `.alert .tag`, `.btn` | alert rows, their colour field, buttons |
+| `.chart`, `.ln`, `.th`, `.tip` | charts, lines, threshold line, tooltip |
+| `table`, `th`, `td`, `.st` | device list, status word |
+| `.log`, `.info` | event log, detail page data list |
+
+Set `display` on `.rail` only to hide it (`none`); the phone layout hides it below 900 px width,
+and any other value would show it there again.
+
+### Rules of thumb
+
+- Warning stays yellow and critical stays red in every theme; the colour field in front of an
+  alert carries no text.
+- Text needs a contrast of at least 4.5:1 against its background, the threshold line 3:1.
+  Light themes need darker accent colours for text (card titles, table headers) than for fills.
+- Check the overview, a device detail page (click a device) and a phone-width window.
 
 ## Tuning
 

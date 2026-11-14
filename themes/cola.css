@@ -1,0 +1,21 @@
+/* theme: Coca-Cola */
+html[data-theme="cola"]{
+ --bg:#fbf7f2;--on:#fff;--panel:#fff;--o1:#e4002b;--o2:#b0001f;--pe:#e4002b;--li:#1e1e1e;--pw:#b0001f;--sk:#5a2d0c;--tan:#6d7072;
+ --tx:#1e1e1e;--tx2:#4a4a4a;--mut:#6b6b6b;--grid:#f0e6e0;--axis:#c9b8b0;--s1:#e4002b;--s2:#1e1e1e;--good:#1f7a36;--thr:#b25000;--warn:#ffc700;--crit:#b0001f;--info:#3a3a3a;
+ --font:'Oswald','Arial Narrow',sans-serif;--head:'Oswald','Arial Narrow',sans-serif;
+ --wave:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 34' preserveAspectRatio='none'%3E%3Cpath d='M0 23C50 4 90 34 140 15S190 9 200 13' fill='none' stroke='%23fff' stroke-width='4'/%3E%3C/svg%3E");
+ & body{letter-spacing:.02em}
+ & .rail{background:var(--o1);border-radius:18px 0 0 18px;padding:10px 0 10px 10px}
+ & .elbow{background:none;font-family:'Lobster',cursive;font-weight:400;font-size:20px;letter-spacing:0;text-transform:none;min-height:0}
+ & .pill{background:#fff;color:var(--tx);border-left:10px solid var(--c);border-radius:12px 0 0 12px}& .fill{background:var(--wave) center/100% 90px repeat-y}
+ & .main>.bar{height:30px;background:var(--o1) var(--wave) 0 0/100% 100% no-repeat}& .main>.bar i{display:none}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 6px 12px 22px}
+ & h1{font-family:'Lobster',cursive;font-weight:400;text-transform:none;letter-spacing:0;font-size:clamp(32px,4.4vw,54px);color:var(--o1)}
+ & .alarm,& .btn{border-radius:999px}& .hb{color:var(--o1)}& .hb::before{width:18px;height:18px;border-radius:50%;box-shadow:0 0 0 3px #fff,0 0 0 5px var(--c)}
+ & .hb::after{height:4px;border-radius:2px}
+ & .kpi,& .alert,& table{box-shadow:0 2px 10px rgba(0,0,0,.08)}& .kpi{border:0;border-top:6px solid var(--c);border-radius:10px}
+ & .alert{border-radius:10px;overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & td:first-child{border-radius:8px 0 0 8px;border-left-width:8px}& td:last-child{border-radius:0 8px 8px 0}& th{color:var(--o1)}
+ & .tip{border-radius:8px;background:#fff}& .log .t,& .info dt{color:var(--o1)}
+ & .st{color:var(--tx)}
+}

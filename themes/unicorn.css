@@ -1,0 +1,21 @@
+/* theme: Unicorn */
+html[data-theme="unicorn"]{
+ --bg:#fff4fb;--on:#3d2352;--panel:#fff;--o1:#ff9ed8;--o2:#c9a7ff;--pe:#ffb38a;--li:#9ee6ff;--pw:#b8f2c8;--sk:#ffe38a;--tan:#f5b8ff;
+ --tx:#3d2352;--tx2:#5e3f78;--mut:#76588f;--grid:#f3dcef;--axis:#d9b8e6;--s1:#a35cff;--s2:#ff4fa3;--good:#8fe3b8;--thr:#a87400;--warn:#ffd36e;--crit:#ff6b78;--info:#a8c8ff;
+ --font:'Nunito',sans-serif;--head:'Nunito',sans-serif;--rainbow:linear-gradient(90deg,#ff9ed8,#ffd36e,#b8f2c8,#9ee6ff,#c9a7ff);
+ & body{letter-spacing:.01em;background:radial-gradient(circle,#fff 1px,transparent 2px) 0 0/38px 38px fixed,radial-gradient(circle,rgba(255,255,255,.8) 1px,transparent 2px) 19px 19px/38px 38px fixed,
+  linear-gradient(135deg,#ffe3f3,#efe3ff 35%,#e0f7ff 70%,#fff7d6) fixed}
+ & .hb,& .sub,& .kpi h3,& th,& .st,& .pill,& .alarm,& .btn,& .alert .tag,& .panel h4,& .info dt,& details.muted summary,& .themesel,& .elbow{text-transform:none;letter-spacing:.02em}
+ & .elbow{background:linear-gradient(160deg,#ff9ed8,#c9a7ff,#9ee6ff)}& .pill{border-radius:24px 6px 6px 24px}& .fill{background:linear-gradient(#ffd36e,#b8f2c8,#9ee6ff,#c9a7ff);border-radius:0 0 0 30px}
+ & .main>.bar{height:10px;border-radius:10px;background:var(--rainbow)}& .main>.bar i{display:none}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 6px 12px 22px}
+ & h1{font-family:'Pacifico',cursive;font-weight:400;text-transform:none;letter-spacing:0;font-size:clamp(28px,4vw,48px);line-height:1.3;
+  background:linear-gradient(90deg,#ff4fa3,#ff9a3c,#3cc98a,#3aa7ff,#a35cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+ & .alarm,& .btn{border-radius:999px;box-shadow:0 6px 18px -8px #a35cff}
+ & .hb{color:var(--tx);font-weight:800}& .hb::before{content:"🦄";width:auto;height:auto;background:none;font-size:22px}
+ & .hb::after{height:8px;border-radius:8px;background:var(--rainbow)}
+ & .kpi,& .alert{border:3px solid transparent;border-radius:22px;background:linear-gradient(#fff,#fff) padding-box,var(--rainbow) border-box;box-shadow:0 10px 26px -14px #a35cff}
+ & .big{font-size:34px}& .kpi h3{color:var(--tx2)}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{border-radius:0}
+ & td{background:rgba(255,255,255,.8)}& td:first-child{border-radius:18px 0 0 18px}& td:last-child{border-radius:0 18px 18px 0}& .st{color:var(--tx)}
+ & .tip{border-radius:14px;border-color:#c9a7ff;background:#fff}& .themesel select{background:#fff}& th,& .info dt,& .log .t{color:var(--tx2)}
+}

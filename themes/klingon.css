@@ -1,0 +1,25 @@
+/* theme: Klingon; startrek */
+html[data-theme="klingon"]{
+ --bg:#0a0303;--on:#140404;--panel:#1a0808;--o1:#e8333a;--o2:#d9573a;--pe:#c8892f;--li:#d9a441;--pw:#d4574a;--sk:#c46a3a;--tan:#8c7a5b;
+ --tx:#f2d6c2;--tx2:#c9a48c;--mut:#a08070;--grid:#2a1010;--axis:#4a1c1c;--s1:#e0b04a;--s2:#e0412b;--good:#7fae3a;--warn:#f2c12e;--crit:#ff2a1a;--info:#c8892f;
+ --font:'Rajdhani','Arial Narrow',sans-serif;--head:'Black Ops One',Impact,sans-serif;
+ & body{background:radial-gradient(ellipse at 50% -10%,#3a0a0a,transparent 60%) fixed,var(--bg);letter-spacing:.03em}
+ & .elbow.t{border-radius:0;clip-path:polygon(0 38%,38% 0,100% 0,100% 100%,0 100%)}
+ & .elbow.b{border-radius:0;clip-path:polygon(0 0,100% 0,100% 100%,38% 100%,0 62%)}
+ & .pill{clip-path:polygon(16px 0,100% 0,100% calc(100% - 16px),calc(100% - 16px) 100%,0 100%,0 16px)}
+ & .fill{clip-path:polygon(0 0,100% 0,100% 100%,40% 100%)}
+ & .bar{height:12px}& .bar i{clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%)}
+ & .inner::before,& .inner::after{display:none}
+ & .inner{border-left:6px solid var(--o1);padding-left:20px;background:linear-gradient(90deg,rgba(179,18,27,.12),transparent 140px)}
+ & h1{font-size:clamp(24px,3.2vw,38px);letter-spacing:.06em;text-shadow:0 0 18px rgba(179,18,27,.7)}
+ & .big{font-size:26px}& .big small{font-size:15px}& .kpi h3{font-size:11px}
+ & .alarm{border-radius:0;clip-path:polygon(14px 0,calc(100% - 14px) 0,100% 50%,calc(100% - 14px) 100%,14px 100%,0 50%);padding:5px 28px}
+ & .hb::before{width:44px;border-radius:0;clip-path:polygon(0 50%,35% 0,100% 0,100% 100%,35% 100%)}
+ & .hb::after{height:8px;border-radius:0;clip-path:polygon(0 0,100% 45%,100% 55%,0 100%)}
+ & .kpi{border-radius:0;border-left-width:6px;clip-path:polygon(0 0,calc(100% - 20px) 0,100% 20px,100% 100%,0 100%);background:linear-gradient(160deg,#2a0c0c,var(--panel) 60%)}
+ & .alert{border-radius:0;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%)}
+ & .alert .tag{border-radius:0;clip-path:polygon(0 0,100% 0,calc(100% - 14px) 100%,0 100%)}& .alert .end{width:6px;border-radius:0}
+ & .btn{border-radius:0;clip-path:polygon(9px 0,100% 0,calc(100% - 9px) 100%,0 100%);padding:6px 20px}
+ & td:first-child{border-radius:0;border-left-width:6px}& td:last-child{border-radius:0}
+ & .tip,& .themesel select{border-radius:0;border-color:var(--li)}
+}

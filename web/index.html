@@ -1,0 +1,42 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WLAN-Überwachung</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="/base.css"><link rel="stylesheet" href="/themes.css">
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Black+Ops+One&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@500;700;900&family=Playfair+Display:wght@700;900&family=Press+Start+2P&family=Rajdhani:wght@500;700&family=UnifrakturMaguntia&family=Zilla+Slab:wght@700&family=Bitter:wght@400;700&family=Fredoka:wght@500;700&family=Pacifico&family=Nunito:wght@400;700;800&family=Lobster&family=Oswald:wght@400;600&family=Caveat+Brush&family=VT323&display=swap" rel="stylesheet">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('wlan-theme')||'lcars'}catch(e){document.documentElement.dataset.theme='lcars'}</script><!-- before first paint: no flash of the default theme -->
+</head><body>
+<div class="frame">
+ <nav class="rail" aria-label="Bereiche">
+  <div class="elbow t">WLAN 01</div>
+  <a class="pill" id="r-status" href="#s-alerts" style="--c:var(--good)"><span>Status</span><b>–</b></a>
+  <a class="pill" id="r-inet" href="#s-kpi" style="--c:var(--pe)"><span>DSL Mbit/s</span><b>–</b></a>
+  <a class="pill" id="r-24" href="#s-24" style="--c:var(--li)"><span>2,4 GHz</span><b>–</b></a>
+  <a class="pill" id="r-5" href="#s-5" style="--c:var(--pw)"><span>5 GHz</span><b>–</b></a>
+  <a class="pill" id="r-dev" href="#s-dev" style="--c:var(--sk)"><span>Geräte</span><b>–</b></a>
+  <a class="pill" id="r-log" href="#s-log" style="--c:var(--tan)"><span>Protokoll</span><b>–</b></a>
+  <div class="fill"></div>
+  <div class="elbow b">FRITZ!BOX</div>
+ </nav>
+ <div class="main">
+  <div class="bar" aria-hidden="true"><i style="flex:5;background:var(--o1)"></i><i style="width:70px;background:var(--li)"></i><i style="width:150px;background:var(--pw)"></i><i style="flex:1;background:var(--o2)"></i><i style="width:46px;background:var(--sk);border-radius:0 12px 12px 0"></i></div>
+  <div class="inner">
+   <header><div><span class="alarm" id="alarm" style="--c:var(--good)">Lade …</span><div class="sub" id="upd">Verbinde mit der FRITZ!Box …</div></div>
+    <div><h1>WLAN-Überwachung</h1><div class="sub sd" id="sd"></div>
+     <label class="themesel">Theme <select id="theme"><!--THEME_OPTIONS--></select></label></div></header>
+   <section id="s-detail" hidden></section>
+   <div id="overview">
+   <section id="s-alerts"><h2 class="hb" style="--c:var(--o1)">Hinweise</h2><div id="alerts" aria-live="polite"></div></section>
+   <section id="s-kpi"><h2 class="hb" style="--c:var(--pe)">Systeme</h2><div class="kpis" id="kpis"></div></section>
+   <div class="cols">
+    <section id="s-24" class="panel"></section>
+    <section id="s-5" class="panel"></section>
+   </div>
+   <section id="s-dev"><h2 class="hb" style="--c:var(--sk)">Geräte</h2><div class="wrap" id="devs"></div></section>
+   <section id="s-log"><h2 class="hb" style="--c:var(--tan)">Protokoll</h2><div id="evs"></div></section>
+   </div>
+  </div>
+  <div class="bar" aria-hidden="true"><i style="flex:3;background:var(--o1)"></i><i style="width:110px;background:var(--pe)"></i><i style="flex:1;background:var(--li)"></i><i style="width:60px;background:var(--o2);border-radius:0 12px 12px 0"></i></div>
+ </div>
+</div>
+<script src="/app.js"></script>
+</body></html>

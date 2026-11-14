@@ -1,0 +1,40 @@
+/* theme: MacBook */
+html[data-theme="macbook"]{
+ --bg:#f5f5f7;--on:#fff;--panel:#fff;--o1:#0062cc;--o2:#c93400;--pe:#d30f45;--li:#8944ab;--pw:#3634a3;--sk:#0071a4;--tan:#a2845e;
+ --tx:#1d1d1f;--tx2:#515154;--mut:#6e6e73;--grid:#ececf0;--axis:#d2d2d7;--s1:#007aff;--s2:#ff9500;--good:#1f7a36;--thr:#b25000;--warn:#ffcc00;--crit:#d70015;--info:#0062cc;
+ --font:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;--head:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;
+ & body{background:linear-gradient(135deg,#c9d6ff,#e6e6eb 45%,#f4d3c8) fixed;padding:24px;font-size:15px;letter-spacing:0;-webkit-font-smoothing:antialiased}
+ & .frame{background:rgba(255,255,255,.78);backdrop-filter:blur(30px) saturate(1.6);border-radius:12px;overflow:hidden;min-height:calc(100vh - 48px);box-shadow:0 30px 60px -20px rgba(0,0,0,.35),0 0 0 .5px rgba(0,0,0,.2)}
+ & .rail{position:relative;background:rgba(232,232,237,.7);border-right:.5px solid rgba(0,0,0,.12);padding:48px 10px 10px;gap:2px}
+ & .rail::before{content:"";position:absolute;top:18px;left:16px;width:12px;height:12px;border-radius:50%;background:#ff5f57;box-shadow:20px 0 #febc2e,40px 0 #28c840}
+ & .elbow{background:none;color:var(--mut);font-size:11px;font-weight:600;letter-spacing:0;min-height:0;padding:12px 10px 4px;justify-content:flex-start;border-radius:0}
+ & .pill{background:none;color:var(--tx);text-transform:none;letter-spacing:0;font-size:13px;font-weight:500;min-height:0;padding:6px 10px;border-radius:6px;flex-direction:row;align-items:center;gap:8px}
+ & .pill::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--c)}& .pill span{flex:1}
+ & .pill b{font-size:13px;font-weight:600;color:var(--tx2)}& .pill:hover,& .pill:focus-visible{background:rgba(0,0,0,.06);filter:none}
+ & .fill{background:none}& .main>.bar{display:none}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:20px 26px 24px}
+ & h1{text-transform:none;letter-spacing:-.02em;font-size:clamp(22px,3vw,30px);color:var(--tx)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:0;font-size:12px;color:var(--mut)}
+ & .themesel select{border-radius:6px;border-color:rgba(0,0,0,.2)}
+ & .alarm{text-transform:none;letter-spacing:0;font-size:13px;font-weight:600;padding:4px 12px;border-radius:999px}
+ & .hb{text-transform:none;letter-spacing:-.01em;font-weight:700;font-size:20px;color:var(--tx);margin:26px 0 10px}
+ & .hb::before{width:4px;height:18px;border-radius:2px}& .hb::after{display:none}
+ & .kpi,& .alert,& table{border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 0 0 .5px rgba(0,0,0,.06)}
+ & .kpi{border:0;padding:12px 14px}& .kpi h3{text-transform:none;letter-spacing:0;font-size:12px}
+ & .big{font-size:28px;font-weight:600;letter-spacing:-.02em}& .big small{font-size:15px}& .sm{font-size:12px;color:var(--mut)}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:0}
+ & .alert b{font-size:15px}& .alert span{font-size:13px}& .alert .end{display:none}
+ & .btn{font:500 13px var(--font);text-transform:none;letter-spacing:0;border-radius:6px;padding:4px 12px;background:#fff;color:var(--tx);box-shadow:0 0 0 .5px rgba(0,0,0,.2),0 1px 1px rgba(0,0,0,.06)}
+ & .btn:hover,& .btn:focus-visible{filter:none;background:#f0f0f2}
+ & details.muted summary,& .panel h4{text-transform:none;letter-spacing:0;font-size:13px}& .legend,& .note{font-size:12px;letter-spacing:0}
+ & .tl{font-size:11px;letter-spacing:0}
+ & .tip{border:0;border-radius:8px;background:rgba(255,255,255,.96);font-size:12px;box-shadow:0 8px 24px rgba(0,0,0,.18),0 0 0 .5px rgba(0,0,0,.1)}
+ & table{font-size:13px;border-spacing:0;background:#fff;overflow:hidden}
+ & th{text-transform:none;letter-spacing:0;font-size:12px;color:var(--mut);padding:10px 12px;border-bottom:.5px solid rgba(0,0,0,.1)}
+ & td:first-child{border-radius:0;border-left:0}& td:last-child{border-radius:0}& tr:nth-child(even) td{background:#f9f9fb}
+ & tr.click:hover td,& tr.click:focus-visible td{filter:none;background:#e8f0fe}
+ & .st{text-transform:none;letter-spacing:0;font-size:12px}
+ & .st::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:6px}
+ & .log{font-size:13px}& .log .t{color:var(--o1)}& .info{font-size:13px}& .info dt{text-transform:none;letter-spacing:0;font-size:12px;color:var(--mut)}
+ & .st{color:var(--tx)}
+}
