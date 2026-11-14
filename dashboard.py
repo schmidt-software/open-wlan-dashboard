@@ -413,7 +413,7 @@ def build_state():
 PAGE = r"""<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WLAN-Überwachung</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Black+Ops+One&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@500;700;900&family=Playfair+Display:wght@700;900&family=Press+Start+2P&family=Rajdhani:wght@500;700&family=UnifrakturMaguntia&family=Zilla+Slab:wght@700&family=Bitter:wght@400;700&family=Fredoka:wght@500;700&family=Pacifico&family=Nunito:wght@400;700;800&family=Lobster&family=Oswald:wght@400;600&family=Caveat+Brush&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Black+Ops+One&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@500;700;900&family=Playfair+Display:wght@700;900&family=Press+Start+2P&family=Rajdhani:wght@500;700&family=UnifrakturMaguntia&family=Zilla+Slab:wght@700&family=Bitter:wght@400;700&family=Fredoka:wght@500;700&family=Pacifico&family=Nunito:wght@400;700;800&family=Lobster&family=Oswald:wght@400;600&family=Caveat+Brush&family=VT323&display=swap" rel="stylesheet">
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('wlan-theme')||'lcars'}catch(e){document.documentElement.dataset.theme='lcars'}</script><!-- before first paint: no flash of the default theme -->
 <style>
 :root{--bg:#000;--on:#000;--on-warn:#1a1a1a;--panel:#0a0911;--o1:#ff9c00;--o2:#ffcc66;--pe:#ff9f80;--li:#cc99ff;--pw:#9999ff;--sk:#99ccff;--tan:#d6a77a;
@@ -548,7 +548,9 @@ html[data-theme="futuristic"]{
  & .tip{border:1px solid var(--o1);border-radius:10px;background:rgba(5,7,15,.92);box-shadow:0 0 14px -4px var(--o1)}
  & .log .t,& .info dt{color:var(--o1)}
 }
-html:is([data-theme="retro"],[data-theme="c64"]){  /* pixel-font sizing shared by both 8-bit themes */
+html[data-theme="retro"]{
+ --bg:#000;--on:#000;--panel:#1d2b53;--o1:#ffa300;--o2:#ffec27;--pe:#ff77a8;--li:#29adff;--pw:#a99ec7;--sk:#00e436;--tan:#ffccaa;
+ --tx:#fff1e8;--tx2:#c2c3c7;--mut:#a99ec7;--grid:#1d2b53;--axis:#5f574f;--s1:#29adff;--s2:#ff004d;--good:#00e436;--warn:#ffec27;--crit:#ff3030;--info:#29adff;
  --font:'Press Start 2P',monospace;--head:'Press Start 2P',monospace;
  & *{border-radius:0 !important}  /* pixels have no round corners; beats every radius above in one line */
  & body{font-size:11px;line-height:1.7;letter-spacing:0}
@@ -572,10 +574,6 @@ html:is([data-theme="retro"],[data-theme="c64"]){  /* pixel-font sizing shared b
  & .st,& .note{font-size:8px;letter-spacing:0;line-height:1.8}
  & .log{font-size:9px;grid-template-columns:60px minmax(0,1fr) auto}& .log div{border-bottom:2px dashed var(--grid)}
  & .info{font-size:9px}& .info dt{font-size:7px;letter-spacing:0;padding-top:2px}
-}
-html[data-theme="retro"]{
- --bg:#000;--on:#000;--panel:#1d2b53;--o1:#ffa300;--o2:#ffec27;--pe:#ff77a8;--li:#29adff;--pw:#a99ec7;--sk:#00e436;--tan:#ffccaa;
- --tx:#fff1e8;--tx2:#c2c3c7;--mut:#a99ec7;--grid:#1d2b53;--axis:#5f574f;--s1:#29adff;--s2:#ff004d;--good:#00e436;--warn:#ffec27;--crit:#ff3030;--info:#29adff;
  & body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9;background:repeating-linear-gradient(transparent 0 2px,rgba(0,0,0,.22) 2px 3px)}
  & .pill{box-shadow:inset -4px -4px 0 rgba(0,0,0,.35),inset 4px 4px 0 rgba(255,255,255,.35)}
  & h1{color:var(--o2);text-shadow:4px 4px 0 #7e2553}
@@ -736,15 +734,36 @@ html[data-theme="cola"]{
  & .tip{border-radius:8px;background:#fff}& .log .t,& .info dt{color:var(--o1)}
  & .st{color:var(--tx)}
 }
-html[data-theme="c64"]{
- --bg:#40318d;--on:#000;--panel:#362a7a;--o1:#7869c4;--o2:#67b6bd;--pe:#b86962;--li:#94e089;--pw:#bfce72;--sk:#9f9f9f;--tan:#c4b8ff;
- --tx:#a5a5ff;--tx2:#c8c8ff;--mut:#bab6ff;--grid:#4b3d9e;--axis:#7869c4;--s1:#67b6bd;--s2:#bfce72;--good:#94e089;--warn:#edf171;--crit:#e04a3c;--info:#67b6bd;
- & body{background:#7869c4;padding:28px;text-transform:uppercase}  /* light-blue border around the blue screen */
- & .frame{background:var(--bg);padding:14px;min-height:calc(100vh - 56px)}
- & h1{color:var(--tx)}& h1::after{content:"";display:inline-block;width:.7em;height:.9em;margin-left:.3em;vertical-align:-.1em;background:var(--tx);animation:blink 1s steps(1) infinite}
- & .sd::after{content:" · READY."}& .hb,& .kpi h3,& .log .t{color:var(--tx2)}
+html[data-theme="amiga"]{
+ --bg:#0055aa;--on:#000022;--on-warn:#000022;--panel:#0055aa;--o1:#ff8800;--o2:#ffffff;--pe:#ffaa55;--li:#ffffff;--pw:#aaccff;--sk:#ffcc88;--tan:#dddddd;
+ --tx:#ffffff;--tx2:#dde6ff;--mut:#c4d4f4;--grid:rgba(255,255,255,.18);--axis:rgba(255,255,255,.55);--s1:#ffffff;--s2:#ff8800;--good:#77ee77;--warn:#ffd000;--crit:#ff3b30;--info:#aaccff;
+ --font:'VT323',monospace;--head:'VT323',monospace;--bevel:inset 2px 2px 0 #fff,inset -2px -2px 0 #000022;  /* raised Workbench gadget */
+ & *{border-radius:0 !important}  /* square windows and gadgets */
+ & body{font-size:20px;line-height:1.25;letter-spacing:.02em}
+ & .main>.bar:first-child{height:24px;background:#fff;color:#000022;align-items:center;padding:0 10px;font-size:18px}  /* screen title bar */
+ & .main>.bar:first-child::before{content:"Workbench 1.3 · 512K Chip-RAM frei"}& .main>.bar i{display:none}& .main>.bar:last-child{display:none}
+ & .elbow{min-height:0;padding:6px 10px;font-size:20px;color:#000022;justify-content:flex-start;align-items:center;
+  background:linear-gradient(90deg,#fff 0 62%,transparent 62%),repeating-linear-gradient(#fff 0 2px,#000022 2px 4px)}  /* title text, then drag bar */
+ & .pill{box-shadow:var(--bevel);min-height:58px;font-size:16px;letter-spacing:.04em}& .pill b{font-size:30px}
+ & .fill{background:transparent;border:2px solid #fff}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:16px 6px 12px 20px}
+ & h1{font-size:clamp(34px,4.5vw,56px);font-weight:400;letter-spacing:.04em;color:#fff}
+ & .sub,& .themesel{font-size:18px;letter-spacing:.06em}
+ & .alarm{box-shadow:var(--bevel);font-size:22px;font-weight:400;padding:4px 16px}
+ & .hb{color:#fff;font-size:24px;font-weight:400;letter-spacing:.08em}
+ & .hb::before{width:18px;height:18px;background:#0055aa;border:2px solid #fff;box-shadow:inset 0 0 0 3px #0055aa,inset 0 0 0 8px #fff}  /* close gadget */
+ & .hb::after{height:14px;background:repeating-linear-gradient(#fff 0 2px,transparent 2px 4px)}  /* drag bar */
+ & .kpi,& .alert{border:2px solid #fff;background:var(--panel)}& .alert .end{display:none}
+ & .kpi{padding:0 12px 10px}& .kpi h3{background:#fff;color:#000022;margin:0 -12px 6px;padding:2px 10px;font-size:18px;font-weight:400;letter-spacing:.06em;border-left:10px solid var(--c)}
+ & .big{font-size:42px;font-weight:400}& .big small{font-size:22px}& .sm{font-size:17px}
+ & .alert b{font-size:22px;font-weight:400}& .alert span{font-size:18px}
+ & .btn{font:18px var(--font);letter-spacing:.04em;box-shadow:var(--bevel);padding:4px 12px}& .btn:active{box-shadow:inset 2px 2px 0 #000022,inset -2px -2px 0 #fff}
+ & table{border-spacing:0;font-size:19px}& th{color:#fff;font-size:16px;font-weight:400;border-bottom:2px solid #fff}
+ & td{border-bottom:1px solid rgba(255,255,255,.35)}& td:first-child{border-left-width:8px}& .st{font-size:17px;font-weight:400}
+ & .tl{font-size:15px;letter-spacing:.02em}& .ln{stroke-linejoin:miter}& .tip{border:2px solid #fff;font-size:18px}
+ & .legend,& .note,& .panel h4,& details.muted summary{font-size:17px}& .log,& .info{font-size:19px}& .info dt{font-size:16px}& .log .t,& .info dt{color:#ffcc88}
+ & .themesel select{background:#fff;color:#000022;border:0;box-shadow:var(--bevel)}& .themesel option{background:#fff;color:#000022}
 }
-@media (prefers-reduced-motion:reduce){html[data-theme="c64"] h1::after{animation:none}}
 html[data-theme="hundertwasser"]{
  --bg:#fff6e0;--on:#1a1a1a;--panel:#fffdf5;--o1:#ff6b4a;--o2:#ffd400;--pe:#5cc06b;--li:#5aa9ff;--pw:#c48bff;--sk:#ffa94d;--tan:#e0b030;
  --tx:#1a1a1a;--tx2:#3a3326;--mut:#665c48;--grid:#f0e2bf;--axis:#1a1a1a;--s1:#1f5fd0;--s2:#d6331a;--good:#5cc06b;--thr:#a87400;--warn:#ffd400;--crit:#f4513a;--info:#5aa9ff;
@@ -792,7 +811,7 @@ html[data-theme="hundertwasser"]{
   <div class="inner">
    <header><div><span class="alarm" id="alarm" style="--c:var(--good)">Lade …</span><div class="sub" id="upd">Verbinde mit der FRITZ!Box …</div></div>
     <div><h1>WLAN-Überwachung</h1><div class="sub sd" id="sd"></div>
-     <label class="themesel">Theme <select id="theme"><option value="lcars">LCARS</option><option value="klingon">Klingon</option><option value="futuristic">Futuristic</option><option value="retro">Retro 8Bit</option><option value="macbook">MacBook</option><option value="newspaper">Newspaper</option><option value="woodworker">Woodworker</option><option value="pokemon">Pokemon</option><option value="unicorn">Unicorn</option><option value="cola">Coca-Cola</option><option value="c64">C64</option><option value="hundertwasser">Hundertwasser</option></select></label></div></header>
+     <label class="themesel">Theme <select id="theme"><option value="lcars">LCARS</option><option value="klingon">Klingon</option><option value="futuristic">Futuristic</option><option value="retro">Retro 8Bit</option><option value="macbook">MacBook</option><option value="newspaper">Newspaper</option><option value="woodworker">Woodworker</option><option value="pokemon">Pokemon</option><option value="unicorn">Unicorn</option><option value="cola">Coca-Cola</option><option value="amiga">Amiga 500</option><option value="hundertwasser">Hundertwasser</option></select></label></div></header>
    <section id="s-detail" hidden></section>
    <div id="overview">
    <section id="s-alerts"><h2 class="hb" style="--c:var(--o1)">Hinweise</h2><div id="alerts" aria-live="polite"></div></section>
@@ -841,13 +860,12 @@ const legend=items=>'<div class="legend">'+items.map(i=>'<span><span class="sw" 
 const pill=(id,val)=>{$(id).querySelector('b').textContent=val};
 
 function render(d){
- const st=LV[d.status],nAl=d.alerts.filter(a=>a.level==d.status).length;
- $('alarm').className='alarm'+(d.status=='crit'||d.status=='warn'?' '+d.status:'');$('alarm').style.setProperty('--c',st[2]);
- const nAck=d.alerts.filter(a=>a.state=='acked').length,nMut=d.alerts.filter(a=>a.state=='muted').length;
- $('alarm').textContent=st[3]+(d.status!='ok'&&nAl>1?' · '+nAl:'')+(nAck?' · '+nAck+' bestätigt':'')+(nMut?' · '+nMut+' stumm':'');
+ const st=LV[d.status],th=document.documentElement.dataset.theme,trek=th=='lcars'||th=='klingon';
+ // header badge: alarm words only in the Star Trek themes; elsewhere hidden (screen readers still get the status)
+ $('alarm').className='alarm'+(d.status=='crit'||d.status=='warn'?' '+d.status:'')+(trek?'':' sr');$('alarm').style.setProperty('--c',st[2]);
+ $('alarm').textContent=st[3];
  $('upd').textContent='Aktualisiert '+hms(d.time)+' · Intervall 5 s'+(d.collector_age_min!=null?' · Verlauf vor '+d.collector_age_min+' min gesichert':'');
- const th=document.documentElement.dataset.theme;
- $('sd').textContent=(th=='lcars'||th=='klingon'?'Sternzeit '+stardate(d.time):new Date(d.time).toLocaleDateString('de-AT',{weekday:'long',day:'numeric',month:'long',year:'numeric'}))+' · FRITZ!Box-Mesh';
+ $('sd').textContent=(trek?'Sternzeit '+stardate(d.time):new Date(d.time).toLocaleDateString('de-AT',{weekday:'long',day:'numeric',month:'long',year:'numeric'}))+' · FRITZ!Box-Mesh';
  $('r-status').style.setProperty('--c',st[2]);$('r-status').classList.toggle('warn',d.status=='warn');pill('r-status',st[1]);
  const i=d.internet,u=d.uplink,ap=(b,n)=>b.aps.find(a=>a.ap==n)||{},maxU=b=>Math.max(...b.aps.map(a=>a.util??0));
  pill('r-inet',num(i.sync_down,1));pill('r-24',num(maxU(d.bands[0]))+' %');pill('r-5',num(maxU(d.bands[1]))+' %');

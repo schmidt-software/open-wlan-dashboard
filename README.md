@@ -20,7 +20,7 @@ maximum rates, Wi-Fi standard, streams, latency, addresses, 24 h signal and rate
 all WLAN events of the device.
 
 Themes: LCARS (default), Klingon, Futuristic, Retro 8Bit, MacBook, Newspaper, Woodworker,
-Pokemon, Unicorn, Coca-Cola, C64 and Hundertwasser, picked in the header and remembered per browser. A theme is a block of CSS custom properties plus shape
+Pokemon, Unicorn, Coca-Cola, Amiga 500 and Hundertwasser, picked in the header and remembered per browser. A theme is a block of CSS custom properties plus shape
 overrides under `html[data-theme="…"]` in `dashboard.py`; adding one means adding a block and an
 `<option>`.
 
