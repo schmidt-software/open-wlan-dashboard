@@ -50,9 +50,9 @@ def api(path):
         try:
             return json.loads(urllib.request.urlopen(req, timeout=10).read())
         except urllib.error.HTTPError as e:
-            if e.code not in (401, 403) or attempt:
+            if e.code not in (400, 401, 403) or attempt:
                 raise
-            login()  # session expired
+            login()  # session expired: the box answers 400 for an unknown SID
 
 
 def mesh():
