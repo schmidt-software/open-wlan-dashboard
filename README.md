@@ -12,6 +12,7 @@ and recent WLAN events, and raises alerts early:
 - crowded or noisy channels
 - weak repeater uplink
 - DSL / internet interruptions, radar interruptions on 5 GHz
+- FRITZ!Box restarts in the last 24 h (flagged as a likely crash when the box sent an error report)
 - stopped history collection, available FRITZ!OS updates
 
 Clicking a device opens its detail page: connection, signal and noise margin, negotiated and

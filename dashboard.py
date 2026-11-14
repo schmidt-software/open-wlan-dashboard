@@ -26,6 +26,7 @@ UPLINK_RSSI_WARN, UPLINK_RATE_WARN = -70, 400  # repeater uplink on 5 GHz: dBm, 
 SNR_WARN = 6.0                                 # DSL noise margin in dB
 ALWAYS_ON_SHARE, ALWAYS_ON_MIN_SAMPLES = 0.9, 8
 COLLECTOR_STALE_MIN = 40
+REBOOT_ALERT_H = 24    # show a box restart this long
 ROAM_WINDOW_S = 10
 ACK_FORGET_S = 600     # a confirmation is dropped once its problem has been gone this long
 ACK_FILE = os.path.join(DIR, "acks.json")
@@ -87,6 +88,24 @@ def device_alerts(d):
         lvl = "crit" if d["rssi"] <= RSSI_CRIT else "warn"
         out.append((lvl, f"rssi:{d['mac']}", f"{d['name']}: schwaches Signal", f"{d['rssi']} dBm am {d['ap']} ({band_label(d['band'])})."))
     return out
+
+
+def stable_boot(prev, uptime_s, fetched_at):
+    """Boot time from the box uptime; keeps the previous value while it only jitters (whole-second uptime)."""
+    if not uptime_s:
+        return None
+    boot = fetched_at - uptime_s
+    return prev if prev and abs(prev - boot) < 60 else boot
+
+
+def reboot_alert(boot, crash_times, now):
+    """Alert for a box restart within REBOOT_ALERT_H; crash_times are log times of error reports sent to AVM."""
+    if not boot or now - boot > REBOOT_ALERT_H * 3600:
+        return None
+    crash = any(t >= boot for t in crash_times)
+    return {"id": f"reboot:{round(boot / 60)}", "level": "warn" if crash else "info", "title": "FRITZ!Box wurde neu gestartet",
+            "detail": dt.datetime.fromtimestamp(boot).strftime("Am %d.%m. um %H:%M Uhr.")
+                      + (" Danach hat sie einen Fehlerbericht an AVM gesendet: vermutlich ein Absturz." if crash else "")}
 
 
 def apply_acks(alerts, acks, now):
@@ -222,7 +241,7 @@ def slow_data():
     if time.time() - _slow["t"] > 60:
         now = time.time()
         aps, links, hist_events = read_history(now - 86400)
-        wlan, net = box_log("wlan"), box_log("net")
+        wlan, net, sys_log = box_log("wlan"), box_log("net"), box_log("sys")
         raw = {f'{e["date"]} {e["time"]} {e["msg"]}': (e["date"], e["time"], e["msg"]) for e in hist_events}
         raw.update({f'{e["date"]} {e["time"]} {e["msg"]}': (e["date"], e["time"], e["msg"]) for e in wlan})
         events = classify([p for p in (parse_event(*v) for v in raw.values()) if p and p["ts"] >= now - 86400])
@@ -237,6 +256,9 @@ def slow_data():
             "dsl": soap("/upnp/control/wandslifconfig1", "urn:dslforum-org:service:WANDSLInterfaceConfig:1", "GetInfo"),
             "ip": soap("/upnp/control/wanipconnection1", "urn:dslforum-org:service:WANIPConnection:1", "GetStatusInfo"),
             "ui": soap("/upnp/control/userif", "urn:dslforum-org:service:UserInterface:1", "GetInfo"),
+            "boot": stable_boot((_slow["data"] or {}).get("boot"),
+                                int(soap("/upnp/control/deviceinfo", "urn:dslforum-org:service:DeviceInfo:1", "GetInfo").get("NewUpTime") or 0), time.time()),
+            "crash_reports": [when(e) for e in sys_log if "Fehlerbericht" in e["msg"]],
         }
         _slow["t"] = time.time()
     return _slow["data"]
@@ -360,6 +382,9 @@ def build_state():
     if now - last_sample > COLLECTOR_STALE_MIN * 60:
         alerts.append({"id": "collector", "level": "warn", "title": "Verlauf wird nicht aufgezeichnet",
                        "detail": "Der Sammeldienst (collect.py) hat seit über 40 Minuten nichts gespeichert. Ist der Mac im Ruhezustand?"})
+    reboot = reboot_alert(slow["boot"], slow["crash_reports"], now)
+    if reboot:
+        alerts.append(reboot)
     if slow["ui"].get("NewUpgradeAvailable") == "1":
         alerts.append({"id": "update", "level": "info", "title": "FRITZ!OS-Update verfügbar", "detail": f"Version {slow['ui'].get('NewX_AVM-DE_Version')}."})
     alerts.sort(key=lambda a: -LEVEL[a["level"]])
@@ -1095,6 +1120,14 @@ def selftest():
                        {"rx_rsni": 255, "cur_availability_tx": 92, "max_data_rate_tx": 866000}, None)
     assert (on["streams"], on["width"], on["wifi"], on["snr"], on["avail"], on["max_down"], on["static_ip"], on["first_seen"]) \
         == (2, "40 MHz", "Wi-Fi 5", None, 92, 866, True, 1700000000000), on
+    assert stable_boot(None, 0, 1e9) is None and reboot_alert(None, [], 1e9) is None   # uptime unknown
+    b = stable_boot(None, 600, 1e9 + 649.6)                              # boot at hh:mm:29.6 (1e9 s is :40)
+    assert stable_boot(b, 1200, 1e9 + 1250.9) == b                       # 0.9 s jitter keeps the boot time and so the alert id
+    assert stable_boot(b, 5, 1e9 + 4000) == 1e9 + 3995                   # a real new restart replaces it
+    assert reboot_alert(1e9, [], 1e9 + REBOOT_ALERT_H * 3600 + 1) is None   # restart too long ago
+    r = reboot_alert(1e9, [1e9 + 300], 1e9 + 600)                        # report sent after the boot: crash
+    assert r["level"] == "warn" and "Absturz" in r["detail"]
+    assert reboot_alert(1e9, [1e9 - 300], 1e9 + 600)["level"] == "info"  # older report belongs to an earlier boot
     print("selftest ok")
 
 
