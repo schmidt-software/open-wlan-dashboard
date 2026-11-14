@@ -18,6 +18,11 @@ Clicking a device opens its detail page: connection, signal and noise margin, ne
 maximum rates, Wi-Fi standard, streams, latency, addresses, 24 h signal and rate history and
 all WLAN events of the device.
 
+Themes: LCARS (default), Klingon, Futuristic, Retro 8Bit, MacBook and Newspaper, picked in the
+header and remembered per browser. A theme is a block of CSS custom properties plus shape
+overrides under `html[data-theme="…"]` in `dashboard.py`; adding one means adding a block and an
+`<option>`.
+
 Alerts can be acknowledged or muted for 1 h / 24 h; they re-arm automatically when the
 problem gets worse, when a mute expires, or when a resolved problem comes back.
 
