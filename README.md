@@ -63,8 +63,16 @@ Self-test of the alert logic: `python3 dashboard.py --selftest`
 Alert thresholds are constants at the top of `dashboard.py` (channel load, noise, signal,
 reconnects per hour, repeater uplink, DSL noise margin, "always-on" detection).
 
+Devices that should never count as always-on (e.g. a game console or a tablet that is often
+switched off) go into `config.local.json` next to `dashboard.py`; they then raise no offline
+or weak-signal alerts. The file is git-ignored because it contains MAC addresses:
+
+```json
+{ "never_always_on": ["AA:BB:CC:DD:EE:FF"] }
+```
+
 ## Private data — never commit
 
 The collector and the dashboard write MAC addresses, device names and network events into
-this directory (`*.csv`, `*.jsonl`, `*.log`, `acks.json`). They are excluded via
+this directory (`*.csv`, `*.jsonl`, `*.log`, `acks.json`, `config.local.json`). They are excluded via
 `.gitignore`, as is the password file. Python standard library only, no dependencies.

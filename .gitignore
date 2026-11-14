@@ -41,6 +41,7 @@ credentials/*
 *.jsonl
 *.log
 acks.json
+config.local.json
 __pycache__/
 *.pyc
 .claude_fritz

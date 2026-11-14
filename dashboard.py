@@ -29,6 +29,9 @@ COLLECTOR_STALE_MIN = 40
 ROAM_WINDOW_S = 10
 ACK_FORGET_S = 600     # a confirmation is dropped once its problem has been gone this long
 ACK_FILE = os.path.join(DIR, "acks.json")
+# Local, git-ignored settings (contains MAC addresses), e.g. {"never_always_on": ["AA:BB:CC:DD:EE:FF"]}:
+# devices listed there are never treated as always-on, so they raise no offline or weak-signal alerts.
+CONFIG_FILE = os.path.join(DIR, "config.local.json")
 
 LEVEL = {"info": 0, "warn": 1, "crit": 2}
 EV = re.compile(r"^(?:\[(?P<rep>[^\]]+)\] )?WLAN-Gerät (?P<what>angemeldet|hat sich abgemeldet|wurde abgemeldet) "
@@ -113,6 +116,29 @@ def apply_acks(alerts, acks, now):
     return out, status
 
 
+def apply_device_states(devices, alerts):
+    """Carry the acknowledge/mute state of alerts into the device list and re-rank it."""
+    states = {a["id"]: a["state"] for a in alerts}
+    out = []
+    for d in devices:
+        al = [dict(a, state=states.get(a["id"], "active")) for a in d["alerts"]]
+        act = [a for a in al if a["state"] == "active"]
+        quiet = None if act or not al else "muted" if any(a["state"] == "muted" for a in al) else "acked"
+        out.append(dict(d, alerts=al, level=max((LEVEL[a["level"]] for a in act), default=-1), quiet=quiet,
+                        quiet_level=max((LEVEL[a["level"]] for a in al), default=-1)))
+    out.sort(key=lambda d: (-d["level"], not d["online"], d["band"], d["name"].lower()))
+    return out
+
+
+def load_config():
+    try:
+        with open(CONFIG_FILE) as f:
+            cfg = json.load(f)
+    except FileNotFoundError:
+        return {"never_always_on": set()}
+    return {"never_always_on": {m.upper() for m in cfg.get("never_always_on", [])}}
+
+
 def band_label(b):
     return "2,4 GHz" if b == "2.4" else "5 GHz"
 
@@ -186,6 +212,7 @@ def slow_data():
 
 def build_state():
     now = time.time()
+    cfg = load_config()
     m, mon, devs, slow = live.mesh(), live.api("monitor/online/0"), live.landevices(), slow_data()
     meshed = {n["uid"] for n in m["nodes"] if n.get("is_meshed")}
     mac_of = {i["uid"]: i.get("mac_address") for n in m["nodes"] for i in n["node_interfaces"]}
@@ -254,6 +281,8 @@ def build_state():
                         "last_seen": round(last_row["ts"] * 1000)}
     for d in devices.values():
         d["always_on"], d["share"] = always_on(d["mac"], slow["links"], since)
+        if d["mac"] in cfg["never_always_on"]:
+            d["always_on"] = False
         evs = [e for e in slow["events"] if e["mac"] == d["mac"]]
         d["drops_1h"] = sum(1 for e in evs if e["kind"] == "drop" and e["ts"] >= now - 3600)
         d["drops_24h"] = sum(1 for e in evs if e["kind"] == "drop")
@@ -286,7 +315,7 @@ def build_state():
     if dsl.get("NewStatus") == "Up" and snr < SNR_WARN:
         alerts.append({"id": "snr", "level": "warn", "title": "Geringer Störabstand der DSL-Leitung", "detail": f"{snr:.1f} dB. Die Leitung kann bei Störungen abbrechen."})
     for line in slow["net_issues"][:3]:
-        alerts.append({"id": f"netlog:{line[:17]}", "level": "warn", "title": "Internetunterbrechung in den letzten 24 h", "detail": line})
+        alerts.append({"id": f"netlog:{line[:13]}", "level": "warn", "title": "Internetunterbrechung in den letzten 24 h", "detail": line})
     if slow["radar"]:
         alerts.append({"id": "radar", "level": "warn", "title": "5-GHz-Funk wegen Radar unterbrochen", "detail": slow["radar"][0]})
     last_sample = max((r["ts"] for r in slow["aps"]), default=0)
@@ -376,7 +405,7 @@ table{width:100%;border-collapse:separate;border-spacing:0 4px;font-variant-nume
 th{color:var(--li);font-weight:600;text-transform:uppercase;letter-spacing:.12em;font-size:13px;text-align:right;padding:2px 12px;white-space:nowrap}
 td{background:var(--panel);padding:5px 12px;text-align:right;white-space:nowrap}
 th.l,td.l{text-align:left}td.l{white-space:normal}
-td:first-child{border-radius:16px 0 0 16px;border-left:12px solid var(--c)}td:last-child{border-radius:0 16px 16px 0}
+td:first-child{border-radius:16px 0 0 16px;border-left:12px solid var(--c)}td:last-child{border-radius:0 16px 16px 0}tr.quiet td{opacity:.6}
 .st{font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:14px;color:var(--c)}
 .mut{color:var(--mut)}.note{font-size:14px;color:var(--mut);margin-top:6px;letter-spacing:.03em}
 .log{display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:2px 14px;font-size:16px}
@@ -475,9 +504,9 @@ function render(d){
   const ta=d.t_axis,z=k=>ta.map((t,j)=>[t,b[k][j]]);
   lineChart($('t'+b.band),[{label:'Download',color:'var(--s1)',pts:z('down')},{label:'Upload',color:'var(--s2)',pts:z('up')}],
    {t0:ta[0],t1:ta[ta.length-1],ticks:[ta[0],ta[Math.floor(ta.length/2)],ta[ta.length-1]],minMax:0.1,fmt:rate,fmtAxis:v=>v&&v<1?num(v*1000)+' k':num(v),aria:b.label+': Datenverkehr der letzten 10 Minuten in Mbit/s'})}
- const sb=x=>x.level==2?LV.crit:x.level==1?LV.warn:x.online?LV.ok:['','Offline','var(--mut)'];
+ const sb=x=>x.level==2?LV.crit:x.level==1?LV.warn:x.quiet?['',x.quiet=='muted'?'Stumm':'Bestätigt',x.quiet_level==2?'var(--crit)':x.quiet_level==1?'var(--warn)':'var(--info)']:x.online?LV.ok:['','Offline','var(--mut)'];
  $('devs').innerHTML='<table><thead><tr><th class="l">Status</th><th class="l">Gerät</th><th class="l">Verbindung</th><th>Signal</th><th>Rate ↓ / ↑</th><th>Verkehr ↓ / ↑</th><th>Abbrüche 1 h</th><th>Abbrüche 24 h</th><th>Wechsel 24 h</th></tr></thead><tbody>'
-  +d.devices.map(x=>{const s=sb(x);return '<tr style="--c:'+s[2]+'"><td class="l"><span class="st">'+s[1]+'</span></td>'
+  +d.devices.map(x=>{const s=sb(x);return '<tr'+(x.quiet?' class="quiet" title="Alarm '+(x.quiet=='muted'?'stummgeschaltet':'bestätigt')+'"':'')+' style="--c:'+s[2]+'"><td class="l"><span class="st">'+s[1]+'</span></td>'
    +'<td class="l">'+esc(x.name)+(x.always_on?' <span class="mut" title="in fast allen Messungen der letzten 24 h verbunden">· dauerhaft</span>':'')+'</td>'
    +'<td class="l">'+(x.online?(x.band=='2.4'?'2,4':'5')+' GHz · '+x.ap:'zuletzt '+(x.last_seen?hm(x.last_seen):'–'))+'</td>'
    +'<td>'+(x.rssi==null?'–':x.rssi+' dBm')+'</td><td>'+num(x.rate_down)+' / '+num(x.rate_up)+'</td>'
@@ -549,7 +578,7 @@ def current_state():
         alerts, status = apply_acks(state["alerts"], acks, time.time())
         if json.dumps(acks, sort_keys=True) != before:
             save_acks(acks)
-    return dict(state, alerts=alerts, status=status)
+    return dict(state, alerts=alerts, status=status, devices=apply_device_states(state["devices"], alerts))
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -639,6 +668,11 @@ def selftest():
     assert out[0]["state"] == "active" and "m" not in acks             # mute expired
     out, st = apply_acks([], {}, 0)
     assert st == "ok"
+    dev = lambda n, als: {"name": n, "online": True, "band": "5", "alerts": als}
+    devs = apply_device_states([dev("A", [A("x", "crit")]), dev("B", [A("y", "warn")]), dev("C", [])],
+                               [dict(A("x", "crit"), state="muted"), dict(A("y", "warn"), state="active")])
+    assert [(d["name"], d["level"], d["quiet"]) for d in devs] == [("B", 1, None), ("A", -1, "muted"), ("C", -1, None)], devs
+    assert devs[1]["quiet_level"] == 2
     print("selftest ok")
 
 
