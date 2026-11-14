@@ -71,13 +71,9 @@ def is_random_mac(mac):
 
 def always_on(mac, link_rows, since):
     """True if a device with a fixed MAC was connected in nearly all collector samples since `since`."""
-    if is_random_mac(mac):
-        return False, 0.0
     samples = {r["time"] for r in link_rows if r["ts"] >= since}
-    if len(samples) < ALWAYS_ON_MIN_SAMPLES:
-        return False, 0.0
-    share = len({r["time"] for r in link_rows if r["ts"] >= since and r["mac"] == mac}) / len(samples)
-    return share >= ALWAYS_ON_SHARE, share
+    share = len({r["time"] for r in link_rows if r["ts"] >= since and r["mac"] == mac}) / len(samples) if samples else 0.0
+    return not is_random_mac(mac) and len(samples) >= ALWAYS_ON_MIN_SAMPLES and share >= ALWAYS_ON_SHARE, share
 
 
 def device_alerts(d):
@@ -118,10 +114,10 @@ def apply_acks(alerts, acks, now):
 
 def apply_device_states(devices, alerts):
     """Carry the acknowledge/mute state of alerts into the device list and re-rank it."""
-    states = {a["id"]: a["state"] for a in alerts}
+    states = {a["id"]: a for a in alerts}  # whole alert: the page also needs since/until
     out = []
     for d in devices:
-        al = [dict(a, state=states.get(a["id"], "active")) for a in d["alerts"]]
+        al = [states.get(a["id"], dict(a, state="active")) for a in d["alerts"]]
         act = [a for a in al if a["state"] == "active"]
         quiet = None if act or not al else "muted" if any(a["state"] == "muted" for a in al) else "acked"
         out.append(dict(d, alerts=al, level=max((LEVEL[a["level"]] for a in act), default=-1), quiet=quiet,
@@ -141,6 +137,44 @@ def load_config():
 
 def band_label(b):
     return "2,4 GHz" if b == "2.4" else "5 GHz"
+
+
+def wifi_gen(modes):
+    for m, g in (("be", "Wi-Fi 7"), ("ax", "Wi-Fi 6"), ("ac", "Wi-Fi 5"), ("n", "Wi-Fi 4")):
+        if m in modes:
+            return g
+    return "älter als Wi-Fi 4" if modes else None
+
+
+def device_detail(mac, ld, node, iface, link, t):
+    """Static and live details of one device from the LAN device list and the mesh topology."""
+    val = lambda v: None if v in (None, 255, "") else v
+    mbit = lambda v: round(v / 1000) if v else None
+    ms = lambda s: int(s) * 1000 if s and str(s) != "0" else None
+    streams = [(w, s) for w, s in iface.get("supported_streams_rx", []) if s]
+    metrics = node.get("metrics") or {}
+    lat = metrics.get("latency_measurement") or {}
+    wan = (metrics.get("wan_counters") or {}).get("bytes") or {}
+    return {
+        "ip": ld.get("ip") or None, "static_ip": ld.get("static_dhcp") == "1", "random_mac": is_random_mac(mac),
+        "ipv6": [a["value"] for a in node.get("ip_addresses", []) if a.get("version") == "V6"],
+        "hostname": node.get("device_name") or ld.get("name") or None,
+        "vendor": node.get("device_manufacturer") or ld.get("vendorname") or None,
+        "model": node.get("device_model") or ld.get("modelname") or None,
+        "firmware": node.get("device_firmware_version") or None,
+        "first_seen": ms(ld.get("firstused")), "last_used": ms(ld.get("lastused")),
+        "connected_since": ms(link.get("last_connected")),
+        "wifi": wifi_gen(iface.get("phymodes") or []), "phymodes": iface.get("phymodes") or [],
+        "streams": max((s for _, s in streams), default=None), "width": streams[-1][0] if streams else None,
+        "channel": iface.get("current_channel"), "security": iface.get("security"),
+        "k": iface.get("11k_friendly"), "v": iface.get("11v_friendly"),
+        "snr": val(link.get("rx_rsni")), "avail": val(link.get("cur_availability_tx")),
+        "max_down": mbit(link.get("max_data_rate_tx")), "max_up": mbit(link.get("max_data_rate_rx")),
+        "latency_ms": lat["rt_latency"] / 1000 if lat.get("status_code") == "SUCCESS" and lat.get("rt_latency") else None,
+        "latency_at": lat.get("timestamp") if lat.get("status_code") == "SUCCESS" else None,
+        "wan_rx": wan.get("rx"), "wan_tx": wan.get("tx"),
+        "traffic": {k: [live.mbit(v) for v in t[k + "stream"]] for k in ("down", "up")} if t else None,
+    }
 
 
 # ---------------------------------------------------------------- FRITZ!Box access
@@ -216,6 +250,8 @@ def build_state():
     m, mon, devs, slow = live.mesh(), live.api("monitor/online/0"), live.landevices(), slow_data()
     meshed = {n["uid"] for n in m["nodes"] if n.get("is_meshed")}
     mac_of = {i["uid"]: i.get("mac_address") for n in m["nodes"] for i in n["node_interfaces"]}
+    iface_of = {i["uid"]: (n, i) for n in m["nodes"] for i in n["node_interfaces"]}
+    details = {}
     by_mac = {x["mac"]: x for x in devs.values()}
     mine = next((x["UID"] for x in devs.values() if x.get("ip") == live.own_ip()), None)
     traffic = {}
@@ -256,6 +292,7 @@ def build_state():
                                 "recorded": t is not None,
                                 "traffic_down": live.mbit(live.last(t["downstream"])) if t else None,
                                 "traffic_up": live.mbit(live.last(t["upstream"])) if t else None}
+                details[mac] = device_detail(mac, ld, *iface_of.get(l["node_interface_2_uid"], ({}, {})), l, t)
                 if t:
                     for key in ("down", "up"):
                         series = t[key + "stream"][-n:]
@@ -279,6 +316,7 @@ def build_state():
                         "ap": "Repeater" if "repeater" in last_row["ap"] else "FRITZ!Box", "band": "5" if "5G" in last_row["band"] else "2.4",
                         "rssi": None, "rate_down": None, "rate_up": None, "recorded": False, "traffic_down": None, "traffic_up": None,
                         "last_seen": round(last_row["ts"] * 1000)}
+        details[mac] = device_detail(mac, ld, {}, {}, {}, None)
     for d in devices.values():
         d["always_on"], d["share"] = always_on(d["mac"], slow["links"], since)
         if d["mac"] in cfg["never_always_on"]:
@@ -339,6 +377,7 @@ def build_state():
         "events": [{"ts": round(e["ts"] * 1000), "name": names.get(e["mac"]) or e["name"], "ap": e["ap"], "band": band_label(e["band"]),
                     "kind": e["kind"]} for e in slow["events"][-25:][::-1]],
         "collector_age_min": round((now - last_sample) / 60) if last_sample else None,
+        "details": details,  # served per device by /device, not in /data
     }
 
 
@@ -411,6 +450,10 @@ td:first-child{border-radius:16px 0 0 16px;border-left:12px solid var(--c)}td:la
 .log{display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:2px 14px;font-size:16px}
 .log div{padding:3px 0;border-bottom:1px solid var(--grid)}.log .t{color:var(--sk);font-variant-numeric:tabular-nums}
 .err{color:var(--crit);font-weight:600}
+tr.click{cursor:pointer}tr.click:hover td,tr.click:focus-visible td{filter:brightness(1.5)}tr.click:focus-visible{outline:2px solid var(--o1)}
+.info{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 18px;font-size:17px;margin:0}
+.info dt{color:var(--li);text-transform:uppercase;letter-spacing:.12em;font-size:13px;padding-top:3px}.info dd{margin:0;overflow-wrap:anywhere}
+.dhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px}
 @media(max-width:1200px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:900px){.frame{grid-template-columns:minmax(0,1fr)}.rail{display:none}.inner{padding-left:6px}.inner::before,.inner::after{display:none}.cols{grid-template-columns:minmax(0,1fr)}h1{font-size:34px}}
 @media(max-width:560px){.kpis{grid-template-columns:minmax(0,1fr)}.alert .tag{width:84px}}
@@ -432,6 +475,8 @@ td:first-child{border-radius:16px 0 0 16px;border-left:12px solid var(--c)}td:la
   <div class="inner">
    <header><div><span class="alarm" id="alarm" style="--c:var(--good)">Lade …</span><div class="sub" id="upd">Verbinde mit der FRITZ!Box …</div></div>
     <div><h1>WLAN-Überwachung</h1><div class="sub" style="text-align:right" id="sd"></div></div></header>
+   <section id="s-detail" hidden></section>
+   <div id="overview">
    <section id="s-alerts"><h2 class="hb" style="--c:var(--o1)">Hinweise</h2><div id="alerts" aria-live="polite"></div></section>
    <section id="s-kpi"><h2 class="hb" style="--c:var(--pe)">Systeme</h2><div class="kpis" id="kpis"></div></section>
    <div class="cols">
@@ -440,6 +485,7 @@ td:first-child{border-radius:16px 0 0 16px;border-left:12px solid var(--c)}td:la
    </div>
    <section id="s-dev"><h2 class="hb" style="--c:var(--sk)">Geräte</h2><div class="wrap" id="devs"></div></section>
    <section id="s-log"><h2 class="hb" style="--c:var(--tan)">Protokoll</h2><div id="evs"></div></section>
+   </div>
   </div>
   <div class="bar" aria-hidden="true"><i style="flex:3;background:var(--o1)"></i><i style="width:110px;background:var(--pe)"></i><i style="flex:1;background:var(--li)"></i><i style="width:60px;background:var(--o2);border-radius:0 12px 12px 0"></i></div>
  </div>
@@ -457,9 +503,9 @@ const stardate=t=>{const d=new Date(t),y=d.getFullYear(),s=new Date(y,0,1),e=new
 function lineChart(el,series,o){const W=Math.max(280,el.clientWidth||600),H=o.h||180,L=44,R=8,T=8,B=22,pw=W-L-R,ph=H-T-B;
  const t0=o.t0,t1=o.t1,all=series.flatMap(s=>s.pts.map(p=>p[1]));let max=o.max??Math.max(o.minMax||1,...all);
  if(o.max==null){const st=[0.025,0.05,0.1,0.25,0.5,1,2,5,10,20,25,50,100,200,500].find(x=>max/x<=4)||1000;max=4*st}
- const X=t=>L+pw*(t-t0)/Math.max(1,t1-t0),Y=v=>T+ph*(1-v/max);
+ const mn=o.min??0,X=t=>L+pw*(t-t0)/Math.max(1,t1-t0),Y=v=>T+ph*(1-(v-mn)/(max-mn));
  let s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(o.aria)+'">';
- for(let k=0;k<=4;k++){const v=max*k/4,y=Y(v);s+='<line class="'+(k?'gl':'ax')+'" x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'"/><text class="tl" x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+o.fmtAxis(v)+'</text>'}
+ for(let k=0;k<=4;k++){const v=mn+(max-mn)*k/4,y=Y(v);s+='<line class="'+(k?'gl':'ax')+'" x1="'+L+'" x2="'+(W-R)+'" y1="'+y+'" y2="'+y+'"/><text class="tl" x="'+(L-6)+'" y="'+(y+4)+'" text-anchor="end">'+o.fmtAxis(v)+'</text>'}
  if(o.thr!=null)s+='<line class="th" x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(o.thr)+'" y2="'+Y(o.thr)+'"/>';
  o.ticks.forEach((t,k)=>{const a=k==0?'start':k==o.ticks.length-1?'end':'middle';s+='<text class="tl" x="'+X(t)+'" y="'+(H-4)+'" text-anchor="'+a+'">'+hm(t)+'</text>'});
  for(const se of series){if(!se.pts.length)continue;s+='<polyline class="ln" stroke="'+se.color+'" points="'+se.pts.map(p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join(' ')+'"/>';
@@ -504,38 +550,90 @@ function render(d){
   const ta=d.t_axis,z=k=>ta.map((t,j)=>[t,b[k][j]]);
   lineChart($('t'+b.band),[{label:'Download',color:'var(--s1)',pts:z('down')},{label:'Upload',color:'var(--s2)',pts:z('up')}],
    {t0:ta[0],t1:ta[ta.length-1],ticks:[ta[0],ta[Math.floor(ta.length/2)],ta[ta.length-1]],minMax:0.1,fmt:rate,fmtAxis:v=>v&&v<1?num(v*1000)+' k':num(v),aria:b.label+': Datenverkehr der letzten 10 Minuten in Mbit/s'})}
- const sb=x=>x.level==2?LV.crit:x.level==1?LV.warn:x.quiet?['',x.quiet=='muted'?'Stumm':'Bestätigt',x.quiet_level==2?'var(--crit)':x.quiet_level==1?'var(--warn)':'var(--info)']:x.online?LV.ok:['','Offline','var(--mut)'];
  $('devs').innerHTML='<table><thead><tr><th class="l">Status</th><th class="l">Gerät</th><th class="l">Verbindung</th><th>Signal</th><th>Rate ↓ / ↑</th><th>Verkehr ↓ / ↑</th><th>Abbrüche 1 h</th><th>Abbrüche 24 h</th><th>Wechsel 24 h</th></tr></thead><tbody>'
-  +d.devices.map(x=>{const s=sb(x);return '<tr'+(x.quiet?' class="quiet" title="Alarm '+(x.quiet=='muted'?'stummgeschaltet':'bestätigt')+'"':'')+' style="--c:'+s[2]+'"><td class="l"><span class="st">'+s[1]+'</span></td>'
-   +'<td class="l">'+esc(x.name)+(x.always_on?' <span class="mut" title="in fast allen Messungen der letzten 24 h verbunden">· dauerhaft</span>':'')+'</td>'
+  +d.devices.map(x=>{const s=sb(x);return '<tr class="click'+(x.quiet?' quiet" title="Alarm '+(x.quiet=='muted'?'stummgeschaltet':'bestätigt'):'')+'" data-mac="'+esc(x.mac)+'" tabindex="0" style="--c:'+s[2]+'"><td class="l"><span class="st">'+s[1]+'</span></td>'
+   +'<td class="l"><a href="#dev='+esc(x.mac)+'">'+esc(x.name)+'</a>'+(x.always_on?' <span class="mut" title="in fast allen Messungen der letzten 24 h verbunden">· dauerhaft</span>':'')+'</td>'
    +'<td class="l">'+(x.online?(x.band=='2.4'?'2,4':'5')+' GHz · '+x.ap:'zuletzt '+(x.last_seen?hm(x.last_seen):'–'))+'</td>'
    +'<td>'+(x.rssi==null?'–':x.rssi+' dBm')+'</td><td>'+num(x.rate_down)+' / '+num(x.rate_up)+'</td>'
    +'<td>'+(x.recorded?rate(x.traffic_down)+' / '+rate(x.traffic_up):'<span class="mut">nicht aufgezeichnet</span>')+'</td>'
    +'<td>'+x.drops_1h+'</td><td>'+x.drops_24h+'</td><td>'+x.roams_24h+'</td></tr>'}).join('')+'</tbody></table>'
-  +'<div class="note">Rate = ausgehandeltes Tempo in Mbit/s (der Repeater meldet keine Upload-Rate). Abbrüche zählen Abmeldungen ohne Wechsel zu einem anderen Zugangspunkt; Wechsel zwischen FRITZ!Box und Repeater sind normal.</div>';
+  +'<div class="note">Für Details auf ein Gerät klicken. Rate = ausgehandeltes Tempo in Mbit/s (der Repeater meldet keine Upload-Rate). Abbrüche zählen Abmeldungen ohne Wechsel zu einem anderen Zugangspunkt; Wechsel zwischen FRITZ!Box und Repeater sind normal.</div>';
  const kind={login:'angemeldet',drop:'abgemeldet',roam:'gewechselt'};
  $('evs').innerHTML='<div class="log">'+d.events.map(e=>'<div class="t">'+hm(e.ts)+'</div><div>'+esc(e.name)+' '+kind[e.kind]+'</div><div class="mut">'+e.band+' · '+e.ap+'</div>').join('')+'</div>'}
 
 let lastAlerts='',mutedOpen=false;
 const btn=(lbl,act,ids,c,h)=>'<button class="btn" type="button" style="--b:'+c+'" data-act="'+act+'" data-ids="'+esc(JSON.stringify(ids))+'"'+(h?' data-h="'+h+'"':'')+'>'+lbl+'</button>';
 const until=t=>new Date(t).toLocaleString('de-AT',new Date(t).toDateString()==new Date().toDateString()?{hour:'2-digit',minute:'2-digit'}:{weekday:'short',hour:'2-digit',minute:'2-digit'});
+const row=(a,extra,acts)=>{const l=LV[a.level];return '<div class="alert '+(a.state||'')+'" style="--c:'+l[2]+'"><div class="tag"><span aria-hidden="true">'+l[0]+'</span>'+l[1]+'</div><div class="txt"><b>'+esc(a.title)+'</b><span>'+esc(a.detail)+extra+'</span></div>'+(acts?'<div class="acts">'+acts+'</div>':'')+'<div class="end"></div></div>'};
+const alertRows=list=>list.map(a=>a.state=='acked'?row(a,' · Bestätigt um '+hm(a.since),btn('Zurücknehmen','clear',[a.id],'var(--tan)'))
+ :a.state=='muted'?row(a,' · stumm bis '+until(a.until),btn('Aufheben','clear',[a.id],'var(--tan)'))
+ :row(a,'',btn('Bestätigen','ack',[a.id],'var(--o2)')+btn('Stumm 1 h','mute',[a.id],'var(--pw)',1)+btn('Stumm 24 h','mute',[a.id],'var(--li)',24))).join('');
+const sb=x=>x.level==2?LV.crit:x.level==1?LV.warn:x.quiet?['',x.quiet=='muted'?'Stumm':'Bestätigt',x.quiet_level==2?'var(--crit)':x.quiet_level==1?'var(--warn)':'var(--info)']:x.online?LV.ok:['','Offline','var(--mut)'];
 function renderAlerts(all){const key=JSON.stringify(all);if(key==lastAlerts)return;lastAlerts=key;
  const act=all.filter(a=>a.state=='active'),ack=all.filter(a=>a.state=='acked'),mut=all.filter(a=>a.state=='muted');
- const row=(a,extra,acts)=>{const l=LV[a.level];return '<div class="alert '+(a.state||'')+'" style="--c:'+l[2]+'"><div class="tag"><span aria-hidden="true">'+l[0]+'</span>'+l[1]+'</div><div class="txt"><b>'+esc(a.title)+'</b><span>'+esc(a.detail)+extra+'</span></div>'+(acts?'<div class="acts">'+acts+'</div>':'')+'<div class="end"></div></div>'};
  let h=act.length>1?'<div class="allbar">'+btn('Alle bestätigen','ack',act.map(a=>a.id),'var(--o2)')+'</div>':'';
- h+=act.map(a=>row(a,'',btn('Bestätigen','ack',[a.id],'var(--o2)')+btn('Stumm 1 h','mute',[a.id],'var(--pw)',1)+btn('Stumm 24 h','mute',[a.id],'var(--li)',24))).join('');
+ h+=alertRows(act);
  if(!act.length)h+=row({level:'ok',title:'Keine aktiven Alarme',detail:ack.length||mut.length?'Alle offenen Hinweise sind bestätigt oder stummgeschaltet.':'Alle Prüfungen ohne Befund.'},'','');
- h+=ack.map(a=>row(a,' · Bestätigt um '+hm(a.since),btn('Zurücknehmen','clear',[a.id],'var(--tan)'))).join('');
- if(mut.length)h+='<details class="muted"'+(mutedOpen?' open':'')+'><summary>Stummgeschaltet: '+mut.length+'</summary>'+mut.map(a=>row(a,' · stumm bis '+until(a.until),btn('Aufheben','clear',[a.id],'var(--tan)'))).join('')+'</details>';
+ h+=alertRows(ack);
+ if(mut.length)h+='<details class="muted"'+(mutedOpen?' open':'')+'><summary>Stummgeschaltet: '+mut.length+'</summary>'+alertRows(mut)+'</details>';
  $('alerts').innerHTML=h}
-$('alerts').addEventListener('click',async e=>{const b=e.target.closest('button[data-act]');if(!b)return;b.disabled=true;
+
+const date=t=>t?new Date(t).toLocaleString('de-AT',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'–';
+const bytes=v=>v==null?'–':v>=1e9?num(v/1e9,2)+' GB':v>=1e6?num(v/1e6,1)+' MB':num(v/1e3)+' kB';
+const yes=v=>v==null?'–':v?'ja':'nein';
+function renderDetail(x){const D=x.detail||{},s=sb(x),k={login:'angemeldet',drop:'abgemeldet',roam:'gewechselt'},bl=b=>b=='2.4'?'2,4 GHz':'5 GHz';
+ const kpi=(c,h,big,sm)=>'<div class="kpi" style="--c:'+c+'"><h3>'+h+'</h3><div class="big">'+big+'</div><div class="sm">'+sm+'</div></div>';
+ const places={};for(const r of x.hist)places[r[5]+' · '+bl(r[6])]=(places[r[5]+' · '+bl(r[6])]||0)+1;
+ const where=Object.entries(places).sort((a,b)=>b[1]-a[1]).map(([p,n])=>p+' '+Math.round(100*n/x.hist.length)+' %').join(', ')||'–';
+ const info=[['Name',esc(x.name)],['Hostname',esc(D.hostname??'–')],['IPv4',esc(D.ip??'–')+(D.static_ip?' <span class="mut">· feste IP</span>':'')],
+  ['IPv6',D.ipv6&&D.ipv6.length?D.ipv6.map(esc).join('<br>'):'–'],['MAC',esc(x.mac)+(D.random_mac?' <span class="mut">· zufällige (private) Adresse</span>':'')],
+  ['Hersteller',esc(D.vendor??'–')],['Modell',esc(D.model??'–')],['Firmware',esc(D.firmware??'–')],
+  ['WLAN-Standard',D.wifi?esc(D.wifi)+' <span class="mut">· 802.11 '+esc(D.phymodes.join('/'))+'</span>':'–'],
+  ['Antennen',D.streams?D.streams+' Stream'+(D.streams>1?'s':'')+' · bis '+esc(D.width):'–'],['Sicherheit',esc(D.security??'–')],
+  ['802.11k / v',yes(D.k)+' / '+yes(D.v)+' <span class="mut">· Hilfen für den Wechsel zwischen Box und Repeater</span>'],
+  ['Verbunden seit',date(D.connected_since)],['Erstmals gesehen',date(D.first_seen)],['Zuletzt aktiv',date(D.last_used)],
+  ['Latenz',D.latency_ms!=null?num(D.latency_ms,1)+' ms <span class="mut">· gemessen '+date(D.latency_at)+'</span>':'–'],
+  ['WAN-Zähler',D.wan_rx!=null?'empfangen '+bytes(D.wan_rx)+' · gesendet '+bytes(D.wan_tx):'–'],
+  ['Dauerhaft verbunden',x.always_on?'ja':'nein'],['Anteil Messungen 24 h',num(100*x.share)+' %'],['Verbindungsorte 24 h',where]];
+ let h='<div class="dhead"><a class="btn" href="#s-dev" style="--b:var(--sk)">← Alle Geräte</a><span class="alarm" style="--c:'+s[2]+'">'+esc(s[1])+'</span></div>'
+  +'<h2 class="hb" style="--c:var(--sk)">'+esc(x.name)+'</h2>';
+ if(x.alerts.length)h+=alertRows(x.alerts);
+ h+='<div class="kpis">'+kpi('var(--li)','Verbindung',x.online?bl(x.band):'Offline',x.online?x.ap+' · Kanal '+(D.channel??'–'):'zuletzt '+(x.last_seen?date(x.last_seen):'–'))
+  +kpi('var(--pw)','Signal',x.rssi==null?'–':x.rssi+' <small>dBm</small>','Störabstand '+(D.snr==null?'–':D.snr+' dB')+' · Verfügbarkeit '+(D.avail==null?'–':D.avail+' %'))
+  +kpi('var(--o2)','Rate ↓ / ↑',num(x.rate_down)+' <small>/ '+num(x.rate_up)+' Mbit/s</small>','maximal '+num(D.max_down)+' / '+num(D.max_up)+' Mbit/s')
+  +kpi('var(--pe)','Datenverkehr',x.recorded?'↓ '+rate(x.traffic_down):'–',x.recorded?'↑ '+rate(x.traffic_up):'nicht aufgezeichnet')
+  +kpi('var(--sk)','Stabilität',x.drops_24h+' <small>Abbrüche 24 h</small>',x.drops_1h+' in 1 h · '+x.roams_24h+' Wechsel Box/Repeater')+'</div>';
+ h+='<div class="cols"><section class="panel"><h2 class="hb" style="--c:var(--pw)">Signal · 24 Stunden</h2>'+legend([['Signal','var(--s1)'],['Warnschwelle '+x.thr_rssi+' dBm','var(--warn)']])+'<div class="chart" id="dsig"></div>'
+  +'<h4 style="margin-top:12px">Ausgehandelte Rate · 24 Stunden</h4>'+legend([['Download','var(--s1)'],['Upload','var(--s2)']])+'<div class="chart" id="drate"></div>'
+  +(D.traffic?'<h4 style="margin-top:12px">Datenverkehr · 10 Minuten</h4>'+legend([['Download','var(--s1)'],['Upload','var(--s2)']])+'<div class="chart" id="dtraf"></div>':'')
+  +'<div class="note">Verlauf aus dem Sammeldienst (alle 15 min, nur bei wachem Mac).</div></section>'
+  +'<section class="panel"><h2 class="hb" style="--c:var(--li)">Daten</h2><dl class="info">'+info.map(i=>'<dt>'+i[0]+'</dt><dd>'+i[1]+'</dd>').join('')+'</dl></section></div>';
+ h+='<h2 class="hb" style="--c:var(--tan)">Ereignisse · 24 Stunden</h2>'+(x.events.length?'<div class="log" style="grid-template-columns:96px minmax(0,1fr) auto">'+x.events.map(e=>'<div class="t">'+until(e.ts)+'</div><div>'+k[e.kind]+'</div><div class="mut">'+e.band+' · '+e.ap+'</div>').join('')+'</div>':'<div class="mut">Keine An- oder Abmeldungen in den letzten 24 Stunden.</div>');
+ $('s-detail').innerHTML=h;
+ const t1=x.time,t0=t1-86400000,tk=[0,6,12,18,24].map(h=>t0+h*3600000),col=i=>x.hist.filter(r=>r[i]!=null).map(r=>[r[0],r[i]]);
+ lineChart($('dsig'),[{label:'Signal',color:'var(--s1)',pts:col(1)}],{t0,t1,ticks:tk,min:-100,max:-20,thr:x.thr_rssi,fmt:v=>v+' dBm',fmtAxis:v=>v,long:true,snap:1800000,aria:'Signalstärke der letzten 24 Stunden in dBm'});
+ lineChart($('drate'),[{label:'Download',color:'var(--s1)',pts:col(3)},{label:'Upload',color:'var(--s2)',pts:col(4)}],{t0,t1,ticks:tk,fmt:v=>num(v)+' Mbit/s',fmtAxis:v=>num(v),long:true,snap:1800000,aria:'Ausgehandelte Rate der letzten 24 Stunden in Mbit/s'});
+ if(D.traffic){const ta=x.t_axis,z=a=>a.slice(-ta.length).map((v,j,arr)=>[ta[ta.length-arr.length+j],v]);
+  lineChart($('dtraf'),[{label:'Download',color:'var(--s1)',pts:z(D.traffic.down)},{label:'Upload',color:'var(--s2)',pts:z(D.traffic.up)}],
+   {t0:ta[0],t1:ta[ta.length-1],ticks:[ta[0],ta[Math.floor(ta.length/2)],ta[ta.length-1]],minMax:0.1,fmt:rate,fmtAxis:v=>v&&v<1?num(v*1000)+' k':num(v),aria:'Datenverkehr der letzten 10 Minuten in Mbit/s'})}}
+
+document.addEventListener('click',async e=>{const b=e.target.closest('button[data-act]');if(!b)return;b.disabled=true;
  try{const r=await fetch('/ack',{method:'POST',headers:{'Content-Type':'application/json','X-Dashboard':'1'},body:JSON.stringify({ids:JSON.parse(b.dataset.ids),action:b.dataset.act,hours:+b.dataset.h||0})});if(!r.ok)throw new Error('HTTP '+r.status)}
  catch(err){$('upd').innerHTML='<span class="err">Aktion fehlgeschlagen: '+esc(err.message)+'</span>'}lastAlerts='';tick()});
+const openDev=e=>{const tr=e.target.closest('tr[data-mac]');if(!tr||e.target.closest('a'))return;if(e.type=='keydown'&&e.key!='Enter')return;location.hash='dev='+tr.dataset.mac};
+$('devs').addEventListener('click',openDev);$('devs').addEventListener('keydown',openDev);
 document.addEventListener('toggle',e=>{if(e.target.classList&&e.target.classList.contains('muted'))mutedOpen=e.target.open},true);
-let last=null;
-async function tick(){try{const r=await fetch('/data',{cache:'no-store'}),d=await r.json();if(d.error)throw new Error(d.error);last=d;render(d)}
- catch(e){$('upd').innerHTML='<span class="err">Keine Daten von der FRITZ!Box: '+esc(e.message)+'</span>'}}
-addEventListener('resize',()=>last&&render(last));tick();setInterval(tick,5000);
+const devMac=()=>(location.hash.match(/^#dev=([0-9A-Fa-f:]{17})$/)||[])[1];
+let last=null,lastDev=null;
+async function tick(){const mac=devMac();
+ try{const r=await fetch('/data',{cache:'no-store'}),d=await r.json();if(d.error)throw new Error(d.error);last=d;render(d)}
+ catch(e){$('upd').innerHTML='<span class="err">Keine Daten von der FRITZ!Box: '+esc(e.message)+'</span>'}
+ if(mac){try{const r=await fetch('/device?mac='+encodeURIComponent(mac),{cache:'no-store'}),x=await r.json();if(mac!=devMac())return;
+   if(x.error)$('s-detail').innerHTML='<div class="dhead"><a class="btn" href="#s-dev" style="--b:var(--sk)">← Alle Geräte</a></div><p class="err">'+esc(x.error)+'</p>';else{lastDev=x;renderDetail(x)}}
+  catch(e){$('upd').innerHTML='<span class="err">Gerätedaten nicht verfügbar: '+esc(e.message)+'</span>'}}}
+addEventListener('hashchange',()=>{lastDev=null;const mac=devMac();$('s-detail').hidden=!mac;$('overview').hidden=!!mac;
+ if(mac){$('s-detail').innerHTML='<div class="dhead sub">Lade Gerät …</div>';scrollTo(0,0)}else if(location.hash.length>1)document.getElementById(location.hash.slice(1))?.scrollIntoView();tick()});
+addEventListener('resize',()=>{last&&render(last);devMac()&&lastDev&&renderDetail(lastDev)});dispatchEvent(new HashChangeEvent('hashchange'));setInterval(tick,5000);
 </script></body></html>"""
 
 
@@ -547,7 +645,7 @@ def cached_state():
     with _lock:  # several open tabs must not multiply the load on the FRITZ!Box
         if time.time() - _cache["t"] > 4:
             data = build_state()
-            data["thr_util"] = UTIL_WARN
+            data["thr_util"], data["thr_rssi"] = UTIL_WARN, RSSI_WARN
             _cache["data"], _cache["t"] = data, time.time()
         return _cache["data"]
 
@@ -578,7 +676,27 @@ def current_state():
         alerts, status = apply_acks(state["alerts"], acks, time.time())
         if json.dumps(acks, sort_keys=True) != before:
             save_acks(acks)
-    return dict(state, alerts=alerts, status=status, devices=apply_device_states(state["devices"], alerts))
+    out = dict(state, alerts=alerts, status=status, devices=apply_device_states(state["devices"], alerts))
+    del out["details"]
+    return out
+
+
+def device_view(mac):
+    """Everything known about one device: list entry, details, 24 h link history and events."""
+    state = current_state()
+    d = next((x for x in state["devices"] if x["mac"] == mac), None)
+    if d is None:
+        return None
+    slow = _slow["data"]
+    num = lambda v: None if v in ("", "255", None) else int(v)
+    mbit = lambda v: round(int(v) / 1000) if v and int(v) > 1000 else None
+    hist = [[round(r["ts"] * 1000), num(r["rssi_dbm"]), num(r["snr_db"]), mbit(r["rate_tx_kbit"]), mbit(r["rate_rx_kbit"]),
+             "Repeater" if "repeater" in r["ap"].lower() else "FRITZ!Box", "5" if "5G" in r["band"] else "2.4"]
+            for r in slow["links"] if r["mac"] == mac]
+    events = [{"ts": round(e["ts"] * 1000), "ap": e["ap"], "band": band_label(e["band"]), "kind": e["kind"]}
+              for e in slow["events"] if e["mac"] == mac][::-1]
+    return dict(d, detail=cached_state()["details"].get(mac, {}), hist=hist, events=events, time=state["time"],
+                t_axis=state["t_axis"], thr_rssi=state["thr_rssi"])
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -610,9 +728,16 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        if self.path == "/data":
+        url = urllib.parse.urlsplit(self.path)
+        if url.path in ("/data", "/device"):
             try:
-                body = json.dumps(current_state()).encode()
+                if url.path == "/data":
+                    data = current_state()
+                else:
+                    mac = urllib.parse.parse_qs(url.query).get("mac", [""])[0].upper()
+                    data = device_view(mac) if re.fullmatch(r"[0-9A-F]{2}(:[0-9A-F]{2}){5}", mac) else None
+                    data = data or {"error": "Gerät nicht in der Liste"}
+                body = json.dumps(data).encode()
             except Exception as e:  # keep the page alive when the box is briefly unreachable
                 body = json.dumps({"error": f"{type(e).__name__}: {e}"}).encode()
             ctype = "application/json"
@@ -645,7 +770,8 @@ def selftest():
     rows = [{"time": str(k), "ts": 1000 + k, "mac": "00:00:5E:00:53:01"} for k in range(10)]
     assert always_on("00:00:5E:00:53:01", rows, 0)[0]
     assert not always_on("00:00:5E:00:53:01", rows[:7], 0)[0]           # too few samples
-    assert not always_on("02:00:00:00:00:01", rows, 0)[0]               # phones (random MAC) never count
+    assert always_on("02:00:00:00:00:01", rows, 0) == (False, 0.0)     # phones (random MAC) never count
+    assert always_on("02:00:00:00:00:01", [dict(r, mac="02:00:00:00:00:01") for r in rows], 0) == (False, 1.0)  # but keep their share
     rows += [{"time": str(k), "ts": 1000 + k, "mac": "AA:00:00:00:00:01"} for k in range(10, 20)]
     assert not always_on("00:00:5E:00:53:01", rows, 0)[0]               # online in only half the samples
     base = {"name": "X", "mac": "00:00:5E:00:53:01", "always_on": True, "share": 0.98, "online": True, "drops_1h": 0, "rssi": -60, "ap": "Repeater", "band": "2.4"}
@@ -670,9 +796,17 @@ def selftest():
     assert st == "ok"
     dev = lambda n, als: {"name": n, "online": True, "band": "5", "alerts": als}
     devs = apply_device_states([dev("A", [A("x", "crit")]), dev("B", [A("y", "warn")]), dev("C", [])],
-                               [dict(A("x", "crit"), state="muted"), dict(A("y", "warn"), state="active")])
+                               [dict(A("x", "crit"), state="muted", until=5000), dict(A("y", "warn"), state="active")])
     assert [(d["name"], d["level"], d["quiet"]) for d in devs] == [("B", 1, None), ("A", -1, "muted"), ("C", -1, None)], devs
-    assert devs[1]["quiet_level"] == 2
+    assert devs[1]["quiet_level"] == 2 and devs[1]["alerts"][0]["until"] == 5000  # mute end reaches the detail page
+    assert wifi_gen(["g", "n", "ax"]) == "Wi-Fi 6" and wifi_gen(["b", "g"]) == "älter als Wi-Fi 4" and wifi_gen([]) is None
+    off = device_detail("02:00:00:00:00:01", {}, {}, {}, {}, None)    # offline device: no mesh data at all
+    assert off["random_mac"] and off["snr"] is None and off["traffic"] is None and off["streams"] is None
+    on = device_detail("00:00:5E:00:53:01", {"ip": "192.0.2.5", "static_dhcp": "1", "firstused": "1700000000"}, {},
+                       {"supported_streams_rx": [["20 MHz", 2], ["40 MHz", 2], ["80 MHz", 0]], "phymodes": ["n", "ac"]},
+                       {"rx_rsni": 255, "cur_availability_tx": 92, "max_data_rate_tx": 866000}, None)
+    assert (on["streams"], on["width"], on["wifi"], on["snr"], on["avail"], on["max_down"], on["static_ip"], on["first_seen"]) \
+        == (2, "40 MHz", "Wi-Fi 5", None, 92, 866, True, 1700000000000), on
     print("selftest ok")
 
 

@@ -14,6 +14,10 @@ and recent WLAN events, and raises alerts early:
 - DSL / internet interruptions, radar interruptions on 5 GHz
 - stopped history collection, available FRITZ!OS updates
 
+Clicking a device opens its detail page: connection, signal and noise margin, negotiated and
+maximum rates, Wi-Fi standard, streams, latency, addresses, 24 h signal and rate history and
+all WLAN events of the device.
+
 Alerts can be acknowledged or muted for 1 h / 24 h; they re-arm automatically when the
 problem gets worse, when a mute expires, or when a resolved problem comes back.
 
