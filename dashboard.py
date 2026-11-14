@@ -36,6 +36,8 @@ ACK_FILE = os.path.join(DIR, "acks.json")
 CONFIG_FILE = os.path.join(DIR, "config.local.json")
 
 LEVEL = {"info": 0, "warn": 1, "crit": 2}
+# box "net" log lines that mean the internet was down; IPv4 line only, its IPv6 twin would list the same outage twice
+NET_ISSUE = re.compile("fehlgeschlagen|Synchronisierung beginnt|unterbrochen|nicht verfügbar|Internetverbindung wurde getrennt")
 EV = re.compile(r"^(?:\[(?P<rep>[^\]]+)\] )?WLAN-Gerät (?P<what>angemeldet|hat sich abgemeldet|wurde abgemeldet) "
                 r"\((?P<band>2,4|5) GHz\)(?:, [\d.]+ Mbit/s)?, (?P<name>.+?), IP [^,]*, MAC (?P<mac>[0-9A-F:]{17})")
 
@@ -252,7 +254,7 @@ def slow_data():
             "aps": aps, "links": links, "events": events,
             "radar": [e["msg"] for e in wlan if re.search("Radar|bevorrechtigten Nutzer", e["msg"]) and when(e) >= now - 86400],
             "net_issues": [f'{e["date"]} {e["time"]} {e["msg"]}' for e in net
-                           if re.search("fehlgeschlagen|Synchronisierung beginnt|unterbrochen|nicht verfügbar", e["msg"]) and when(e) >= now - 86400],
+                           if NET_ISSUE.search(e["msg"]) and when(e) >= now - 86400],
             "dsl": soap("/upnp/control/wandslifconfig1", "urn:dslforum-org:service:WANDSLInterfaceConfig:1", "GetInfo"),
             "ip": soap("/upnp/control/wanipconnection1", "urn:dslforum-org:service:WANIPConnection:1", "GetStatusInfo"),
             "ui": soap("/upnp/control/userif", "urn:dslforum-org:service:UserInterface:1", "GetInfo"),
@@ -1139,6 +1141,9 @@ def selftest():
     assert merge_new([L("22:24:29")], [L("22:24:30"), L("22:24:39"), L("22:24:43", "other")]) == [L("22:24:39"), L("22:24:43", "other")]  # ±1 s shift
     assert merge_new([], [L("22:01:30"), L("22:01:32")]) == [L("22:01:30"), L("22:01:32")]  # same read: real back-and-forth
     assert merge_new([L("22:01:30")], [L("22:01:30"), L("22:01:32")]) == [L("22:01:32")]   # one known line absorbs one entry
+    assert NET_ISSUE.search("Internetverbindung wurde getrennt.") and NET_ISSUE.search("DSL-Synchronisierung beginnt (Training).")
+    assert not NET_ISSUE.search("Internetverbindung IPv6 wurde getrennt, Präfix nicht mehr gültig.")
+    assert not NET_ISSUE.search("Internetverbindung wurde erfolgreich hergestellt. IP-Adresse: 192.0.2.1")
     print("selftest ok")
 
 
