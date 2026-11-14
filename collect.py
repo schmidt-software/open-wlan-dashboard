@@ -12,6 +12,7 @@ BOX = "192.168.178.1"
 USER = "claude"
 PW = open(os.path.expanduser("~/.claude_fritz")).readline().strip()
 DIR = os.path.dirname(os.path.abspath(__file__))
+JITTER_S = 2  # the box shows the same log line with a time ±1 s off between reads (seen after a restart)
 
 
 def login():
@@ -25,6 +26,28 @@ def login():
     if sid == "0000000000000000":
         raise SystemExit("login failed")
     return sid
+
+
+def log_ts(e):
+    return datetime.datetime.strptime(f'{e["date"]} {e["time"]}', "%d.%m.%y %H:%M:%S").timestamp()
+
+
+def merge_new(known, entries):
+    """Entries from one box read that are not in `known` yet. The box may show a line again with its time ±1 s
+    off, so each known line absorbs at most one entry with the same text within JITTER_S seconds. Lines of the
+    same read are never duplicates of each other (a device can roam back and forth within seconds)."""
+    idx = {}
+    for e in known:
+        idx.setdefault(e["msg"], []).append(log_ts(e))
+    new = []
+    for e in entries:
+        t, cands = log_ts(e), idx.get(e["msg"], [])
+        hit = min((k for k in cands if abs(k - t) <= JITTER_S), key=lambda k: abs(k - t), default=None)
+        if hit is None:
+            new.append(e)
+        else:
+            cands.remove(hit)
+    return new
 
 
 def wlan_log(sid):
@@ -67,17 +90,16 @@ def main():
         urllib.request.urlopen(f"http://{BOX}/login_sid.lua?version=2&logout=1&sid={sid}", timeout=10)
 
     ev_path = os.path.join(DIR, "events.jsonl")
-    seen = set()
+    known = []
     if os.path.exists(ev_path):
         with open(ev_path) as f:
-            seen = {json.loads(line)["key"] for line in f}
-    new = 0
+            known = [json.loads(line) for line in f]
+    fresh = merge_new(known, reversed(entries))  # oldest first
+    new = len(fresh)
     with open(ev_path, "a") as f:
-        for e in reversed(entries):  # oldest first
+        for e in fresh:
             key = f'{e["date"]} {e["time"]} {e["msg"]}'
-            if key not in seen:
-                seen.add(key); new += 1
-                f.write(json.dumps({"key": key, "date": e["date"], "time": e["time"], "msg": e["msg"], "collected": now}, ensure_ascii=False) + "\n")
+            f.write(json.dumps({"key": key, "date": e["date"], "time": e["time"], "msg": e["msg"], "collected": now}, ensure_ascii=False) + "\n")
 
     links, aps = mesh_links()
     for fname, header, rows in (("links.csv", ["time", "device", "mac", "ap", "band", "rssi_dbm", "snr_db", "rate_rx_kbit", "rate_tx_kbit"], links),

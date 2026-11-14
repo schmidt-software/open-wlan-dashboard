@@ -13,6 +13,7 @@ import xml.etree.ElementTree as ET
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import live  # FRITZ!Box access helpers: login, REST api, mesh, landevices, mbit, last, own_ip
+from collect import merge_new  # same duplicate rule as the collector
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 PORT = 8765
@@ -242,9 +243,8 @@ def slow_data():
         now = time.time()
         aps, links, hist_events = read_history(now - 86400)
         wlan, net, sys_log = box_log("wlan"), box_log("net"), box_log("sys")
-        raw = {f'{e["date"]} {e["time"]} {e["msg"]}': (e["date"], e["time"], e["msg"]) for e in hist_events}
-        raw.update({f'{e["date"]} {e["time"]} {e["msg"]}': (e["date"], e["time"], e["msg"]) for e in wlan})
-        events = classify([p for p in (parse_event(*v) for v in raw.values()) if p and p["ts"] >= now - 86400])
+        merged = hist_events + merge_new(hist_events, reversed(wlan))
+        events = classify([p for p in (parse_event(e["date"], e["time"], e["msg"]) for e in merged) if p and p["ts"] >= now - 86400])
         events.sort(key=lambda e: e["ts"])
         def when(e):
             return dt.datetime.strptime(f'{e["date"]} {e["time"]}', "%d.%m.%y %H:%M:%S").timestamp()
@@ -1128,6 +1128,10 @@ def selftest():
     r = reboot_alert(1e9, [1e9 + 300], 1e9 + 600)                        # report sent after the boot: crash
     assert r["level"] == "warn" and "Absturz" in r["detail"]
     assert reboot_alert(1e9, [1e9 - 300], 1e9 + 600)["level"] == "info"  # older report belongs to an earlier boot
+    L = lambda t, m="WLAN-Gerät hat sich abgemeldet (2,4 GHz), X": {"date": "14.11.26", "time": t, "msg": m}
+    assert merge_new([L("22:24:29")], [L("22:24:30"), L("22:24:39"), L("22:24:43", "other")]) == [L("22:24:39"), L("22:24:43", "other")]  # ±1 s shift
+    assert merge_new([], [L("22:01:30"), L("22:01:32")]) == [L("22:01:30"), L("22:01:32")]  # same read: real back-and-forth
+    assert merge_new([L("22:01:30")], [L("22:01:30"), L("22:01:32")]) == [L("22:01:32")]   # one known line absorbs one entry
     print("selftest ok")
 
 
