@@ -32,6 +32,7 @@ ALWAYS_ON_SHARE, ALWAYS_ON_MIN_SAMPLES = 0.9, 8
 COLLECTOR_STALE_MIN = 40
 REBOOT_ALERT_H = 24    # show a box restart this long
 ROAM_WINDOW_S = 10
+RECONNECT_WINDOW_S = 600   # a logoff is a drop only if the device is back this soon; longer = standby or switched off
 ACK_FORGET_S = 600     # a confirmation is dropped once its problem has been gone this long
 ACK_FILE = os.path.join(DIR, "acks.json")
 # Local, git-ignored settings (contains MAC addresses), e.g. {"never_always_on": ["AA:BB:CC:DD:EE:FF"]}:
@@ -59,7 +60,8 @@ def parse_event(date, clock, msg):
 
 
 def classify(events):
-    """Mark each logoff as 'roam' (re-login at another radio within the window) or 'drop'."""
+    """Mark each logoff as 'roam' (re-login at another radio within the roam window), 'drop' (back within the
+    reconnect window) or 'off' (gone longer: standby, switched off, out of range)."""
     by_mac = {}
     for e in events:
         by_mac.setdefault(e["mac"], []).append(e)
@@ -70,7 +72,8 @@ def classify(events):
                 continue
             moved = any(o["up"] and abs(o["ts"] - e["ts"]) <= ROAM_WINDOW_S and (o["ap"], o["band"]) != (e["ap"], e["band"])
                         for o in evs)
-            e["kind"] = "roam" if moved else "drop"
+            back = any(o["up"] and 0 <= o["ts"] - e["ts"] <= RECONNECT_WINDOW_S for o in evs)
+            e["kind"] = "roam" if moved else "drop" if back else "off"
     return events
 
 
@@ -591,11 +594,12 @@ def selftest():
           parse_event("13.11.26", "22:00:01", "[fritzrepeaterschlafzimmer] WLAN-Gerät angemeldet (5 GHz), 1201 Mbit/s, PC-02, IP 192.168.178.118, MAC 02:00:00:00:00:01."),
           parse_event("13.11.26", "22:10:00", "[fritzrepeaterschlafzimmer] WLAN-Gerät hat sich abgemeldet (2,4 GHz), PC-00, IP 192.168.178.29, MAC 00:00:5E:00:53:01."),
           parse_event("13.11.26", "22:10:02", "[fritzrepeaterschlafzimmer] WLAN-Gerät angemeldet (2,4 GHz), 72 Mbit/s, PC-00, IP 192.168.178.29, MAC 00:00:5E:00:53:01."),
-          parse_event("13.11.26", "22:20:00", "WLAN-Gerät hat sich abgemeldet (2,4 GHz), VR200-EG, IP ---, MAC 00:00:5E:00:53:02.")]
+          parse_event("13.11.26", "22:20:00", "WLAN-Gerät hat sich abgemeldet (2,4 GHz), VR200-EG, IP ---, MAC 00:00:5E:00:53:02."),
+          parse_event("13.11.26", "22:31:00", "WLAN-Gerät angemeldet (2,4 GHz), 72 Mbit/s, VR200-EG, IP ---, MAC 00:00:5E:00:53:02.")]
     assert all(ev), "log line not parsed"
     assert ev[1]["ap"] == "Repeater" and ev[0]["ap"] == "FRITZ!Box" and ev[2]["band"] == "2.4" and ev[1]["up"]
     kinds = [e["kind"] for e in classify(ev)]
-    assert kinds == ["roam", "login", "drop", "login", "drop"], kinds  # box->repeater is roaming; same-radio relogin is a drop
+    assert kinds == ["roam", "login", "drop", "login", "off", "login"], kinds  # box->repeater is roaming; quick relogin is a drop; back after 11 min is standby
     assert is_random_mac("02:00:00:00:00:01") and not is_random_mac("00:00:5E:00:53:01")
     rows = [{"time": str(k), "ts": 1000 + k, "mac": "00:00:5E:00:53:01"} for k in range(10)]
     assert always_on("00:00:5E:00:53:01", rows, 0)[0]

@@ -7,7 +7,8 @@ It shows the internet line, channel load and traffic per band, link quality per 
 and recent WLAN events, and raises alerts early:
 
 - always-on devices going offline
-- reconnect loops (roaming between box and repeater is not counted)
+- reconnect loops (roaming between box and repeater is not counted, nor is a device that stays away
+  longer than 10 minutes, e.g. in standby)
 - weak signal of always-on devices
 - crowded or noisy channels
 - weak repeater uplink
@@ -175,7 +176,7 @@ and any other value would show it there again.
 ## Tuning
 
 Alert thresholds are constants at the top of `dashboard.py` (channel load, noise, signal,
-reconnects per hour, repeater uplink, DSL noise margin, "always-on" detection).
+reconnects per hour and the reconnect window, repeater uplink, DSL noise margin, "always-on" detection).
 
 Devices that should never count as always-on (e.g. a game console or a tablet that is often
 switched off) go into `config.local.json` next to `dashboard.py`; they then raise no offline
