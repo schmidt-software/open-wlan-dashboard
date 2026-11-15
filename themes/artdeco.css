@@ -1,0 +1,27 @@
+/* theme: Art déco */
+/* Black and gold: sunburst rays, double gold frames with stepped corners, slim geometric capitals. */
+html[data-theme="artdeco"]{
+ --big-fit:20.1cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#0d0d0d;--on:#0d0d0d;--panel:#151412;--o1:#d4af37;--o2:#e8d08a;--pe:#c9a14a;--li:#e8d08a;--pw:#bfa060;--sk:#f0dca0;--tan:#a89060;
+ --tx:#f3e9d2;--tx2:#d9c9a3;--mut:#b8a77d;--grid:rgba(212,175,55,.14);--axis:rgba(212,175,55,.5);--s1:#e8d08a;--s2:#ffffff;--good:#6fcf8f;--warn:#ffd23f;--crit:#ff4a3d;--info:#e8d08a;
+ --font:'Jost','Futura',sans-serif;--head:'Poiret One','Jost',sans-serif;
+ --step:polygon(10px 0,calc(100% - 10px) 0,calc(100% - 10px) 4px,calc(100% - 4px) 4px,calc(100% - 4px) 10px,100% 10px,100% calc(100% - 10px),calc(100% - 4px) calc(100% - 10px),
+  calc(100% - 4px) calc(100% - 4px),calc(100% - 10px) calc(100% - 4px),calc(100% - 10px) 100%,10px 100%,10px calc(100% - 4px),4px calc(100% - 4px),4px calc(100% - 10px),0 calc(100% - 10px),
+  0 10px,4px 10px,4px 4px,10px 4px);
+ background:repeating-conic-gradient(from -90deg at 50% -5%,rgba(212,175,55,.07) 0 1.5deg,transparent 1.5deg 6deg) fixed,#0d0d0d;  /* sunburst */
+ & body{background:transparent;letter-spacing:.04em}
+ & .elbow{background:linear-gradient(135deg,#d4af37,#8a6a1c);color:#0d0d0d;border-radius:0;clip-path:var(--step);min-height:0;padding:16px;justify-content:center;font-family:var(--head);font-size:18px}
+ & .pill{background:#0d0d0d;color:#d4af37;border:1px solid #d4af37;border-radius:0;outline:1px solid #d4af37;outline-offset:-5px;border-left:6px solid var(--c);min-height:62px}
+ & .pill b{color:var(--tx)}& .fill{background:repeating-linear-gradient(90deg,transparent 0 10px,rgba(212,175,55,.35) 10px 11px);border:1px solid #d4af37}
+ & .main>.bar{height:3px}& .main>.bar i{background:#d4af37 !important}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 6px 12px 22px}
+ & h1{font-weight:400;letter-spacing:.24em;font-size:clamp(28px,4vw,50px);background:linear-gradient(#f8e7a8,#d4af37 55%,#8a6a1c);-webkit-background-clip:text;background-clip:text;color:transparent}
+ & .sub{letter-spacing:.24em}& .hb{color:#e8d08a;font-weight:400;letter-spacing:.3em;font-size:20px}
+ & .hb::before{width:12px;height:12px;border-radius:0;background:#d4af37;transform:rotate(45deg)}  /* diamond */
+ & .hb::after{height:5px;border-radius:0;background:none;border-top:1px solid #d4af37;border-bottom:1px solid #d4af37}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #d4af37;border-radius:0;outline:1px solid #d4af37;outline-offset:-6px}
+ & .kpi{clip-path:var(--step);text-align:center;padding:14px}& .kpi h3{color:#d4af37;letter-spacing:.3em;font-size:12px}& .big{font-family:var(--head);color:#f8e7a8}
+ & .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:0;background:transparent;color:#d4af37;border:1px solid #d4af37;letter-spacing:.2em}& .btn:hover,& .btn:focus-visible{background:#d4af37;color:#0d0d0d;filter:none}
+ & th{color:#d4af37;letter-spacing:.24em}& td{background:var(--panel);border-top:1px solid rgba(212,175,55,.25)}& td:first-child{border-radius:0;border-left-width:6px}& td:last-child{border-radius:0}
+ & .log .t,& .info dt{color:#d4af37}& .tip{border-radius:0;border:1px solid #d4af37;background:#0d0d0d}& .themesel select{border-radius:0;border-color:#d4af37;background:#0d0d0d}
+}

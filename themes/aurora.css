@@ -1,0 +1,32 @@
+/* theme: Polarlicht */
+/* Night sky with stars and slowly moving green-violet northern lights, icy glass cards. */
+@keyframes aurora-drift{0%,100%{transform:translateX(-6%) scaleY(1)}50%{transform:translateX(6%) scaleY(1.15)}}
+html[data-theme="aurora"]{
+ --big-fit:18cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#050a1a;--on:#050a1a;--panel:rgba(12,22,48,.7);--o1:#5affc8;--o2:#a78bff;--pe:#6fd6ff;--li:#5affc8;--pw:#a78bff;--sk:#8ef0ff;--tan:#d6c8ff;
+ --tx:#eaf6ff;--tx2:#bcd6f0;--mut:#93b0d0;--grid:rgba(90,255,200,.1);--axis:rgba(90,255,200,.35);--s1:#5affc8;--s2:#a78bff;--good:#5affc8;--warn:#ffe14d;--crit:#ff5a6e;--info:#6fd6ff;
+ --font:'Quicksand',sans-serif;--head:'Quicksand',sans-serif;
+ background:radial-gradient(circle,rgba(255,255,255,.8) 0 1px,transparent 1.5px) 0 0/97px 89px,radial-gradient(circle,rgba(255,255,255,.5) 0 1px,transparent 1.5px) 40px 30px/151px 137px,#050a1a;
+ & body{background:transparent;font-weight:500}
+ & body::before{content:"";position:fixed;left:-10%;right:-10%;top:-10%;height:60vh;z-index:-1;pointer-events:none;filter:blur(30px);
+  background:radial-gradient(ellipse at 30% 60%,rgba(0,255,170,.45),transparent 55%),radial-gradient(ellipse at 70% 40%,rgba(140,90,255,.45),transparent 55%),
+   radial-gradient(ellipse at 50% 80%,rgba(0,200,255,.25),transparent 60%);animation:aurora-drift 24s ease-in-out infinite;will-change:transform}
+ & .elbow{background:linear-gradient(160deg,#5affc8,#a78bff);color:#050a1a;border-radius:20px;min-height:0;padding:16px;justify-content:center;font-weight:700}
+ & .pill{background:var(--panel);color:var(--c);border:1px solid var(--c);border-radius:16px;backdrop-filter:blur(8px);min-height:60px;font-weight:700}& .pill b{color:var(--tx)}
+ & .fill{background:linear-gradient(rgba(90,255,200,.25),transparent);border-radius:20px}
+ & .main>.bar{height:3px}& .main>.bar i{border-radius:2px;filter:blur(.5px)}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{font-weight:700;text-transform:none;letter-spacing:.06em;font-size:clamp(28px,4vw,48px);background:linear-gradient(90deg,#5affc8,#8ef0ff,#a78bff);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.08em}
+ & .hb{color:var(--c);text-transform:none;letter-spacing:.08em;font-weight:700}
+ & .hb::before{content:"✦";width:auto;height:auto;background:none;color:var(--c);font-size:18px}
+ & .hb::after{height:2px;border-radius:2px;background:linear-gradient(90deg,#5affc8,#a78bff,transparent)}
+ & .kpi,& .alert{background:var(--panel);border:1px solid rgba(160,255,230,.22);border-radius:16px;backdrop-filter:blur(10px)}
+ & .kpi h3{text-transform:none;letter-spacing:.06em;font-weight:700}& .big{font-weight:700}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:999px;background:transparent;color:var(--b);border:1px solid var(--b);text-transform:none;font-weight:700}& .btn:hover,& .btn:focus-visible{background:var(--b);color:var(--on);filter:none}
+ & th{color:#8ef0ff;text-transform:none;letter-spacing:.06em}& td{background:var(--panel)}& td:first-child{border-radius:14px 0 0 14px}& td:last-child{border-radius:0 14px 14px 0}
+ & .st,& .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em}& .log .t,& .info dt{color:#5affc8}
+ & .tip{border-radius:12px;border-color:#5affc8;background:#050a1a}& .themesel select{border-color:#5affc8;border-radius:999px}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="aurora"] body::before{animation:none}}

@@ -1,5 +1,6 @@
 /* theme: Woodworker */
 html[data-theme="woodworker"]{
+ --big-fit:19.5cqi;  /* big numbers: max share of the card width for this font */
  --bg:#e3c99c;--on:#fdf6e8;--panel:#f7ead0;--o1:#5b3a1e;--o2:#8a4b2a;--pe:#9b3d23;--li:#5e6b2e;--pw:#3f5566;--sk:#7a5230;--tan:#6b5a3a;
  --on-warn:#2b1a0e;--tx:#2b1a0e;--tx2:#4f3a26;--mut:#6a5134;--grid:#e2cfa8;--axis:#a88a5e;--s1:#3f5566;--s2:#b5532a;--good:#3d6b2a;--thr:#8f5200;--warn:#e9b81c;--crit:#a3241b;--info:#3f5566;
  --font:'Bitter',Georgia,serif;--head:'Zilla Slab',Rockwell,serif;
@@ -9,7 +10,7 @@ html[data-theme="woodworker"]{
  & .pill{border-radius:4px;background:repeating-linear-gradient(90deg,rgba(0,0,0,.10) 0 2px,transparent 2px 7px),var(--c);box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)}
  & .fill{border-radius:4px;background:repeating-linear-gradient(90deg,rgba(0,0,0,.1) 0 2px,transparent 2px 9px),#a87c4a}
  & .bar{height:16px}& .bar i{border-radius:3px}& .inner::before,& .inner::after{display:none}& .inner{padding:16px 6px 12px 22px}
- & h1{color:#4a2c12;text-shadow:0 1px 0 rgba(255,255,255,.45),0 0 8px rgba(80,40,10,.3);letter-spacing:.04em}& .big{font-size:32px}
+ & h1{color:#4a2c12;text-shadow:0 1px 0 rgba(255,255,255,.45),0 0 8px rgba(80,40,10,.3);letter-spacing:.04em}& .big{--big:32px}
  & .alarm{border-radius:6px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.25)}
  & .hb{color:var(--tx)}& .hb::before{width:22px;border-radius:3px}
  & .hb::after{height:14px;border-radius:2px;box-shadow:inset 0 0 0 1px #8a6a10;  /* measuring tape */

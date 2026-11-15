@@ -1,5 +1,6 @@
 /* theme: Futuristic */
 html[data-theme="futuristic"]{
+ --big-fit:15.2cqi;  /* big numbers: max share of the card width for this font */
  --bg:#05070f;--on:#05070f;--panel:rgba(20,32,64,.45);--o1:#00e5ff;--o2:#9b7bff;--pe:#ff4fd8;--li:#00e5ff;--pw:#7c8cff;--sk:#39ffb0;--tan:#ffd166;
  --tx:#e6f7ff;--tx2:#9fb6d9;--mut:#7189ad;--grid:rgba(0,229,255,.08);--axis:rgba(0,229,255,.28);--s1:#00e5ff;--s2:#ff4fd8;--good:#39ffb0;--warn:#ffe14d;--crit:#ff3b4e;--info:#7c8cff;
  --font:'Rajdhani',sans-serif;--head:'Orbitron',sans-serif;
@@ -20,7 +21,7 @@ html[data-theme="futuristic"]{
  & .hb::after{height:1px;border-radius:0;background:linear-gradient(90deg,var(--c),transparent);opacity:.7}
  & .kpi,& .alert,& td{backdrop-filter:blur(10px)}
  & .kpi{border:1px solid rgba(255,255,255,.08);border-top:2px solid var(--c);border-radius:16px;box-shadow:0 10px 30px -14px var(--c)}
- & .kpi h3{font-size:11px}& .big{font-size:30px}
+ & .kpi h3{font-size:11px}& .big{--big:30px}
  & .alert{border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden}
  & .alert .tag{border-radius:0;width:6px;box-shadow:0 0 12px var(--c)}
  & .alert .end{width:3px;border-radius:0;box-shadow:0 0 10px var(--c)}

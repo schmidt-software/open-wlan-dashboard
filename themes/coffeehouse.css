@@ -1,0 +1,27 @@
+/* theme: Kaffeehaus */
+/* Cream and espresso brown, coffee ring stains, menu-card typography with dotted leaders. */
+html[data-theme="coffeehouse"]{
+ --big-fit:18.7cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#f3e9dc;--on:#fffaf3;--on-warn:#2b1a12;--panel:#fffaf3;--o1:#4a2c1d;--o2:#a8632a;--pe:#4a2c1d;--li:#8a3b1f;--pw:#3f6b5a;--sk:#6b4a3a;--tan:#7a5a40;
+ --tx:#2b1a12;--tx2:#4e3426;--mut:#6b4f3c;--grid:#eadccb;--axis:#2b1a12;--s1:#4a2c1d;--s2:#a8632a;--good:#3f6b3a;--thr:#8a5a00;--warn:#f2c200;--crit:#a8261c;--info:#4a2c1d;
+ --font:'Lora',Georgia,serif;--head:'Abril Fatface',Georgia,serif;
+ background:radial-gradient(circle at 88% 18%,transparent 46px,rgba(120,70,30,.18) 47px 50px,transparent 51px) fixed,  /* coffee rings */
+  radial-gradient(circle at 6% 82%,transparent 38px,rgba(120,70,30,.14) 39px 41px,transparent 42px) fixed,#f3e9dc;
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#4a2c1d;color:#f3e9dc;border-radius:8px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.04em}
+ & .pill{border-radius:6px;min-height:60px;text-transform:none}& .fill{background:linear-gradient(#a8632a,#4a2c1d);border-radius:6px;opacity:.35}
+ & .main>.bar{height:6px}& .main>.bar i{background:#4a2c1d !important;border-radius:3px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#4a2c1d;font-weight:400;text-transform:none;letter-spacing:.02em;font-size:clamp(32px,4.6vw,58px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em;font-style:italic}
+ & .hb{color:#2b1a12;font-weight:400;text-transform:none;letter-spacing:.04em;font-size:26px}
+ & .hb::before{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#6b3a1f 0 6px,transparent 7px);border:3px solid var(--c)}  /* cup from above */
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:3px dotted #4a2c1d}  /* menu leaders */
+ & .kpi,& .alert{background:var(--panel);border:1px solid #4a2c1d;border-radius:4px;box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 4px #c9a988}
+ & .kpi{border-left:1px solid #4a2c1d;text-align:center}& .kpi h3{color:var(--c);text-transform:none;letter-spacing:.08em;font-family:var(--font);font-weight:600;font-style:italic}
+ & .big{font-family:var(--head);font-weight:400}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:4px;text-transform:none;letter-spacing:.04em}
+ & th{color:#4a2c1d;text-transform:none;letter-spacing:.06em;font-style:italic}& td{background:var(--panel);border-bottom:1px dotted #c9a988}
+ & td:first-child{border-radius:4px 0 0 4px}& td:last-child{border-radius:0 4px 4px 0}& .st{color:#2b1a12;text-transform:none}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em}& .log .t,& .info dt{color:#8a3b1f}
+ & .tip{border-radius:4px;border-color:#4a2c1d;background:var(--panel)}& .themesel select{background:var(--panel);border-color:#4a2c1d}
+}

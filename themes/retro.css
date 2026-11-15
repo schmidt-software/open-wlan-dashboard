@@ -1,5 +1,6 @@
 /* theme: Retro 8Bit */
 html[data-theme="retro"]{
+ --big-fit:10.7cqi;  /* big numbers: max share of the card width for this font */
  --bg:#000;--on:#000;--panel:#1d2b53;--o1:#ffa300;--o2:#ffec27;--pe:#ff77a8;--li:#29adff;--pw:#a99ec7;--sk:#00e436;--tan:#ffccaa;
  --tx:#fff1e8;--tx2:#c2c3c7;--mut:#a99ec7;--grid:#1d2b53;--axis:#5f574f;--s1:#29adff;--s2:#ff004d;--good:#00e436;--warn:#ffec27;--crit:#ff3030;--info:#29adff;
  --font:'Press Start 2P',monospace;--head:'Press Start 2P',monospace;
@@ -14,7 +15,7 @@ html[data-theme="retro"]{
  & .hb{font-size:12px;letter-spacing:0;gap:10px}& .hb::before{width:16px;height:16px}
  & .hb::after{height:4px;background:repeating-linear-gradient(90deg,var(--c) 0 8px,transparent 8px 12px)}
  & .kpi{border:4px solid var(--c);padding:10px 12px}
- & .kpi h3{font-size:8px;letter-spacing:0;line-height:1.6}& .big{font-size:18px;line-height:1.5;margin:4px 0}& .big small{font-size:9px}& .sm{font-size:8px;line-height:1.8}
+ & .kpi h3{font-size:8px;letter-spacing:0;line-height:1.6}& .big{--big:18px;line-height:1.5;margin:4px 0}& .big small{font-size:9px}& .sm{font-size:8px;line-height:1.8}
  & .alert{border:4px solid var(--c);margin:10px 0}
  & .alert b{font-size:10px;line-height:1.6}& .alert span{font-size:8px;line-height:1.8}& .alert .end{display:none}
  & .btn{font:8px var(--font);letter-spacing:0;padding:8px 10px}

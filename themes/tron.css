@@ -1,0 +1,28 @@
+/* theme: Tron */
+/* Black grid world: cyan light lines with orange accents, cut corners, glowing grid floor to the horizon. */
+html[data-theme="tron"]{
+ --big-fit:15.2cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#000814;--on:#00121f;--panel:rgba(0,14,28,.88);--o1:#6ff3ff;--o2:#ff9f1c;--pe:#ff9f1c;--li:#6ff3ff;--pw:#a0f8ff;--sk:#6ff3ff;--tan:#ffd29a;
+ --tx:#e6fcff;--tx2:#a8e9f5;--mut:#7fbfd0;--grid:rgba(111,243,255,.12);--axis:rgba(111,243,255,.45);--s1:#6ff3ff;--s2:#ff9f1c;--good:#4dffb8;--warn:#ffe14d;--crit:#ff3355;--info:#6ff3ff;
+ --font:'Rajdhani',sans-serif;--head:'Orbitron',sans-serif;
+ --cut:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);
+ background:radial-gradient(ellipse at 50% 70%,rgba(111,243,255,.18),transparent 60%) fixed,#000814;
+ & body{background:transparent}
+ & body::before{content:"";position:fixed;left:-50%;right:-50%;bottom:0;height:40vh;z-index:-1;pointer-events:none;  /* grid floor */
+  background:linear-gradient(transparent 94%,rgba(111,243,255,.6) 94%) 0 0/100% 50px,linear-gradient(90deg,transparent 95%,rgba(111,243,255,.6) 95%) 0 0/80px 100%,
+   linear-gradient(rgba(0,8,20,.6),#000814);transform:perspective(300px) rotateX(62deg);transform-origin:50% 100%}
+ & .elbow{background:transparent;color:var(--o1);border:2px solid var(--o1);border-radius:0;clip-path:var(--cut);min-height:0;padding:12px;font-family:var(--head);font-size:12px;box-shadow:inset 0 0 14px rgba(111,243,255,.4)}
+ & .pill{background:var(--panel);color:var(--c);border:2px solid var(--c);border-radius:0;clip-path:var(--cut);box-shadow:inset 0 0 16px -4px var(--c)}& .pill b{color:var(--tx)}
+ & .fill{background:linear-gradient(90deg,transparent 48%,#6ff3ff 48% 52%,transparent 52%);opacity:.5}
+ & .main>.bar{height:2px}& .main>.bar i{box-shadow:0 0 8px currentColor}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 6px 12px 18px}
+ & h1{color:#e6fcff;font-weight:700;letter-spacing:.24em;font-size:clamp(24px,3.4vw,40px);text-shadow:0 0 10px #6ff3ff,0 0 24px #6ff3ff}
+ & .hb{color:var(--c);letter-spacing:.24em;font-size:15px}& .hb::before{width:22px;height:4px;border-radius:0;background:var(--c);box-shadow:0 0 8px var(--c)}
+ & .hb::after{height:4px;border-radius:0;background:none;border-top:1px solid var(--c);border-bottom:1px solid var(--c)}
+ & .kpi,& .alert{background:var(--panel);border:2px solid var(--c);border-radius:0;clip-path:var(--cut);box-shadow:inset 0 0 20px -8px var(--c)}
+ & .alert{border-color:rgba(111,243,255,.5)}& .alert .tag{border-radius:0;box-shadow:0 0 12px var(--c)}& .alert .end{display:none}
+ & .kpi h3{font-family:var(--head);font-size:11px;letter-spacing:.2em}& .big{font-family:var(--head);--big:30px;color:#e6fcff}
+ & .btn{border-radius:0;clip-path:var(--cut);background:transparent;color:var(--b);border:2px solid var(--b)}& .btn:hover,& .btn:focus-visible{background:var(--b);color:var(--on);filter:none}
+ & th{color:#6ff3ff;font-family:var(--head);font-size:10px}& td{background:var(--panel)}& td:first-child{border-radius:0;border-left-width:4px}& td:last-child{border-radius:0}
+ & .ln{filter:drop-shadow(0 0 4px currentColor)}& .log .t,& .info dt{color:#6ff3ff}& .tip{border-radius:0;border:2px solid #6ff3ff;background:#000814}
+ & .themesel select{border-color:#6ff3ff;border-radius:0}
+}

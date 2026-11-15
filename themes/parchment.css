@@ -1,0 +1,31 @@
+/* theme: Abenteuer-Pergament */
+/* Fantasy adventure map: parchment with dark edges, gold-framed cards, heart symbols, forest green and gold. */
+html[data-theme="parchment"]{
+ --big-fit:19.2cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#efe2bf;--on:#fbf3dc;--on-warn:#2a1d0c;--panel:#f7eccd;--o1:#2f6b2f;--o2:#7a5a12;--pe:#2f6b2f;--li:#1f5a7a;--pw:#6b2f6b;--sk:#7a5a12;--tan:#5a4a2a;
+ --tx:#3a2a14;--tx2:#5a4426;--mut:#6b5532;--grid:#e0cf9f;--axis:#3a2a14;--s1:#1f5a7a;--s2:#a8321c;--good:#2f7a2f;--thr:#8a5a00;--warn:#f2c200;--crit:#b0201a;--info:#1f5a7a;
+ --font:'Old Standard TT',Georgia,serif;--head:'MedievalSharp',Georgia,serif;
+ --gold:#b8892f;
+ background:radial-gradient(ellipse at 50% 45%,transparent 50%,rgba(110,70,20,.45)) fixed,
+  radial-gradient(circle at 20% 30%,rgba(160,120,50,.12) 0 120px,transparent 121px) fixed,#efe2bf;
+ & body{background:transparent;font-size:17px}
+ & .elbow{background:linear-gradient(#2f6b2f,#1f4a1f);color:#fbf3dc;border:2px solid var(--gold);border-radius:10px;min-height:0;padding:14px;justify-content:center;font-family:var(--head)}
+ & .pill{border:2px solid var(--gold);border-radius:8px;min-height:62px;font-family:var(--head)}
+ & .fill{background:repeating-linear-gradient(transparent 0 18px,rgba(122,90,18,.25) 18px 20px);border:2px solid var(--gold);border-radius:8px}
+ & .main>.bar{height:8px}& .main>.bar i{background:var(--gold) !important;border-radius:4px}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 6px 12px 22px}
+ & h1{color:#2f4a1f;font-weight:400;text-transform:none;letter-spacing:.04em;font-size:clamp(30px,4.4vw,52px);text-shadow:1px 1px 0 #fbf3dc}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.04em;font-style:italic}
+ & .hb{color:var(--tx);font-weight:400;text-transform:none;letter-spacing:.04em;font-size:24px}
+ & .hb::before{width:24px;height:22px;border-radius:0;background:#c0281c;  /* heart */
+  clip-path:path("M12 21 L2.5 11.5 A5.5 5.5 0 0 1 12 4.5 A5.5 5.5 0 0 1 21.5 11.5 Z")}
+ & .hb::after{height:4px;border-radius:0;background:none;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold)}
+ & .kpi,& .alert{border:2px solid var(--gold);border-radius:6px;background:var(--panel);box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 4px var(--gold)}
+ & .kpi{border-left:2px solid var(--gold)}& .kpi h3{color:var(--c);font-family:var(--head);text-transform:none;letter-spacing:.06em;font-size:15px}
+ & .big{font-family:var(--head)}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}& .alert b{font-family:var(--head);font-weight:400}
+ & .btn{border-radius:6px;border:1px solid var(--gold);text-transform:none;letter-spacing:.02em;font-family:var(--font)}
+ & th{color:#2f4a1f;text-transform:none;letter-spacing:.04em;font-family:var(--head);font-weight:400}& td{background:var(--panel)}
+ & td:first-child{border-radius:6px 0 0 6px}& td:last-child{border-radius:0 6px 6px 0}& .st{color:var(--tx);text-transform:none}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em}& .log .t,& .info dt{color:#2f6b2f}
+ & .tip{border-radius:6px;border-color:var(--gold);background:var(--panel)}& .themesel select{background:var(--panel);border-color:var(--gold)}
+}

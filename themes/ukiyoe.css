@@ -1,0 +1,33 @@
+/* theme: Ukiyo-e */
+/* Japanese woodblock print: washi paper, Prussian blue and rust, wave (seigaiha) pattern, ink outlines. */
+html[data-theme="ukiyoe"]{
+ --big-fit:17.3cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#efe4cc;--on:#f6efdd;--on-warn:#1f1a14;--panel:#f6efdd;--o1:#1f3a63;--o2:#a63d24;--pe:#a63d24;--li:#1f3a63;--pw:#3d5a3a;--sk:#7a4a1a;--tan:#5a4a3a;
+ --tx:#1f1a14;--tx2:#433626;--mut:#5f5040;--grid:#e0d3b4;--axis:#1f1a14;--s1:#1f3a63;--s2:#a63d24;--good:#3d6b3a;--thr:#8a5a00;--warn:#f2c200;--crit:#b8321c;--info:#1f3a63;
+ --font:'Shippori Mincho',Georgia,serif;--head:'Shippori Mincho',Georgia,serif;
+ --wave-c:#f6efdd;--wave-f:#1f3a63;
+ --seigaiha:radial-gradient(circle at 100% 150%,var(--wave-c) 24%,var(--wave-f) 24% 28%,var(--wave-c) 28% 36%,var(--wave-f) 36% 40%,transparent 40%),
+  radial-gradient(circle at 0 150%,var(--wave-c) 24%,var(--wave-f) 24% 28%,var(--wave-c) 28% 36%,var(--wave-f) 36% 40%,transparent 40%),
+  radial-gradient(circle at 50% 100%,var(--wave-f) 10%,var(--wave-c) 10% 23%,var(--wave-f) 23% 30%,var(--wave-c) 30% 43%,var(--wave-f) 43% 50%,var(--wave-c) 50% 63%,var(--wave-f) 63% 71%,transparent 71%),
+  radial-gradient(circle at 100% 50%,var(--wave-f) 5%,var(--wave-c) 5% 15%,var(--wave-f) 15% 20%,var(--wave-c) 20% 29%,var(--wave-f) 29% 34%,var(--wave-c) 34% 44%,var(--wave-f) 44% 49%,transparent 49%),
+  radial-gradient(circle at 0 50%,var(--wave-f) 5%,var(--wave-c) 5% 15%,var(--wave-f) 15% 20%,var(--wave-c) 20% 29%,var(--wave-f) 29% 34%,var(--wave-c) 34% 44%,var(--wave-f) 44% 49%,transparent 49%);
+ & body{letter-spacing:.02em}
+ & .elbow{background:var(--seigaiha),var(--wave-c);background-size:40px 20px;color:transparent;border:3px solid #1f1a14;border-radius:0;min-height:90px}  /* wave tile */
+ & .pill{border:2px solid #1f1a14;border-radius:0;text-transform:none;min-height:60px}& .pill b{font-weight:700}
+ & .fill{background:var(--seigaiha),var(--wave-c);background-size:40px 20px;border:3px solid #1f1a14}
+ & .main>.bar{height:20px;background:var(--seigaiha),var(--wave-c);background-size:40px 20px;border-top:2px solid #1f1a14;border-bottom:2px solid #1f1a14}& .main>.bar i{display:none}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:20px 8px 14px 24px}
+ & h1{color:#1f3a63;background:var(--panel);border:3px solid #a63d24;padding:4px 16px;font-weight:700;text-transform:none;letter-spacing:.1em;font-size:clamp(26px,3.8vw,44px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em}
+ & .hb{color:#1f1a14;text-transform:none;letter-spacing:.12em;font-weight:700;font-size:21px}
+ & .hb::before{width:22px;height:22px;border-radius:50%;background:#a63d24;border:2px solid #1f1a14}  /* rising sun */
+ & .hb::after{height:10px;border-radius:0;background:var(--seigaiha),var(--wave-c);background-size:20px 10px}
+ & .kpi,& .alert{border:2px solid #1f1a14;border-radius:0;background:var(--panel)}& .kpi{border-left:8px solid var(--c)}
+ & .kpi h3{color:var(--c);text-transform:none;letter-spacing:.1em}& .big{font-weight:700}
+ & .alert .tag{border-radius:0;border-right:2px solid #1f1a14}& .alert .end{display:none}
+ & .btn{border:2px solid #1f1a14;border-radius:0;text-transform:none;letter-spacing:.06em}
+ & th{color:#1f1a14;text-transform:none;letter-spacing:.08em}& td{background:var(--panel);border-bottom:1px solid #d2c3a0}
+ & td:first-child{border-radius:0}& td:last-child{border-radius:0}& .st{color:#1f1a14;text-transform:none}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.08em}& .log .t,& .info dt{color:#a63d24}
+ & .tip{border-radius:0;border:2px solid #1f1a14;background:var(--panel)}& .themesel select{background:var(--panel);border:2px solid #1f1a14;border-radius:0}
+}

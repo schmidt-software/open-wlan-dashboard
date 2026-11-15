@@ -1,0 +1,34 @@
+/* theme: Bahnhofsanzeige */
+/* Split-flap departure board: values sit on black flap tiles that flip when the page refreshes,
+   headings are blue station signs. */
+@keyframes bahnhof-flap{0%{transform:perspective(400px) rotateX(-90deg)}60%{transform:perspective(400px) rotateX(12deg)}100%{transform:none}}
+html[data-theme="bahnhof"]{
+ --bg:#1b1d1f;--on:#111;--panel:#111214;--o1:#ffd400;--o2:#f2f2f2;--pe:#ffb000;--li:#8fc0ff;--pw:#a9d2ff;--sk:#d2e8ff;--tan:#d9d9d9;
+ --tx:#f2f2f2;--tx2:#c9ccd1;--mut:#9aa0a8;--grid:#2a2d31;--axis:#4a4f56;--s1:#ffd400;--s2:#f2f2f2;--good:#3fcf6a;--warn:#ffd400;--crit:#ff3b30;--info:#8fc0ff;
+ --font:'Barlow Condensed','Arial Narrow',sans-serif;--head:'Barlow Condensed','Arial Narrow',sans-serif;
+ --flap:linear-gradient(#2a2c30 0 49%,#000 49% 51%,#1f2124 51%);  /* tile with the split in the middle */
+ --sign:#0a3d91;  /* station sign blue */
+ & body{letter-spacing:.03em}
+ & .elbow{background:var(--sign);color:#fff;border-radius:6px;box-shadow:inset 0 0 0 3px #fff;min-height:0;padding:14px;justify-content:center;align-items:center;font-size:18px}
+ & .pill{background:var(--flap);color:var(--tx);border-left:8px solid var(--c);border-radius:4px;min-height:64px}
+ & .pill b{font-size:30px;color:#ffd400}& .pill:hover,& .pill:focus-visible{filter:brightness(1.4)}
+ & .fill{background:repeating-linear-gradient(#111214 0 30px,#000 30px 32px);border-radius:4px}
+ & .main>.bar{height:10px}& .main>.bar i{background:var(--flap) !important;border-radius:2px}  /* flap strip instead of colour bars */
+ & .inner::before,& .inner::after{display:none}& .inner{padding:16px 6px 12px 22px}
+ & h1{background:var(--sign);color:#fff;padding:6px 18px;border-radius:6px;box-shadow:inset 0 0 0 3px #fff;font-size:clamp(26px,3.4vw,42px);letter-spacing:.08em}
+ & .sub{letter-spacing:.14em}
+ & .hb{color:#fff;font-size:20px;letter-spacing:.14em}
+ & .hb::before{width:auto;height:auto;padding:2px 10px;border-radius:4px;background:var(--sign);box-shadow:inset 0 0 0 2px #fff;content:"Gleis"}
+ & .hb::after{height:3px;border-radius:0;background:var(--c)}
+ & .kpi{border-left:0;border-radius:6px;background:#0c0d0f;box-shadow:inset 0 0 0 1px #2a2d31}
+ & .kpi h3{color:#ffd400;letter-spacing:.18em}
+ & .big{display:inline-block;background:var(--flap);border-radius:4px;padding:2px 10px;margin:4px 0;color:#fff;letter-spacing:.06em;
+  font-variant-numeric:tabular-nums;transform-origin:50% 50%;animation:bahnhof-flap .5s ease-out}
+ & .big small{color:#c9ccd1}
+ & .alert{border-radius:6px;background:#0c0d0f}& .alert .tag{border-radius:6px 0 0 6px}& .alert .end{display:none}
+ & .btn{border-radius:4px;background:var(--flap);color:#fff;box-shadow:inset 0 0 0 1px #3a3d42}& .btn:hover,& .btn:focus-visible{color:#ffd400}
+ & table{border-spacing:0 3px}& th{color:#ffd400;letter-spacing:.16em}
+ & td{background:var(--flap);font-size:18px}& td:first-child{border-radius:4px 0 0 4px;border-left-width:8px}& td:last-child{border-radius:0 4px 4px 0}
+ & .log .t{color:#ffd400}& .info dt{color:#ffd400}& .tip{border-radius:4px;border-color:#ffd400;background:#0c0d0f}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="bahnhof"] .big{animation:none}}

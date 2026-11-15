@@ -19,9 +19,9 @@ Clicking a device opens its detail page: connection, signal and noise margin, ne
 maximum rates, Wi-Fi standard, streams, latency, addresses, 24 h signal and rate history and
 all WLAN events of the device.
 
-Themes: LCARS (default), Klingon, Futuristic, Retro 8Bit, MacBook, Newspaper, Woodworker,
-Pokemon, Unicorn, Coca-Cola, Amiga 500 and Hundertwasser, picked in the header and remembered
-per browser. See [Themes](#themes) for editing them or adding your own.
+WLAN Dashboard includes 44 themes ranging from sci-fi and retro computers to art, places, and
+seasons. LCARS is the default selection, and your choice is remembered per browser. Browse the
+[THEMES.md](THEMES.md) gallery or see [Themes](#themes) for editing instructions.
 
 Alerts can be acknowledged or muted for 1 h / 24 h; they re-arm automatically when the
 problem gets worse, when a mute expires, or when a resolved problem comes back.
@@ -93,6 +93,13 @@ themes/
 3. Put every rule inside `html[data-theme="sunset"]{ ... }`, with the id from the file name.
    Rules for elements use CSS nesting with `&`, e.g. `& .kpi{border-radius:0}`.
 4. Reload the dashboard and pick it from the menu. The menu is sorted by name; LCARS stays first.
+5. Add the theme to THEMES.md with a heading in the matching group, one or two sentences of
+   description, a link to the CSS file, and a screenshot saved as `assets/themes/sunset.jpg`. Use demo
+   data for the screenshot; never include real device names.
+
+A theme file may also hold top-level `@keyframes` and `@media` rules (see `radar.css`,
+`bahnhof.css`). Prefix keyframe names with the theme id, since all theme files end up in one
+stylesheet, and switch animations off under `prefers-reduced-motion`.
 
 Run `python3 dashboard.py --selftest` afterwards: it checks that every theme file has a name.
 
@@ -112,6 +119,8 @@ Most of a theme is setting these variables; the base design uses them everywhere
 | `--s1`, `--s2` | the two chart lines (download/upload, box/repeater) |
 | `--grid`, `--axis` | chart grid and axis lines |
 | `--font`, `--head` | body font; font for headings, numbers and the side bar |
+| `--big` | font size of the big numbers in summary cards (default 40px); themes set this instead of styling `.big` directly |
+| `--big-fit` | max width share of a card for big numbers in `cqi` units (default 22cqi); use lower values (11–21cqi) for wide fonts to prevent clipping |
 
 Fonts come from Google Fonts; add a new family to the font link in `web/index.html`.
 

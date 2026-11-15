@@ -1,0 +1,29 @@
+/* theme: Circuit Board */
+/* Green PCB with gold traces and vias, cards as black chips with pins, copper pads as buttons. */
+html[data-theme="circuit"]{
+ --big-fit:18.5cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#0b3b24;--on:#0b2a19;--panel:#161616;--o1:#d4af37;--o2:#e8c86a;--pe:#ffcc66;--li:#9ee6b8;--pw:#c9f0d4;--sk:#e0a050;--tan:#d9d2b0;
+ --tx:#f3f1e6;--tx2:#cfe8d6;--mut:#a8cdb5;--grid:rgba(212,175,55,.15);--axis:rgba(212,175,55,.5);--s1:#ffcc66;--s2:#9ee6b8;--good:#5be38a;--warn:#ffd23f;--crit:#ff4d4d;--info:#9ee6b8;
+ --font:'Share Tech Mono',ui-monospace,monospace;--head:'Oxanium',sans-serif;
+ --pins:repeating-linear-gradient(90deg,#c9c9c9 0 5px,transparent 5px 13px);
+ background:radial-gradient(circle,#d4af37 0 3px,#0b3b24 3.5px 5px,transparent 5.5px) 0 0/80px 80px,  /* vias */
+  linear-gradient(90deg,transparent 39px,rgba(212,175,55,.22) 39px 41px,transparent 41px) 0 0/80px 80px,
+  linear-gradient(transparent 39px,rgba(212,175,55,.22) 39px 41px,transparent 41px) 0 0/160px 80px,#0b3b24;
+ & body{background:transparent}
+ & .elbow{color:#d4af37;background:linear-gradient(#0b2a19 0 0) 0 100%/100% 30px no-repeat,repeating-linear-gradient(90deg,#d4af37 0 10px,#0b3b24 10px 14px)}  /* edge connector, label on a dark strip */
+ & .elbow.b{background:linear-gradient(#0b2a19 0 0) 0 0/100% 30px no-repeat,repeating-linear-gradient(90deg,#d4af37 0 10px,#0b3b24 10px 14px)}
+ & .elbow.t,& .elbow.b{border-radius:4px;min-height:60px}
+ & .pill{border-radius:4px;box-shadow:inset 0 0 0 3px rgba(0,0,0,.25)}
+ & .fill{background:linear-gradient(90deg,transparent 45%,#d4af37 45% 55%,transparent 55%)}
+ & .main>.bar{height:4px}& .main>.bar i{background:#d4af37 !important;border-radius:2px}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 6px 12px 20px}
+ & h1{color:#f3f1e6;font-size:clamp(26px,3.6vw,44px);letter-spacing:.08em;text-shadow:0 0 12px rgba(212,175,55,.5)}
+ & .hb{color:var(--c);letter-spacing:.14em}
+ & .hb::before{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle,#0b3b24 0 3px,#d4af37 4px)}  /* via */
+ & .hb::after{height:3px;border-radius:0;background:#d4af37}
+ & .kpi{border:1px solid #333;border-radius:3px;padding:14px;background:var(--pins) top/100% 5px no-repeat,var(--pins) bottom/100% 5px no-repeat,var(--panel)}  /* chip with pins */
+ & .alert{border-radius:3px;background:var(--panel)}& .alert .tag{border-radius:3px 0 0 3px}& .alert .end{display:none}
+ & .btn{border-radius:3px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.3)}
+ & td{background:rgba(22,22,22,.9)}& td:first-child{border-radius:3px 0 0 3px;border-left-width:6px}& td:last-child{border-radius:0 3px 3px 0}
+ & .log .t,& .info dt{color:#d4af37}& .tip{border-radius:3px;border-color:#d4af37;background:#161616}
+}

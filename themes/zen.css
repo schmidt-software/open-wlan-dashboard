@@ -1,0 +1,31 @@
+/* theme: Zen */
+/* Rice paper, sumi ink, a red seal in front of every heading, brush-stroke lines and plenty of white space. */
+html[data-theme="zen"]{
+ --big-fit:17.3cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#f5f1e8;--on:#fff;--panel:#fbf8f1;--o1:#c0392b;--o2:#1d1d1d;--pe:#2d4a7a;--li:#5a6b3a;--pw:#2d4a7a;--sk:#1d1d1d;--tan:#6b5a4a;
+ --tx:#1d1d1d;--tx2:#4a4a4a;--mut:#666;--grid:#e6e0d2;--axis:#1d1d1d;--s1:#2d4a7a;--s2:#c0392b;--good:#3f7a3f;--thr:#8a6100;--warn:#f2c200;--crit:#c0392b;--info:#2d4a7a;
+ --font:'Shippori Mincho',Georgia,serif;--head:'Shippori Mincho',Georgia,serif;
+ --brush:linear-gradient(90deg,transparent,#1d1d1d 6%,#1d1d1d 62%,rgba(29,29,29,.35) 85%,transparent);
+ background:radial-gradient(circle at 92% 8%,rgba(232,165,184,.35) 0 60px,transparent 61px) fixed,radial-gradient(circle at 86% 14%,rgba(232,165,184,.25) 0 26px,transparent 27px) fixed,#f5f1e8;
+ & body{background:transparent;letter-spacing:.02em}
+ & .rail{gap:14px}
+ & .elbow{background:none;color:#1d1d1d;min-height:0;padding:18px 10px;justify-content:center;align-items:center;text-transform:none;letter-spacing:.2em}
+ & .elbow.t{min-height:132px;align-items:flex-end;background:radial-gradient(circle at 50% 38%,transparent 32px,#1d1d1d 33px 38px,transparent 39px);font-size:13px}  /* enso above the label */
+ & .elbow.b{display:none}
+ & .pill{background:none;color:#1d1d1d;border-left:4px solid var(--c);border-radius:0;text-transform:none;min-height:58px}& .pill b{font-weight:700}
+ & .pill:hover,& .pill:focus-visible{background:rgba(0,0,0,.04);filter:none}& .fill{background:none}
+ & .main>.bar{display:none}& .inner::before,& .inner::after{display:none}& .inner{padding:24px 10px 16px 30px}
+ & h1{color:#1d1d1d;font-weight:700;text-transform:none;letter-spacing:.12em;font-size:clamp(28px,4vw,46px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.08em}
+ & .hb{color:#1d1d1d;text-transform:none;letter-spacing:.14em;font-weight:700;font-size:21px;margin:34px 0 14px}
+ & .hb::before{content:"和";width:28px;height:28px;border-radius:3px;background:#c0392b;color:#fff;font-size:15px;display:grid;place-items:center}  /* seal */
+ & .hb::after{height:6px;border-radius:50%;background:var(--brush)}
+ & .kpis{gap:18px}& .kpi{border:0;border-top:1px solid #1d1d1d;border-radius:0;background:transparent;padding:12px 4px}
+ & .kpi h3{color:var(--c);text-transform:none;letter-spacing:.12em}& .big{font-weight:700}
+ & .alert{background:var(--panel);border-radius:0;box-shadow:0 1px 0 #d8d0bf}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{background:transparent;color:#1d1d1d;border:1px solid #1d1d1d;border-radius:2px;text-transform:none;letter-spacing:.06em}& .btn:hover,& .btn:focus-visible{background:#1d1d1d;color:#fff;filter:none}
+ & th{color:#1d1d1d;text-transform:none;letter-spacing:.1em}& td{background:transparent;border-bottom:1px solid #e0d8c6}
+ & td:first-child{border-radius:0;border-left-width:4px}& td:last-child{border-radius:0}& .st{color:#1d1d1d;text-transform:none}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.08em}& .log .t,& .info dt{color:#c0392b}
+ & .tip{border-radius:2px;border:1px solid #1d1d1d;background:#fbf8f1}& .themesel select{background:#fbf8f1;border-color:#1d1d1d;border-radius:2px}
+}

@@ -1,0 +1,43 @@
+/* theme: Windows 95 */
+/* Teal desktop, grey bevelled window with a navy title bar, start menu as side bar, white list view. */
+html[data-theme="win95"]{
+ --bg:#c0c0c0;--on:#000;--panel:#c0c0c0;--o1:#000080;--o2:#000080;--pe:#800000;--li:#6b006b;--pw:#004d4d;--sk:#404000;--tan:#404040;
+ --tx:#000;--tx2:#222;--mut:#404040;--grid:#a8a8a8;--axis:#000;--s1:#000080;--s2:#800000;--good:#008000;--warn:#ffff00;--crit:#ff0000;--info:#000080;
+ --font:Tahoma,Verdana,'Segoe UI',sans-serif;--head:Tahoma,Verdana,'Segoe UI',sans-serif;
+ --raised:inset -1px -1px #000,inset 1px 1px #fff,inset -2px -2px #808080,inset 2px 2px #dfdfdf;
+ --sunken:inset -1px -1px #fff,inset 1px 1px #808080,inset -2px -2px #dfdfdf,inset 2px 2px #000;
+ --title:linear-gradient(90deg,#000080,#0a5fb0);
+ background:#008080;  /* desktop */
+ & *,& .hb::before{border-radius:0 !important}
+ & body{background:transparent;font-size:14px;letter-spacing:0}
+ & .frame{gap:8px}
+ & .rail{position:relative;background:#c0c0c0;box-shadow:var(--raised);padding:4px 4px 4px 30px;gap:2px;align-self:start}
+ & .rail::before{content:"WLAN 95";position:absolute;left:3px;top:3px;bottom:3px;width:24px;background:linear-gradient(#000080,#0a5fb0);color:#c0c0c0;
+  writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;font-size:18px;padding-top:8px}  /* start menu band */
+ & .elbow{display:none}& .fill{display:none}
+ & .pill{background:none;color:#000;text-transform:none;letter-spacing:0;font-size:14px;font-weight:400;min-height:0;padding:6px 8px;flex-direction:row;align-items:center;gap:8px}
+ & .pill::before{content:"";flex:none;width:16px;height:16px;background:var(--c);box-shadow:var(--raised)}& .pill span{flex:1}& .pill b{font-size:14px;color:#000}
+ & .pill:hover,& .pill:focus-visible{background:#000080;color:#fff;filter:none}& .pill:hover b,& .pill:focus-visible b{color:#fff}
+ & .main{background:#c0c0c0;box-shadow:var(--raised);padding:3px}
+ & .main>.bar:first-child{height:24px;background:var(--title);color:#fff;font-weight:700;align-items:center;padding:0 4px 0 8px}
+ & .main>.bar:first-child::before{content:"WLAN-Überwachung.exe"}
+ & .main>.bar:first-child::after{content:"✕";margin-left:auto;width:18px;height:16px;background:#c0c0c0;color:#000;box-shadow:var(--raised);font-size:11px;display:grid;place-items:center}
+ & .main>.bar i{display:none}& .main>.bar:last-child{display:none}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:12px 10px}
+ & h1{color:#000;text-transform:none;letter-spacing:0;font-size:26px}
+ & .sub,& .themesel{text-transform:none;letter-spacing:0;color:#222}& .themesel select{background:#fff;border:0;box-shadow:var(--sunken)}
+ & .hb{color:#000;text-transform:none;letter-spacing:0;font-size:16px}
+ & .hb::before{width:16px;height:16px;background:var(--c);box-shadow:var(--raised)}
+ & .hb::after{height:2px;background:none;border-top:1px solid #808080;border-bottom:1px solid #fff}
+ & .kpi{border:0;box-shadow:var(--raised);padding:3px 10px 10px}
+ & .kpi h3{background:var(--title);color:#fff;margin:0 -7px 6px;padding:2px 6px;text-transform:none;letter-spacing:0;font-size:13px}
+ & .big{--big:30px}& .sm{color:#222}
+ & .alert{background:#fff;box-shadow:var(--sunken)}& .alert .end{display:none}
+ & .btn{background:#c0c0c0;color:#000;box-shadow:var(--raised);text-transform:none;letter-spacing:0;font:13px var(--font);padding:4px 12px}
+ & .btn:active{box-shadow:var(--sunken)}& .btn:hover,& .btn:focus-visible{filter:none;outline:1px dotted #000;outline-offset:-4px}
+ & .wrap{background:#fff;box-shadow:var(--sunken)}& table{border-spacing:0}
+ & th{background:#c0c0c0;color:#000;box-shadow:var(--raised);text-transform:none;letter-spacing:0;font-size:13px;padding:4px 10px}
+ & td{background:#fff}& td:first-child{border-left-width:6px}& .st{color:#000;text-transform:none;letter-spacing:0}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:0}
+ & .log .t,& .info dt{color:#000080}& .tip{border:1px solid #000;background:#ffffe1;color:#000}
+}

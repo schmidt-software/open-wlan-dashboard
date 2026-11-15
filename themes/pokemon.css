@@ -1,5 +1,6 @@
 /* theme: Pokemon */
 html[data-theme="pokemon"]{
+ --big-fit:19.3cqi;  /* big numbers: max share of the card width for this font */
  --bg:#eef3fa;--on:#fff;--panel:#fff;--o1:#d4300c;--o2:#3b4cca;--pe:#d4300c;--li:#3b4cca;--pw:#2a7d4f;--sk:#7a3fb0;--tan:#8a5a2b;
  --on-warn:#1d2c5e;--tx:#1d2c5e;--tx2:#3b4a7a;--mut:#56638c;--grid:#dfe6f2;--axis:#9fb0d0;--s1:#3b4cca;--s2:#e3350d;--good:#2a7d4f;--thr:#b35900;--warn:#ffcb05;--crit:#cc0000;--info:#3b4cca;
  --font:'Fredoka','Nunito',sans-serif;--head:'Fredoka','Nunito',sans-serif;

@@ -20,7 +20,7 @@ html[data-theme="amiga"]{
  & .hb::after{height:14px;background:repeating-linear-gradient(#fff 0 2px,transparent 2px 4px)}  /* drag bar */
  & .kpi,& .alert{border:2px solid #fff;background:var(--panel)}& .alert .end{display:none}
  & .kpi{padding:0 12px 10px}& .kpi h3{background:#fff;color:#000022;margin:0 -12px 6px;padding:2px 10px;font-size:18px;font-weight:400;letter-spacing:.06em;border-left:10px solid var(--c)}
- & .big{font-size:42px;font-weight:400}& .big small{font-size:22px}& .sm{font-size:17px}
+ & .big{--big:42px;font-weight:400}& .big small{font-size:22px}& .sm{font-size:17px}
  & .alert b{font-size:22px;font-weight:400}& .alert span{font-size:18px}
  & .btn{font:18px var(--font);letter-spacing:.04em;box-shadow:var(--bevel);padding:4px 12px}& .btn:active{box-shadow:inset 2px 2px 0 #000022,inset -2px -2px 0 #fff}
  & table{border-spacing:0;font-size:19px}& th{color:#fff;font-size:16px;font-weight:400;border-bottom:2px solid #fff}

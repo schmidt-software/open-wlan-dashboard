@@ -1,5 +1,6 @@
 /* theme: Unicorn */
 html[data-theme="unicorn"]{
+ --big-fit:18.9cqi;  /* big numbers: max share of the card width for this font */
  --bg:#fff4fb;--on:#3d2352;--panel:#fff;--o1:#ff9ed8;--o2:#c9a7ff;--pe:#ffb38a;--li:#9ee6ff;--pw:#b8f2c8;--sk:#ffe38a;--tan:#f5b8ff;
  --tx:#3d2352;--tx2:#5e3f78;--mut:#76588f;--grid:#f3dcef;--axis:#d9b8e6;--s1:#a35cff;--s2:#ff4fa3;--good:#8fe3b8;--thr:#a87400;--warn:#ffd36e;--crit:#ff6b78;--info:#a8c8ff;
  --font:'Nunito',sans-serif;--head:'Nunito',sans-serif;--rainbow:linear-gradient(90deg,#ff9ed8,#ffd36e,#b8f2c8,#9ee6ff,#c9a7ff);
@@ -15,7 +16,7 @@ html[data-theme="unicorn"]{
  & .hb{color:var(--tx);font-weight:800}& .hb::before{content:"🦄";width:auto;height:auto;background:none;font-size:22px}
  & .hb::after{height:8px;border-radius:8px;background:var(--rainbow)}
  & .kpi,& .alert{border:3px solid transparent;border-radius:22px;background:linear-gradient(#fff,#fff) padding-box,var(--rainbow) border-box;box-shadow:0 10px 26px -14px #a35cff}
- & .big{font-size:34px}& .kpi h3{color:var(--tx2)}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{border-radius:0}
+ & .big{--big:34px}& .kpi h3{color:var(--tx2)}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{border-radius:0}
  & td{background:rgba(255,255,255,.8)}& td:first-child{border-radius:18px 0 0 18px}& td:last-child{border-radius:0 18px 18px 0}& .st{color:var(--tx)}
  & .tip{border-radius:14px;border-color:#c9a7ff;background:#fff}& .themesel select{background:#fff}& th,& .info dt,& .log .t{color:var(--tx2)}
 }

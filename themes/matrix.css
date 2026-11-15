@@ -1,0 +1,27 @@
+/* theme: Matrix */
+/* Black screen with slowly falling green glyphs behind the page, glowing green text. */
+@keyframes matrix-rain{from{transform:translateY(-50%)}to{transform:translateY(0)}}
+html[data-theme="matrix"]{
+ --big-fit:19.6cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#000;--on:#001a07;--panel:rgba(0,14,4,.86);--o1:#00ff41;--o2:#7dff9e;--pe:#00ff41;--li:#5dff8a;--pw:#a8ffbf;--sk:#00ff41;--tan:#4fd96f;
+ --tx:#a6ffbb;--tx2:#5fdc7c;--mut:#3fae5b;--grid:rgba(0,255,65,.1);--axis:rgba(0,255,65,.35);--s1:#00ff41;--s2:#d6ffe0;--good:#00ff41;--warn:#ffd23f;--crit:#ff3b3b;--info:#7dff9e;
+ --font:'Share Tech Mono',ui-monospace,monospace;--head:'Share Tech Mono',ui-monospace,monospace;
+ & body{background:transparent;text-shadow:0 0 6px rgba(0,255,65,.5)}
+ & body::before{content:"ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789Z:・.\"=*+-<>¦｜ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ";
+  position:fixed;left:0;top:0;width:100%;height:200%;z-index:-1;pointer-events:none;font:22px/1.15 var(--font);letter-spacing:.9em;word-break:break-all;
+  color:rgba(0,255,65,.14);-webkit-mask:linear-gradient(transparent,#000 30%,#000 70%,transparent);mask:linear-gradient(transparent,#000 30%,#000 70%,transparent);
+  animation:matrix-rain 40s linear infinite;will-change:transform}
+ & .elbow{background:transparent;color:var(--o1);border:1px solid var(--o1);border-radius:2px;min-height:0;padding:12px}
+ & .pill{background:var(--panel);color:var(--c);border:1px solid var(--c);border-radius:2px;min-height:60px}& .pill b{color:var(--tx)}
+ & .fill{background:linear-gradient(transparent,rgba(0,255,65,.25));border-radius:2px}
+ & .main>.bar{height:2px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 6px 12px 18px}
+ & h1{color:var(--o1);letter-spacing:.2em;font-size:clamp(24px,3.4vw,42px);text-shadow:0 0 14px #00ff41}
+ & .hb{color:var(--o1);letter-spacing:.24em}& .hb::before{width:12px;height:12px;border-radius:0;background:var(--o1);box-shadow:0 0 10px #00ff41}
+ & .hb::after{height:1px;border-radius:0;background:linear-gradient(90deg,var(--o1),transparent)}
+ & .kpi,& .alert{background:var(--panel);border:1px solid rgba(0,255,65,.35);border-radius:2px}& .kpi h3{letter-spacing:.2em}
+ & .alert .tag{border-radius:2px 0 0 2px}& .alert .end{display:none}
+ & .btn{border-radius:2px;background:transparent;color:var(--b);border:1px solid var(--b)}& .btn:hover,& .btn:focus-visible{background:var(--b);color:var(--on);filter:none}
+ & td{background:var(--panel)}& td:first-child{border-radius:2px 0 0 2px;border-left-width:4px}& td:last-child{border-radius:0 2px 2px 0}
+ & th,& .log .t,& .info dt{color:var(--o1)}& .tip{border-radius:2px;border:1px solid var(--o1);background:#000}& .themesel select{border-color:var(--o1);background:#000}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="matrix"] body::before{animation:none}}

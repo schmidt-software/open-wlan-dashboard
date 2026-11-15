@@ -21,7 +21,7 @@ html[data-theme="macbook"]{
  & .hb::before{width:4px;height:18px;border-radius:2px}& .hb::after{display:none}
  & .kpi,& .alert,& table{border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 0 0 .5px rgba(0,0,0,.06)}
  & .kpi{border:0;padding:12px 14px}& .kpi h3{text-transform:none;letter-spacing:0;font-size:12px}
- & .big{font-size:28px;font-weight:600;letter-spacing:-.02em}& .big small{font-size:15px}& .sm{font-size:12px;color:var(--mut)}
+ & .big{--big:28px;font-weight:600;letter-spacing:-.02em}& .big small{font-size:15px}& .sm{font-size:12px;color:var(--mut)}
  & .alert{overflow:hidden}& .alert .tag{border-radius:0}
  & .alert b{font-size:15px}& .alert span{font-size:13px}& .alert .end{display:none}
  & .btn{font:500 13px var(--font);text-transform:none;letter-spacing:0;border-radius:6px;padding:4px 12px;background:#fff;color:var(--tx);box-shadow:0 0 0 .5px rgba(0,0,0,.2),0 1px 1px rgba(0,0,0,.06)}

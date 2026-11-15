@@ -1,0 +1,28 @@
+/* theme: Cockpit */
+/* Aircraft instrument panel: grey panel with screws, black displays with green and amber readouts, annunciator lights. */
+html[data-theme="cockpit"]{
+ --big-fit:16.3cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#14181d;--on:#0a0c0f;--panel:#050608;--o1:#38ff6a;--o2:#ffb000;--pe:#ffb000;--li:#38ff6a;--pw:#4fd3ff;--sk:#ffffff;--tan:#c8d0d8;
+ --tx:#e8eef2;--tx2:#b8c2cc;--mut:#8f9aa6;--grid:rgba(56,255,106,.1);--axis:rgba(255,255,255,.35);--s1:#38ff6a;--s2:#ffb000;--good:#38ff6a;--warn:#ffd000;--crit:#ff3b30;--info:#4fd3ff;
+ --font:'B612',Arial,sans-serif;--head:'B612 Mono',ui-monospace,monospace;
+ --screws:radial-gradient(circle at 8px 8px,#6a737d 0 3px,#2a3038 3.5px 4.5px,transparent 5px),radial-gradient(circle at calc(100% - 8px) 8px,#6a737d 0 3px,#2a3038 3.5px 4.5px,transparent 5px),
+  radial-gradient(circle at 8px calc(100% - 8px),#6a737d 0 3px,#2a3038 3.5px 4.5px,transparent 5px),radial-gradient(circle at calc(100% - 8px) calc(100% - 8px),#6a737d 0 3px,#2a3038 3.5px 4.5px,transparent 5px);
+ background:linear-gradient(#1c2128,#111418);
+ & body{background:transparent}
+ & .elbow{background:var(--screws),#2a3038;color:#e8eef2;border-radius:8px;min-height:0;padding:18px;justify-content:center;font-family:var(--head)}
+ & .pill{background:#0a0c0f;color:var(--c);border:2px solid #2a3038;border-radius:6px;min-height:60px;text-shadow:0 0 8px var(--c);font-family:var(--head)}  /* annunciator */
+ & .pill b{color:var(--c)}& .fill{background:var(--screws),repeating-linear-gradient(#2a3038 0 2px,#1c2128 2px 6px);border-radius:8px}
+ & .main>.bar{height:10px}& .main>.bar i{background:repeating-linear-gradient(-45deg,#ffd000 0 8px,#111 8px 16px) !important;border-radius:2px}  /* hazard stripes */
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#e8eef2;font-family:var(--head);letter-spacing:.14em;font-size:clamp(24px,3.4vw,40px)}
+ & .hb{color:#e8eef2;font-family:var(--head);letter-spacing:.14em;font-size:16px}
+ & .hb::before{width:26px;height:12px;border-radius:2px;background:repeating-linear-gradient(-45deg,#ffd000 0 4px,#111 4px 8px)}
+ & .hb::after{height:2px;border-radius:0;background:#2a3038}
+ & .kpi{background:var(--screws),#050608;border:4px solid #2a3038;border-radius:12px;box-shadow:inset 0 0 18px rgba(0,0,0,.9);padding:14px 18px}  /* instrument */
+ & .kpi h3{color:#e8eef2;font-family:var(--head);letter-spacing:.12em;font-size:11px}
+ & .big{font-family:var(--head);color:var(--c);text-shadow:0 0 10px var(--c);--big:32px}& .big small{color:var(--c);opacity:.85}
+ & .alert{background:#050608;border:2px solid #2a3038;border-radius:8px;overflow:hidden}& .alert .tag{border-radius:0;box-shadow:0 0 12px var(--c)}& .alert .end{display:none}
+ & .btn{border-radius:4px;background:linear-gradient(#3a424c,#232a32);color:#e8eef2;border:1px solid #4a535e;box-shadow:inset 0 1px 0 #5a646f}
+ & th{color:#b8c2cc;font-family:var(--head)}& td{background:#0a0c0f}& td:first-child{border-radius:6px 0 0 6px}& td:last-child{border-radius:0 6px 6px 0}
+ & .log .t,& .info dt{color:#ffb000}& .tip{border-radius:6px;border:2px solid #2a3038;background:#050608}& .themesel select{background:#0a0c0f;border-color:#4a535e}
+}

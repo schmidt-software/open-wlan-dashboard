@@ -1,0 +1,29 @@
+/* theme: Funkamateur */
+/* Valve radio at night: dark bakelite and brass, warm amber dial glow, frequency scales, Morse-code markers. */
+html[data-theme="hamradio"]{
+ --big-fit:18cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#1a1612;--on:#1a1612;--panel:#241e18;--o1:#ffb347;--o2:#e8c88a;--pe:#ffcf7a;--li:#ffb347;--pw:#d8e8a0;--sk:#ffe0a8;--tan:#c8a878;
+ --tx:#ffe6b8;--tx2:#e8c890;--mut:#c8a878;--grid:rgba(255,179,71,.12);--axis:rgba(255,179,71,.45);--s1:#ffb347;--s2:#d8e8a0;--good:#8ee08a;--warn:#ffd23f;--crit:#ff4a3d;--info:#ffe0a8;
+ --font:'Share Tech Mono',ui-monospace,monospace;--head:'Special Elite','Courier New',monospace;
+ --brass:#b8924a;--scale:repeating-linear-gradient(90deg,var(--c) 0 1px,transparent 1px 8px),repeating-linear-gradient(90deg,var(--c) 0 2px,transparent 2px 40px);
+ background:radial-gradient(ellipse at 50% 110%,rgba(255,150,40,.22),transparent 60%) fixed,linear-gradient(#211b16,#1a1612);  /* valve glow */
+ & body{background:transparent}
+ & .elbow{background:radial-gradient(circle at 50% 45%,#3a2e22 0 26px,#2a221a 27px 34px,var(--brass) 35px 37px,transparent 38px),#241e18;
+  color:var(--o1);border:2px solid var(--brass);border-radius:10px;min-height:118px;align-items:flex-end;justify-content:center}  /* tuning knob */
+ & .elbow.b{min-height:0;padding:12px;background:#241e18}
+ & .pill{background:#241e18;color:var(--c);border:2px solid var(--brass);border-radius:10px;min-height:60px;text-shadow:0 0 8px rgba(255,179,71,.5)}& .pill b{color:var(--tx)}
+ & .fill{background:repeating-linear-gradient(90deg,#2a221a 0 6px,#1a1612 6px 9px);border:2px solid var(--brass);border-radius:10px}  /* speaker cloth */
+ & .main>.bar{height:4px}& .main>.bar i{background:var(--brass) !important;border-radius:2px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#ffb347;font-weight:400;letter-spacing:.1em;font-size:clamp(26px,3.8vw,46px);text-shadow:0 0 14px rgba(255,150,40,.6)}
+ & .hb{color:var(--c);font-family:var(--head);font-weight:400;letter-spacing:.1em}
+ & .hb::before{content:"·−·";width:auto;height:auto;background:none;color:var(--c);letter-spacing:.1em}  /* Morse R */
+ & .hb::after{height:12px;border-radius:0;background:var(--scale) bottom/100% 6px no-repeat,var(--scale) bottom/100% 12px no-repeat;opacity:.7;  /* dial scale */
+  -webkit-mask:linear-gradient(90deg,#000 0 80%,transparent);mask:linear-gradient(90deg,#000 0 80%,transparent)}
+ & .kpi,& .alert{background:var(--panel);border:2px solid var(--brass);border-radius:10px}
+ & .kpi{background:radial-gradient(ellipse at 50% 0,rgba(255,179,71,.18),transparent 70%),var(--panel)}  /* backlit dial */
+ & .kpi h3{font-family:var(--head);letter-spacing:.12em}& .big{color:#ffb347;text-shadow:0 0 10px rgba(255,150,40,.55)}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:8px;background:linear-gradient(#3a2e22,#241e18);color:#ffe6b8;border:1px solid var(--brass)}
+ & th{color:#ffb347;font-family:var(--head)}& td{background:var(--panel)}& td:first-child{border-radius:8px 0 0 8px}& td:last-child{border-radius:0 8px 8px 0}
+ & .log .t,& .info dt{color:#ffb347}& .tip{border-radius:8px;border:2px solid var(--brass);background:#1a1612}& .themesel select{background:#241e18;border-color:var(--brass)}
+}

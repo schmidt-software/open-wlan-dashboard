@@ -1,0 +1,28 @@
+/* theme: Blade Runner */
+/* Rainy neon night: pink and cyan neon on dark, drifting rain and fog, hologram scan lines on the cards. */
+@keyframes bladerunner-rain{from{transform:translate(0,-60px)}to{transform:translate(-30px,0)}}
+html[data-theme="bladerunner"]{
+ --big-fit:18.5cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#07070d;--on:#0b0712;--panel:rgba(18,14,30,.86);--o1:#ff3fa4;--o2:#2de2e6;--pe:#ffb347;--li:#c77dff;--pw:#2de2e6;--sk:#ff6ec7;--tan:#ffd9a0;
+ --tx:#f1e9ff;--tx2:#c8b8e8;--mut:#a092c0;--grid:rgba(45,226,230,.1);--axis:rgba(45,226,230,.35);--s1:#2de2e6;--s2:#ff3fa4;--good:#4dffb0;--warn:#ffe14d;--crit:#ff3355;--info:#2de2e6;
+ --font:'Rajdhani',sans-serif;--head:'Oxanium',sans-serif;
+ background:radial-gradient(ellipse at 15% 100%,rgba(45,226,230,.18),transparent 55%) fixed,radial-gradient(ellipse at 85% 90%,rgba(255,63,164,.2),transparent 55%) fixed,
+  linear-gradient(#0d0b1a,#07070d 60%) fixed;
+ & body{background:transparent}
+ & body::before{content:"";position:fixed;inset:-60px -30px 0 0;z-index:-1;pointer-events:none;  /* rain */
+  background:repeating-linear-gradient(105deg,transparent 0 22px,rgba(180,210,255,.07) 22px 23px);animation:bladerunner-rain 1.2s linear infinite;will-change:transform}
+ & .elbow{background:linear-gradient(160deg,#ff3fa4,#7a2bff);color:#fff;border-radius:2px;text-shadow:0 0 6px rgba(0,0,0,.6)}
+ & .pill{background:rgba(18,14,30,.9);color:var(--c);border:1px solid var(--c);border-radius:2px;box-shadow:0 0 14px -4px var(--c),inset 0 0 12px -6px var(--c)}& .pill b{color:var(--tx)}
+ & .fill{background:linear-gradient(transparent,rgba(255,63,164,.3));border-radius:2px}
+ & .main>.bar{height:2px}& .main>.bar i{box-shadow:0 0 10px currentColor}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 6px 12px 18px}
+ & h1{color:#ff3fa4;letter-spacing:.12em;font-size:clamp(26px,3.8vw,46px);text-shadow:0 0 8px #ff3fa4,0 0 22px rgba(255,63,164,.6)}
+ & h1::after{content:" 監視";font-size:.5em;color:#2de2e6;text-shadow:0 0 8px #2de2e6;vertical-align:middle}
+ & .hb{color:var(--c);letter-spacing:.18em;text-shadow:0 0 8px var(--c)}& .hb::before{width:6px;height:18px;border-radius:0;background:var(--c);box-shadow:0 0 10px var(--c)}
+ & .hb::after{height:1px;border-radius:0;background:linear-gradient(90deg,var(--c),transparent 80%)}
+ & .kpi,& .alert{background:repeating-linear-gradient(rgba(255,255,255,.035) 0 1px,transparent 1px 3px),var(--panel);border:1px solid rgba(255,63,164,.35);border-radius:2px}
+ & .kpi{border-top:2px solid var(--c)}& .alert .tag{border-radius:2px 0 0 2px;box-shadow:0 0 12px var(--c)}& .alert .end{display:none}
+ & .btn{border-radius:2px;background:transparent;color:var(--b);border:1px solid var(--b);box-shadow:0 0 8px -3px var(--b)}& .btn:hover,& .btn:focus-visible{background:var(--b);color:var(--on);filter:none}
+ & th{color:#2de2e6}& td{background:var(--panel)}& td:first-child{border-radius:2px 0 0 2px;border-left-width:4px}& td:last-child{border-radius:0 2px 2px 0}
+ & .log .t,& .info dt{color:#2de2e6}& .tip{border-radius:2px;border-color:#ff3fa4;background:#0b0712}& .themesel select{border-color:#ff3fa4}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="bladerunner"] body::before{animation:none}}

@@ -1,0 +1,29 @@
+/* theme: Disco 70er */
+/* Brown, orange and mustard, 70s stripes, mirror-ball sparkle, round shapes and a chunky rounded font. */
+html[data-theme="disco"]{
+ --big-fit:19.4cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#2a1608;--on:#2a1608;--panel:#3a2010;--o1:#ff8c1a;--o2:#e0a800;--pe:#ff6f3c;--li:#ffc04d;--pw:#c8d65a;--sk:#ff9ec4;--tan:#ffd9a0;
+ --tx:#ffe9c4;--tx2:#f0cfa0;--mut:#d0a878;--grid:rgba(255,140,26,.14);--axis:rgba(255,200,120,.45);--s1:#ffc04d;--s2:#ff6f3c;--good:#8ee05a;--warn:#ffd23f;--crit:#ff4a3d;--info:#ffd9a0;
+ --font:'Nunito',sans-serif;--head:'Righteous',sans-serif;
+ --stripes:linear-gradient(#7a3e12 0 25%,#ff6f3c 25% 50%,#ff8c1a 50% 75%,#e0a800 75%);
+ background:radial-gradient(circle,rgba(255,255,255,.35) 0 1.5px,transparent 2px) 0 0/63px 71px,radial-gradient(circle,rgba(255,220,160,.25) 0 2px,transparent 2.5px) 30px 20px/97px 89px,  /* mirror-ball sparkle */
+  radial-gradient(ellipse at 50% 0,#4a2810,#2a1608 70%);
+ & body{background:transparent}
+ & .elbow{background:var(--stripes);color:transparent;border-radius:40px;min-height:70px}
+ & .elbow.t{min-height:118px;background:radial-gradient(circle at 35% 30%,#fff 0 6px,transparent 14px),repeating-conic-gradient(#d8d8d8 0 10deg,#8a8a8a 10deg 20deg);border-radius:50%;aspect-ratio:1}  /* mirror ball */
+ & .pill{border-radius:999px;min-height:58px;box-shadow:0 6px 0 rgba(0,0,0,.25)}& .pill b{font-family:var(--head)}
+ & .fill{background:linear-gradient(90deg,#7a3e12 0 25%,#ff6f3c 25% 50%,#ff8c1a 50% 75%,#e0a800 75%);border-radius:999px;width:40%;align-self:center}
+ & .main>.bar{height:20px;background:var(--stripes);border-radius:10px}& .main>.bar i{display:none}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#ffc04d;font-weight:400;text-transform:none;letter-spacing:.02em;font-size:clamp(32px,4.6vw,58px);text-shadow:3px 3px 0 #ff6f3c,6px 6px 0 #7a3e12}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.04em}
+ & .hb{color:var(--c);font-weight:400;text-transform:none;letter-spacing:.02em;font-size:26px}
+ & .hb::before{width:24px;height:24px;border-radius:50%;background:var(--stripes)}& .hb::after{height:12px;border-radius:6px;background:var(--stripes)}
+ & .kpi,& .alert{background:var(--panel);border-radius:24px}& .kpi{border:0;border-top:6px solid var(--c)}
+ & .kpi h3{text-transform:none;letter-spacing:.04em;font-size:14px}& .big{font-weight:400}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:999px;text-transform:none;letter-spacing:.02em;font-weight:700}
+ & th{color:#ffc04d;text-transform:none;letter-spacing:.04em}& td{background:var(--panel)}& td:first-child{border-radius:20px 0 0 20px}& td:last-child{border-radius:0 20px 20px 0}
+ & .st,& .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.02em}& .log .t,& .info dt{color:#ffc04d}
+ & .tip{border-radius:16px;border-color:#ff8c1a;background:#2a1608}& .themesel select{border-color:#ff8c1a;border-radius:999px}
+}

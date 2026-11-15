@@ -1,0 +1,27 @@
+/* theme: Atari 2600 */
+/* Wood-veneer side bar, ribbed black console, orange-amber-yellow stripes, chunky block lettering. */
+html[data-theme="atari"]{
+ --big-fit:14.6cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#1a1410;--on:#1a1410;--panel:#231b14;--o1:#ff7a1a;--o2:#ffb000;--pe:#ff8c3a;--li:#ffd27a;--pw:#e8a050;--sk:#ffe0a0;--tan:#c8a87a;
+ --tx:#f2e6d0;--tx2:#d8c8a8;--mut:#b8a07a;--grid:rgba(255,176,0,.12);--axis:rgba(255,176,0,.45);--s1:#ffb000;--s2:#ff7a1a;--good:#7ad65a;--warn:#ffd23f;--crit:#ff3b30;--info:#ffe0a0;
+ --font:'Share Tech Mono',ui-monospace,monospace;--head:'Bungee',Impact,sans-serif;
+ --veneer:repeating-linear-gradient(92deg,rgba(0,0,0,.18) 0 2px,transparent 2px 7px,rgba(0,0,0,.08) 7px 9px,transparent 9px 16px),linear-gradient(#8a5a2e,#5e3a1a);
+ --stripes:linear-gradient(#ff3b1a 0 33%,#ff7a1a 33% 66%,#ffb000 66%);
+ background:repeating-linear-gradient(#1a1410 0 4px,#140f0b 4px 6px);  /* ribbed console */
+ & *,& .hb::before{border-radius:0 !important}
+ & body{background:transparent}
+ & .rail{background:var(--veneer);padding:10px;gap:8px}
+ & .elbow{background:#1a1410;color:#ffb000;min-height:0;padding:14px;justify-content:center;font-size:14px;border-top:6px solid #ff7a1a}
+ & .pill{background:#1a1410;color:#f2e6d0;border-left:10px solid var(--c);min-height:60px}& .pill b{color:var(--c)}
+ & .fill{background:repeating-linear-gradient(#1a1410 0 6px,#2a2018 6px 10px)}
+ & .main>.bar{height:18px;background:var(--stripes)}& .main>.bar i{display:none}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#ffb000;font-weight:400;letter-spacing:.04em;font-size:clamp(26px,3.8vw,46px);text-shadow:4px 4px 0 #ff3b1a}
+ & .hb{color:var(--c);font-family:var(--head);font-weight:400;letter-spacing:.06em;font-size:18px}
+ & .hb::before{width:24px;height:24px;background:var(--stripes)}& .hb::after{height:9px;background:var(--stripes)}
+ & .kpi,& .alert{background:var(--panel);border:4px solid #3a2c20}& .kpi{border-top:12px solid transparent;border-image:var(--stripes) 12 0 0 0 / 12px 0 0 0}
+ & .kpi h3{font-family:var(--font);letter-spacing:.08em}& .big{font-family:var(--head);font-weight:400;--big:30px}
+ & .alert .end{display:none}& .btn{border:3px solid #3a2c20;font:14px var(--font);letter-spacing:.06em}
+ & th{color:#ffb000;font-family:var(--font)}& td{background:var(--panel)}& td:first-child{border-left-width:10px}
+ & .log .t,& .info dt{color:#ffb000}& .tip{border:3px solid #ff7a1a;background:#1a1410}& .themesel select{background:#1a1410;border:2px solid #ff7a1a}
+}

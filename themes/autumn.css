@@ -1,0 +1,27 @@
+/* theme: Herbst */
+/* Warm paper, maple red, pumpkin and mustard, scattered leaves, elegant serif headings. */
+html[data-theme="autumn"]{
+ --big-fit:18.5cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#f7ecdc;--on:#fffaf0;--on-warn:#3a2414;--panel:#fffaf0;--o1:#b5341c;--o2:#b04e0d;--pe:#b5341c;--li:#8a6200;--pw:#5f6b2a;--sk:#7a1f2b;--tan:#6b3e1f;
+ --tx:#3a2414;--tx2:#5c3a22;--mut:#77502f;--grid:#efdfc8;--axis:#3a2414;--s1:#6b3e1f;--s2:#c4570f;--good:#4a7a2a;--thr:#8a5a00;--warn:#f2c200;--crit:#b5341c;--info:#6b3e1f;
+ --font:'Lora',Georgia,serif;--head:'Playfair Display',Georgia,serif;
+ --leaf:0 70% 0 70%;
+ background:radial-gradient(ellipse 18px 9px at 8% 20%,rgba(181,52,28,.35) 98%,transparent) fixed,radial-gradient(ellipse 14px 7px at 94% 30%,rgba(196,87,15,.35) 98%,transparent) fixed,
+  radial-gradient(ellipse 16px 8px at 88% 85%,rgba(166,124,0,.35) 98%,transparent) fixed,radial-gradient(ellipse 12px 6px at 4% 75%,rgba(122,31,43,.3) 98%,transparent) fixed,#f7ecdc;
+ & body{background-color:transparent}
+ & .elbow{background:linear-gradient(160deg,#c4570f,#7a1f2b);color:#fffaf0;border-radius:20px 4px 20px 4px;min-height:0;padding:16px;justify-content:center;font-family:var(--head)}
+ & .pill{border-radius:16px 4px 16px 4px;min-height:60px}& .fill{background:linear-gradient(#e8b04a,#b5341c);border-radius:16px 4px 16px 4px;opacity:.5}
+ & .main>.bar{height:8px}& .main>.bar i{border-radius:4px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#7a1f2b;font-weight:900;text-transform:none;letter-spacing:.01em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.04em;font-style:italic}
+ & .hb{color:var(--tx);text-transform:none;letter-spacing:.02em;font-weight:900;font-size:24px}
+ & .hb::before{width:22px;height:22px;border-radius:var(--leaf);background:var(--c);transform:rotate(-45deg)}  /* leaf */
+ & .hb::after{height:3px;border-radius:2px;background:linear-gradient(90deg,#b5341c,#c4570f,#e8b04a,transparent)}
+ & .kpi,& .alert{background:var(--panel);border-radius:12px;box-shadow:0 6px 18px -10px rgba(122,31,43,.5)}
+ & .kpi{border:0;border-top:4px solid var(--c)}& .kpi h3{color:var(--c);font-family:var(--head);text-transform:none;letter-spacing:.02em;font-size:15px}& .big{font-family:var(--head);font-weight:900}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:10px 2px 10px 2px;text-transform:none;letter-spacing:.02em}
+ & th{color:#7a1f2b;text-transform:none;letter-spacing:.02em}& td{background:var(--panel)}& td:first-child{border-radius:10px 0 0 10px}& td:last-child{border-radius:0 10px 10px 0}
+ & .st{color:var(--tx);text-transform:none}& .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.02em}& .log .t,& .info dt{color:#b5341c}
+ & .tip{border-radius:10px;border-color:#b5341c;background:var(--panel)}& .themesel select{background:var(--panel);border-color:#b5341c}
+}

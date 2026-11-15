@@ -1,0 +1,36 @@
+/* theme: Bauhaus */
+/* Primary colours on paper, geometric sans, lower-case headings, circle / square / triangle per section. */
+html[data-theme="bauhaus"]{
+ --big-fit:18.8cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#f4f1ea;--on:#fff;--panel:#fff;--o1:#d6201a;--o2:#111;--pe:#1d4fa0;--li:#d6201a;--pw:#1d4fa0;--sk:#111;--tan:#6b6b6b;
+ --tx:#111;--tx2:#3a3a3a;--mut:#5f5f5f;--grid:#e4e0d6;--axis:#111;--s1:#1d4fa0;--s2:#d6201a;--good:#1f7a36;--thr:#8a6100;--warn:#ffcc00;--crit:#d6201a;--info:#1d4fa0;
+ --font:'Jost','Futura','Century Gothic',sans-serif;--head:'Jost','Futura','Century Gothic',sans-serif;
+ & *{border-radius:0 !important}  /* only the circles below are round */
+ & body{letter-spacing:0}
+ & .rail{gap:10px}
+ & .elbow{background:#111;color:#fff;font-weight:800;text-transform:lowercase;letter-spacing:.04em}
+ & .elbow.t{min-height:118px;background:radial-gradient(circle at 70% 35%,#ffcc00 0 26px,transparent 27px),#111}  /* sun over black */
+ & .pill{text-transform:lowercase;letter-spacing:.02em;font-weight:600}& .pill b{font-weight:800}
+ & .fill{background:linear-gradient(#1d4fa0 0 33%,#ffcc00 33% 66%,#d6201a 66%)}
+ & .main>.bar{height:14px}& .inner::before,& .inner::after{display:none}
+ & .inner{border-left:12px solid #111;padding:18px 6px 12px 24px}
+ & h1{color:#111;font-weight:800;text-transform:lowercase;letter-spacing:-.01em;font-size:clamp(34px,5vw,64px);line-height:.95}
+ & .sub,& .themesel{text-transform:lowercase;letter-spacing:.04em}& .themesel select{border:2px solid #111;background:#fff}
+ & .hb{color:#111;font-weight:800;text-transform:lowercase;letter-spacing:0;font-size:26px}
+ & .hb::before{width:26px;height:26px;border-radius:0;background:var(--c)}  /* `*` above does not reach pseudo-elements */
+ & #s-alerts .hb::before,& #s-24 .hb::before{border-radius:50%}
+ & #s-kpi .hb::before,& #s-log .hb::before{clip-path:polygon(50% 0,100% 100%,0 100%);background:#ffcc00}
+ & .hb::after{height:6px;background:#111}
+ & .kpi{border:3px solid #111;padding:10px 14px 12px;  /* quarter circle in the corner */
+  background:radial-gradient(circle at 0 0,var(--c) 0 34px,transparent 35px),#fff}
+ & .kpi h3{color:#111;font-weight:800;text-transform:lowercase;letter-spacing:.02em;font-size:15px;padding-left:30px}
+ & .big{font-weight:800;letter-spacing:-.02em;--big:34px}& .sm{color:#3a3a3a}
+ & .alert{border:3px solid #111;background:#fff}& .alert .end{display:none}& .alert b{font-weight:600}
+ & .btn{text-transform:lowercase;letter-spacing:.02em;font-weight:600;border:2px solid #111}
+ & table{border-spacing:0;border-top:3px solid #111;border-bottom:3px solid #111;background:#fff}
+ & th{color:#111;text-transform:lowercase;letter-spacing:.02em;font-size:15px;border-bottom:2px solid #111;padding:6px 12px}
+ & td{border-bottom:1px solid #d9d4c7}& td:first-child{border-left-width:10px}& .st{color:#111;text-transform:lowercase}
+ & .panel h4{color:#111;text-transform:lowercase;letter-spacing:.02em}& .legend{letter-spacing:0}
+ & .log .t,& .info dt{color:#1d4fa0}& .info dt{text-transform:lowercase;letter-spacing:.02em}
+ & .tip{border:2px solid #111;background:#fff}
+}

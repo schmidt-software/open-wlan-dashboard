@@ -1,0 +1,25 @@
+/* theme: Mondrian */
+/* Thick black grid lines with red, blue and yellow fields; every card carries a colour block on top. */
+html[data-theme="mondrian"]{
+ --big-fit:17.9cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#f8f6f0;--on:#111;--panel:#fff;--o1:#f05a4f;--o2:#4a86dc;--pe:#f7d842;--li:#f05a4f;--pw:#4a86dc;--sk:#f7d842;--tan:#d9d9d9;
+ --tx:#111;--tx2:#333;--mut:#555;--grid:#e6e3da;--axis:#111;--s1:#1356a2;--s2:#d40920;--good:#2e9e4f;--thr:#8a6100;--warn:#f7d842;--crit:#f05a4f;--info:#4a86dc;
+ --font:'Jost','Futura',sans-serif;--head:'Jost','Futura',sans-serif;
+ & *,& .hb::before{border-radius:0 !important}
+ & .rail{background:#111;gap:8px;padding:8px}
+ & .elbow{background:#fff;color:#111;min-height:0;padding:14px;font-weight:800}& .elbow.t{min-height:90px;background:linear-gradient(#d40920 0 60%,#fff 60%)}
+ & .pill{min-height:60px;font-weight:600}& .fill{background:linear-gradient(#fff 0 40%,#1356a2 40% 70%,#fff 70%)}
+ & .main>.bar{height:16px;gap:8px;background:#111}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 6px 12px 22px;border-left:8px solid #111}
+ & h1{color:#111;font-weight:800;letter-spacing:.02em;font-size:clamp(30px,4.4vw,54px)}
+ & .hb{color:#111;font-weight:800;letter-spacing:.06em}& .hb::before{width:24px;height:24px;background:var(--c);border:4px solid #111}
+ & .hb::after{height:8px;background:#111}
+ & .kpis{background:#111;gap:8px;padding:8px}
+ & .kpi{position:relative;border:0;background:#fff;padding:56px 14px 12px}
+ & .kpi::before{content:"";position:absolute;left:0;right:0;top:0;height:42px;background:var(--c);border-bottom:8px solid #111}  /* colour block */
+ & .kpi h3{color:#111;font-weight:800}& .big{font-weight:800}
+ & .alert{border:6px solid #111;background:#fff}& .alert .end{display:none}
+ & .btn{border:3px solid #111;font-weight:600}
+ & table{border-spacing:0;border:6px solid #111;background:#fff}& th{color:#111;border-bottom:4px solid #111;padding:6px 12px}
+ & td{border-bottom:2px solid #111}& td:first-child{border-left-width:12px}& .st{color:#111}
+ & .log .t,& .info dt{color:#1356a2}& .tip{border:4px solid #111;background:#fff}& .themesel select{border:3px solid #111;background:#fff}
+}

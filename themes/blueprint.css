@@ -1,0 +1,29 @@
+/* theme: Blueprint */
+/* Construction plan: white lines on blue paper, drafting grid, dimension lines under headings, title block. */
+html[data-theme="blueprint"]{
+ --big-fit:19.6cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#1e4b8f;--on:#1e4b8f;--panel:#1e4b8f;--o1:#ffffff;--o2:#cfe3ff;--pe:#ffffff;--li:#cfe3ff;--pw:#e6f0ff;--sk:#ffffff;--tan:#cfe3ff;
+ --tx:#ffffff;--tx2:#dbe7fb;--mut:#c2d4f2;--grid:rgba(255,255,255,.15);--axis:rgba(255,255,255,.6);--s1:#ffffff;--s2:#ffd27a;--good:#7dffa8;--warn:#ffe14d;--crit:#ff5a5a;--info:#cfe3ff;
+ --font:'Share Tech Mono',ui-monospace,monospace;--head:'Architects Daughter',cursive;
+ --line:rgba(255,255,255,.85);
+ background:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px) 0 0/100px 100px,linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px) 0 0/100px 100px,
+  linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px) 0 0/20px 20px,linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px) 0 0/20px 20px,#1e4b8f;
+ & *,& .hb::before{border-radius:0 !important}
+ & body{background:transparent;letter-spacing:.02em}
+ & .elbow{background:transparent;color:#fff;border:1px solid var(--line);min-height:0;padding:10px;font-family:var(--head)}
+ & .pill{background:transparent;color:#fff;border:1px solid var(--line);border-left:6px solid var(--c);min-height:60px}
+ & .fill{background:repeating-linear-gradient(45deg,transparent 0 8px,rgba(255,255,255,.18) 8px 9px);border:1px solid var(--line)}  /* hatched section */
+ & .main>.bar{height:2px}& .main>.bar i{background:#fff !important}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 6px 12px 20px}
+ & h1{color:#fff;font-weight:400;text-transform:none;letter-spacing:.04em;font-size:clamp(28px,4vw,46px);border:3px double #fff;padding:4px 16px}
+ & .hb{color:#fff;font-weight:400;letter-spacing:.06em;text-transform:none;font-size:22px}
+ & .hb::before{width:14px;height:14px;background:transparent;border:1px solid #fff;border-radius:50% !important}
+ & .hb::after{height:11px;background:linear-gradient(#fff 0 0) 50%/100% 1px no-repeat,linear-gradient(#fff 0 0) 0 0/1px 100% no-repeat,linear-gradient(#fff 0 0) 100% 0/1px 100% no-repeat}  /* dimension line */
+ & .kpi,& .alert{border:1px solid var(--line);background:rgba(255,255,255,.04)}& .kpi{border-left:6px solid var(--c)}
+ & .kpi h3{color:#fff;font-family:var(--head);text-transform:none;letter-spacing:.04em;font-size:15px;font-weight:400}
+ & .alert .end{display:none}& .alert b{font-family:var(--head);font-weight:400}
+ & .btn{background:transparent;color:#fff;border:1px solid #fff}& .btn:hover,& .btn:focus-visible{background:#fff;color:#1e4b8f;filter:none}
+ & th{color:#fff}& td{background:transparent;border-bottom:1px solid rgba(255,255,255,.3)}& .st{color:#fff}
+ & .panel h4{font-family:var(--head);text-transform:none;letter-spacing:.04em;font-weight:400}
+ & .log .t,& .info dt{color:#fff}& .tip{border:1px solid #fff;background:#1e4b8f}& .themesel select{border-color:#fff;background:#1e4b8f}
+}
