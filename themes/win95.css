@@ -20,7 +20,7 @@ html[data-theme="win95"]{
  & .pill:hover,& .pill:focus-visible{background:#000080;color:#fff;filter:none}& .pill:hover b,& .pill:focus-visible b{color:#fff}
  & .main{background:#c0c0c0;box-shadow:var(--raised);padding:3px}
  & .main>.bar:first-child{height:24px;background:var(--title);color:#fff;font-weight:700;align-items:center;padding:0 4px 0 8px}
- & .main>.bar:first-child::before{content:"WLAN-Überwachung.exe"}
+ & .main>.bar:first-child::before{content:"WLAN Monitor.exe"}&:lang(de) .main>.bar:first-child::before{content:"WLAN-Überwachung.exe"}
  & .main>.bar:first-child::after{content:"✕";margin-left:auto;width:18px;height:16px;background:#c0c0c0;color:#000;box-shadow:var(--raised);font-size:11px;display:grid;place-items:center}
  & .main>.bar i{display:none}& .main>.bar:last-child{display:none}
  & .inner::before,& .inner::after{display:none}& .inner{padding:12px 10px}

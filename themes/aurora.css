@@ -1,4 +1,4 @@
-/* theme: Polarlicht */
+/* theme: Northern Lights; de: Polarlicht */
 /* Night sky with stars and slowly moving green-violet northern lights, icy glass cards. */
 @keyframes aurora-drift{0%,100%{transform:translateX(-6%) scaleY(1)}50%{transform:translateX(6%) scaleY(1.15)}}
 html[data-theme="aurora"]{

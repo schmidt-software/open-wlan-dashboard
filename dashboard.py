@@ -39,8 +39,10 @@ ACK_FILE = os.path.join(DIR, "acks.json")
 CONFIG_FILE = os.path.join(DIR, "config.local.json")
 
 LEVEL = {"info": 0, "warn": 1, "crit": 2}
-# box "net" log lines that mean the internet was down; IPv4 line only, its IPv6 twin would list the same outage twice
-NET_ISSUE = re.compile("fehlgeschlagen|Synchronisierung beginnt|unterbrochen|nicht verfügbar|Internetverbindung wurde getrennt")
+# box "net" log lines (German box UI) that mean the internet was down, with a language-neutral kind for the page;
+# IPv4 line only, its IPv6 twin would list the same outage twice
+NET_ISSUES = (("Internetverbindung wurde getrennt", "disconnected"), ("Synchronisierung beginnt", "dsl_resync"),
+              ("fehlgeschlagen", "failed"), ("unterbrochen", "interrupted"), ("nicht verfügbar", "unavailable"))
 EV = re.compile(r"^(?:\[(?P<rep>[^\]]+)\] )?WLAN-Gerät (?P<what>angemeldet|hat sich abgemeldet|wurde abgemeldet) "
                 r"\((?P<band>2,4|5) GHz\)(?:, [\d.]+ Mbit/s)?, (?P<name>.+?), IP [^,]*, MAC (?P<mac>[0-9A-F:]{17})")
 
@@ -83,16 +85,23 @@ def always_on(mac, link_rows, since):
     return not is_random_mac(mac) and len(samples) >= ALWAYS_ON_MIN_SAMPLES and share >= ALWAYS_ON_SHARE, share
 
 
+def alert(aid, level, key, **args):
+    """An alert without text: the page turns key + args into a sentence in the chosen language (web/app.js, I18N)."""
+    return {"id": aid, "level": level, "key": key, "args": args}
+
+
+def net_issue_kind(msg):
+    return next((kind for text, kind in NET_ISSUES if text in msg), None)
+
+
 def device_alerts(d):
     out = []
     if d["always_on"] and not d["online"]:
-        out.append(("crit", f"offline:{d['mac']}", f"{d['name']} ist offline", f"Sonst dauerhaft verbunden (in {round(d['share'] * 100)} % der Messungen der letzten 24 h)."))
+        out.append(alert(f"offline:{d['mac']}", "crit", "offline", name=d["name"], share=round(d["share"] * 100)))
     if d["always_on"] and d["drops_1h"] >= DROPS_WARN:
-        lvl = "crit" if d["drops_1h"] >= DROPS_CRIT else "warn"
-        out.append((lvl, f"drops:{d['mac']}", f"{d['name']} verliert ständig die Verbindung", f"{d['drops_1h']} Abbrüche in der letzten Stunde."))
+        out.append(alert(f"drops:{d['mac']}", "crit" if d["drops_1h"] >= DROPS_CRIT else "warn", "drops", name=d["name"], n=d["drops_1h"]))
     if d["always_on"] and d["online"] and d["rssi"] is not None and d["rssi"] <= RSSI_WARN:
-        lvl = "crit" if d["rssi"] <= RSSI_CRIT else "warn"
-        out.append((lvl, f"rssi:{d['mac']}", f"{d['name']}: schwaches Signal", f"{d['rssi']} dBm am {d['ap']} ({band_label(d['band'])})."))
+        out.append(alert(f"rssi:{d['mac']}", "crit" if d["rssi"] <= RSSI_CRIT else "warn", "rssi", name=d["name"], rssi=d["rssi"], ap=d["ap"], band=d["band"]))
     return out
 
 
@@ -109,9 +118,7 @@ def reboot_alert(boot, crash_times, now):
     if not boot or now - boot > REBOOT_ALERT_H * 3600:
         return None
     crash = any(t >= boot for t in crash_times)
-    return {"id": f"reboot:{round(boot / 60)}", "level": "warn" if crash else "info", "title": "FRITZ!Box wurde neu gestartet",
-            "detail": dt.datetime.fromtimestamp(boot).strftime("Am %d.%m. um %H:%M Uhr.")
-                      + (" Danach hat sie einen Fehlerbericht an AVM gesendet: vermutlich ein Absturz." if crash else "")}
+    return alert(f"reboot:{round(boot / 60)}", "warn" if crash else "info", "reboot_crash" if crash else "reboot", boot=round(boot * 1000))
 
 
 def apply_acks(alerts, acks, now):
@@ -160,15 +167,11 @@ def load_config():
     return {"never_always_on": {m.upper() for m in cfg.get("never_always_on", [])}}
 
 
-def band_label(b):
-    return "2,4 GHz" if b == "2.4" else "5 GHz"
-
-
 def wifi_gen(modes):
     for m, g in (("be", "Wi-Fi 7"), ("ax", "Wi-Fi 6"), ("ac", "Wi-Fi 5"), ("n", "Wi-Fi 4")):
         if m in modes:
             return g
-    return "älter als Wi-Fi 4" if modes else None
+    return "< Wi-Fi 4" if modes else None
 
 
 def device_detail(mac, ld, node, iface, link, t):
@@ -256,8 +259,8 @@ def slow_data():
         _slow["data"] = {
             "aps": aps, "links": links, "events": events,
             "radar": [e["msg"] for e in wlan if re.search("Radar|bevorrechtigten Nutzer", e["msg"]) and when(e) >= now - 86400],
-            "net_issues": [f'{e["date"]} {e["time"]} {e["msg"]}' for e in net
-                           if NET_ISSUE.search(e["msg"]) and when(e) >= now - 86400],
+            "net_issues": [(f'{e["date"]} {e["time"]}', net_issue_kind(e["msg"])) for e in net
+                           if net_issue_kind(e["msg"]) and when(e) >= now - 86400],
             "dsl": soap("/upnp/control/wandslifconfig1", "urn:dslforum-org:service:WANDSLInterfaceConfig:1", "GetInfo"),
             "ip": soap("/upnp/control/wanipconnection1", "urn:dslforum-org:service:WANIPConnection:1", "GetStatusInfo"),
             "ui": soap("/upnp/control/userif", "urn:dslforum-org:service:UserInterface:1", "GetInfo"),
@@ -290,7 +293,7 @@ def build_state():
     step, t_last = mon.get("sampleInterval", 5000) / 1000, mon.get("lastSampleTime", now)
     t_axis = [round((t_last - (n - 1 - k) * step) * 1000) for k in range(n)]
 
-    bands = {b: {"band": b, "label": band_label(b), "aps": [], "down": [0.0] * n, "up": [0.0] * n} for b in ("2.4", "5")}
+    bands = {b: {"band": b, "aps": [], "down": [0.0] * n, "up": [0.0] * n} for b in ("2.4", "5")}
     devices, uplink = {}, None
     for node in m["nodes"]:
         if node["uid"] not in meshed:
@@ -352,7 +355,7 @@ def build_state():
         d["drops_1h"] = sum(1 for e in evs if e["kind"] == "drop" and e["ts"] >= now - 3600)
         d["drops_24h"] = sum(1 for e in evs if e["kind"] == "drop")
         d["roams_24h"] = sum(1 for e in evs if e["kind"] == "roam")
-        d["alerts"] = [{"id": i, "level": lv, "title": ti, "detail": de} for lv, i, ti, de in device_alerts(d)]
+        d["alerts"] = device_alerts(d)
         d["level"] = max((LEVEL[a["level"]] for a in d["alerts"]), default=-1)
     devices = [d for d in devices.values() if d["online"] or d["always_on"]]  # skip offline phones etc.
 
@@ -360,38 +363,34 @@ def build_state():
     for b in bands.values():
         for a in b["aps"]:
             if a["util_avg30"] is not None and a["util_avg30"] >= UTIL_WARN:
-                alerts.append({"id": f"util:{b['band']}:{a['ap']}", "level": "crit" if a["util_avg30"] >= UTIL_CRIT else "warn",
-                               "title": f"{b['label']} am {a['ap']} stark ausgelastet",
-                               "detail": f"Kanal {a['channel']} im Mittel der letzten 30 min zu {a['util_avg30']} % belegt. Geräte mit viel Datenverkehr auf 5 GHz umziehen."})
+                alerts.append(alert(f"util:{b['band']}:{a['ap']}", "crit" if a["util_avg30"] >= UTIL_CRIT else "warn", "util",
+                                    band=b["band"], ap=a["ap"], channel=a["channel"], pct=a["util_avg30"]))
             if a["noise"] is not None and a["noise"] > NOISE_WARN:
-                alerts.append({"id": f"noise:{b['band']}:{a['ap']}", "level": "warn", "title": f"Störungen auf {b['label']} am {a['ap']}",
-                               "detail": f"Rauschen {a['noise']} dBm auf Kanal {a['channel']}. Möglicherweise Nachbarnetze oder Störquellen; anderen Kanal prüfen."})
+                alerts.append(alert(f"noise:{b['band']}:{a['ap']}", "warn", "noise", band=b["band"], ap=a["ap"], noise=a["noise"], channel=a["channel"]))
     if uplink is None:
-        alerts.append({"id": "uplink", "level": "crit", "title": "Repeater nicht über 5 GHz angebunden", "detail": "Der Repeater hat keine 5-GHz-Verbindung zur FRITZ!Box."})
+        alerts.append(alert("uplink", "crit", "uplink_none"))
     elif (uplink["rssi"] is not None and uplink["rssi"] < UPLINK_RSSI_WARN) or (uplink["down"] or 0) < UPLINK_RATE_WARN:
-        alerts.append({"id": "uplink", "level": "warn", "title": "Schwache Anbindung des Repeaters",
-                       "detail": f"Signal {uplink['rssi']} dBm, {uplink['down']} Mbit/s zur FRITZ!Box."})
+        alerts.append(alert("uplink", "warn", "uplink_weak", rssi=uplink["rssi"], rate=uplink["down"]))
     dsl, ip = slow["dsl"], slow["ip"]
     if dsl.get("NewStatus") != "Up":
-        alerts.append({"id": "dsl", "level": "crit", "title": "DSL-Leitung nicht synchron", "detail": f"Status: {dsl.get('NewStatus')}."})
+        alerts.append(alert("dsl", "crit", "dsl", status=dsl.get("NewStatus")))
     if ip.get("NewConnectionStatus") != "Connected":
-        alerts.append({"id": "inet", "level": "crit", "title": "Keine Internetverbindung", "detail": f"Status: {ip.get('NewConnectionStatus')}, letzter Fehler {ip.get('NewLastConnectionError')}."})
+        alerts.append(alert("inet", "crit", "inet", status=ip.get("NewConnectionStatus"), error=ip.get("NewLastConnectionError")))
     snr = min(int(dsl.get("NewDownstreamNoiseMargin") or 0), int(dsl.get("NewUpstreamNoiseMargin") or 0)) / 10
     if dsl.get("NewStatus") == "Up" and snr < SNR_WARN:
-        alerts.append({"id": "snr", "level": "warn", "title": "Geringer Störabstand der DSL-Leitung", "detail": f"{snr:.1f} dB. Die Leitung kann bei Störungen abbrechen."})
-    for line in slow["net_issues"][:3]:
-        alerts.append({"id": f"netlog:{line[:13]}", "level": "warn", "title": "Internetunterbrechung in den letzten 24 h", "detail": line})
+        alerts.append(alert("snr", "warn", "snr", snr=snr))
+    for when_s, kind in slow["net_issues"][:3]:
+        alerts.append(alert(f"netlog:{when_s[:13]}", "warn", "netlog", time=when_s, kind=kind))
     if slow["radar"]:
-        alerts.append({"id": "radar", "level": "warn", "title": "5-GHz-Funk wegen Radar unterbrochen", "detail": slow["radar"][0]})
+        alerts.append(alert("radar", "warn", "radar", line=slow["radar"][0]))  # raw box log line (German box UI)
     last_sample = max((r["ts"] for r in slow["aps"]), default=0)
     if now - last_sample > COLLECTOR_STALE_MIN * 60:
-        alerts.append({"id": "collector", "level": "warn", "title": "Verlauf wird nicht aufgezeichnet",
-                       "detail": "Der Sammeldienst (collect.py) hat seit über 40 Minuten nichts gespeichert. Ist der Mac im Ruhezustand?"})
+        alerts.append(alert("collector", "warn", "collector", minutes=COLLECTOR_STALE_MIN))
     reboot = reboot_alert(slow["boot"], slow["crash_reports"], now)
     if reboot:
         alerts.append(reboot)
     if slow["ui"].get("NewUpgradeAvailable") == "1":
-        alerts.append({"id": "update", "level": "info", "title": "FRITZ!OS-Update verfügbar", "detail": f"Version {slow['ui'].get('NewX_AVM-DE_Version')}."})
+        alerts.append(alert("update", "info", "update", version=slow["ui"].get("NewX_AVM-DE_Version")))
     alerts.sort(key=lambda a: -LEVEL[a["level"]])
 
     names = {d["mac"]: d["name"] for d in devices}
@@ -404,7 +403,7 @@ def build_state():
                      "dsl_up": dsl.get("NewStatus") == "Up", "sync_down": int(dsl.get("NewDownstreamCurrRate") or 0) / 1000,
                      "sync_up": int(dsl.get("NewUpstreamCurrRate") or 0) / 1000, "snr": snr, "traffic": wan},
         "devices": sorted(devices, key=lambda d: (-d["level"], not d["online"], d["band"], d["name"].lower())),
-        "events": [{"ts": round(e["ts"] * 1000), "name": names.get(e["mac"]) or e["name"], "ap": e["ap"], "band": band_label(e["band"]),
+        "events": [{"ts": round(e["ts"] * 1000), "name": names.get(e["mac"]) or e["name"], "ap": e["ap"], "band": e["band"],
                     "kind": e["kind"]} for e in slow["events"][-25:][::-1]],
         "collector_age_min": round((now - last_sample) / 60) if last_sample else None,
         "details": details,  # served per device by /device, not in /data
@@ -413,20 +412,29 @@ def build_state():
 
 # ---------------------------------------------------------------- web page
 
-THEME_HEAD = re.compile(r"/\*\s*theme:\s*([^;*]+?)\s*(;\s*startrek\s*)?\*/")  # first line of a theme file
+THEME_HEAD = re.compile(r"/\*\s*theme:\s*([^*]+?)\s*\*/")  # first line: /* theme: Ocean; de: Ozean; startrek */
+
+
+def parse_theme_head(line):
+    """(name, German name, startrek) from a theme file's first line, or None without a header."""
+    m = THEME_HEAD.match(line)
+    if not m:
+        return None
+    name, *opts = [p.strip() for p in m[1].split(";")]
+    de = next((o[3:].strip() for o in opts if o.startswith("de:")), name)
+    return name, de, "startrek" in opts
 
 
 def list_themes(folder=THEME_DIR):
-    """[(id, name, startrek)] for every <id>.css in the theme folder, LCARS (the base design) first.
-    The first line of a theme file names it: /* theme: Amiga 500 */ ("; startrek" adds the alarm words)."""
+    """[(id, name, German name, startrek)] for every <id>.css in the theme folder, LCARS (the base design) first."""
     out = []
     for f in os.listdir(folder):
         m = re.fullmatch(r"([a-z0-9-]+)\.css", f)
         if not m:
             continue
         with open(os.path.join(folder, f), encoding="utf-8", errors="replace") as fh:  # one badly saved file must not break the page
-            h = THEME_HEAD.match(fh.readline())
-        out.append((m[1], h[1] if h else m[1], bool(h and h[2])))
+            h = parse_theme_head(fh.readline())
+        out.append((m[1], *(h or (m[1], m[1], False))))
     return sorted(out, key=lambda t: (t[0] != "lcars", t[1].lower()))
 
 
@@ -439,15 +447,18 @@ def static_file(path):
     """(body, content type) for the page and its design files, or None. Read on every request,
     so edits to a theme show up with a page reload."""
     if path == "/":
-        opts = "".join(f'<option value="{t}"{" data-startrek" if trek else ""}>{html.escape(n)}</option>' for t, n, trek in list_themes())
+        opts = "".join(f'<option value="{t}" data-en="{html.escape(n)}" data-de="{html.escape(de)}"{" data-startrek" if trek else ""}>{html.escape(n)}</option>'
+                       for t, n, de, trek in list_themes())
         return read_web("index.html").replace("<!--THEME_OPTIONS-->", opts), "text/html; charset=utf-8"
     if path == "/app.js":
         return read_web("app.js").replace("__POLL_S__", str(POLL_S)), "text/javascript; charset=utf-8"
+    if path == "/i18n.js":
+        return read_web("i18n.js"), "text/javascript; charset=utf-8"
     if path == "/base.css":
         return read_web("base.css"), "text/css; charset=utf-8"
     if path == "/themes.css":
         parts = []
-        for t, _, _ in list_themes():
+        for t, *_ in list_themes():
             with open(os.path.join(THEME_DIR, t + ".css"), encoding="utf-8", errors="replace") as f:
                 parts.append(f.read())
         return "\n".join(parts), "text/css; charset=utf-8"
@@ -511,7 +522,7 @@ def device_view(mac):
     hist = [[round(r["ts"] * 1000), num(r["rssi_dbm"]), num(r["snr_db"]), mbit(r["rate_tx_kbit"]), mbit(r["rate_rx_kbit"]),
              "Repeater" if "repeater" in r["ap"].lower() else "FRITZ!Box", "5" if "5G" in r["band"] else "2.4"]
             for r in slow["links"] if r["mac"] == mac]
-    events = [{"ts": round(e["ts"] * 1000), "ap": e["ap"], "band": band_label(e["band"]), "kind": e["kind"]}
+    events = [{"ts": round(e["ts"] * 1000), "ap": e["ap"], "band": e["band"], "kind": e["kind"]}
               for e in slow["events"] if e["mac"] == mac][::-1]
     return dict(d, detail=cached_state()["details"].get(mac, {}), hist=hist, events=events, time=state["time"],
                 t_axis=state["t_axis"], thr_rssi=state["thr_rssi"])
@@ -554,7 +565,7 @@ class Handler(BaseHTTPRequestHandler):
                 else:
                     mac = urllib.parse.parse_qs(url.query).get("mac", [""])[0].upper()
                     data = device_view(mac) if re.fullmatch(r"[0-9A-F]{2}(:[0-9A-F]{2}){5}", mac) else None
-                    data = data or {"error": "Gerät nicht in der Liste"}
+                    data = data or {"error": "unknown_device"}  # translated by the page
                 body = json.dumps(data).encode()
             except Exception as e:  # keep the page alive when the box is briefly unreachable
                 body = json.dumps({"error": f"{type(e).__name__}: {e}"}).encode()
@@ -595,9 +606,10 @@ def selftest():
     assert not always_on("00:00:5E:00:53:01", rows, 0)[0]               # online in only half the samples
     base = {"name": "X", "mac": "00:00:5E:00:53:01", "always_on": True, "share": 0.98, "online": True, "drops_1h": 0, "rssi": -60, "ap": "Repeater", "band": "2.4"}
     assert device_alerts(base) == []
-    assert device_alerts(dict(base, online=False))[0][0] == "crit"
-    assert device_alerts(dict(base, drops_1h=5))[0][0] == "warn" and device_alerts(dict(base, drops_1h=60))[0][0] == "crit"
-    assert device_alerts(dict(base, rssi=-77))[0][0] == "warn" and device_alerts(dict(base, rssi=-82))[0][0] == "crit"
+    off = device_alerts(dict(base, online=False))[0]
+    assert (off["level"], off["key"], off["args"]) == ("crit", "offline", {"name": "X", "share": 98}), off
+    assert device_alerts(dict(base, drops_1h=5))[0]["level"] == "warn" and device_alerts(dict(base, drops_1h=60))[0]["level"] == "crit"
+    assert device_alerts(dict(base, rssi=-77))[0]["level"] == "warn" and device_alerts(dict(base, rssi=-82))[0]["level"] == "crit"
     assert device_alerts(dict(base, always_on=False, online=False, drops_1h=60, rssi=-90)) == []
     A = lambda i, lv: {"id": i, "level": lv, "title": i, "detail": ""}
     acks = {"a": {"kind": "ack", "level": "warn", "at": 0, "last_seen": 0},
@@ -618,7 +630,7 @@ def selftest():
                                [dict(A("x", "crit"), state="muted", until=5000), dict(A("y", "warn"), state="active")])
     assert [(d["name"], d["level"], d["quiet"]) for d in devs] == [("B", 1, None), ("A", -1, "muted"), ("C", -1, None)], devs
     assert devs[1]["quiet_level"] == 2 and devs[1]["alerts"][0]["until"] == 5000  # mute end reaches the detail page
-    assert wifi_gen(["g", "n", "ax"]) == "Wi-Fi 6" and wifi_gen(["b", "g"]) == "älter als Wi-Fi 4" and wifi_gen([]) is None
+    assert wifi_gen(["g", "n", "ax"]) == "Wi-Fi 6" and wifi_gen(["b", "g"]) == "< Wi-Fi 4" and wifi_gen([]) is None
     off = device_detail("02:00:00:00:00:01", {}, {}, {}, {}, None)    # offline device: no mesh data at all
     assert off["random_mac"] and off["snr"] is None and off["traffic"] is None and off["streams"] is None
     on = device_detail("00:00:5E:00:53:01", {"ip": "192.0.2.5", "static_dhcp": "1", "firstused": "1700000000"}, {},
@@ -632,24 +644,27 @@ def selftest():
     assert stable_boot(b, 5, 1e9 + 4000) == 1e9 + 3995                   # a real new restart replaces it
     assert reboot_alert(1e9, [], 1e9 + REBOOT_ALERT_H * 3600 + 1) is None   # restart too long ago
     r = reboot_alert(1e9, [1e9 + 300], 1e9 + 600)                        # report sent after the boot: crash
-    assert r["level"] == "warn" and "Absturz" in r["detail"]
-    assert reboot_alert(1e9, [1e9 - 300], 1e9 + 600)["level"] == "info"  # older report belongs to an earlier boot
+    assert r["level"] == "warn" and r["key"] == "reboot_crash" and r["args"]["boot"] == 1e12
+    assert reboot_alert(1e9, [1e9 - 300], 1e9 + 600)["key"] == "reboot"   # older report belongs to an earlier boot
     L = lambda t, m="WLAN-Gerät hat sich abgemeldet (2,4 GHz), X": {"date": "14.11.26", "time": t, "msg": m}
     assert merge_new([L("22:24:29")], [L("22:24:30"), L("22:24:39"), L("22:24:43", "other")]) == [L("22:24:39"), L("22:24:43", "other")]  # ±1 s shift
     assert merge_new([], [L("22:01:30"), L("22:01:32")]) == [L("22:01:30"), L("22:01:32")]  # same read: real back-and-forth
     assert merge_new([L("22:01:30")], [L("22:01:30"), L("22:01:32")]) == [L("22:01:32")]   # one known line absorbs one entry
-    assert NET_ISSUE.search("Internetverbindung wurde getrennt.") and NET_ISSUE.search("DSL-Synchronisierung beginnt (Training).")
-    assert not NET_ISSUE.search("Internetverbindung IPv6 wurde getrennt, Präfix nicht mehr gültig.")
-    assert not NET_ISSUE.search("Internetverbindung wurde erfolgreich hergestellt. IP-Adresse: 192.0.2.1")
+    assert net_issue_kind("Internetverbindung wurde getrennt.") == "disconnected"
+    assert net_issue_kind("DSL-Synchronisierung beginnt (Training).") == "dsl_resync"
+    assert net_issue_kind("Internetverbindung IPv6 wurde getrennt, Präfix nicht mehr gültig.") is None
+    assert net_issue_kind("Internetverbindung wurde erfolgreich hergestellt. IP-Adresse: 192.0.2.1") is None
     import tempfile
     with tempfile.TemporaryDirectory() as tmp:
         for f, head in (("b.css", "/* theme: Zeta; startrek */"), ("a.css", "/* theme: Alpha */"), ("lcars.css", "/* theme: LCARS */"),
                         ("noname.css", "html{}"), ("Bad Name.css", "/* theme: X */"), ("notes.txt", "")):
             open(os.path.join(tmp, f), "w").write(head + "\n")
         open(os.path.join(tmp, "k.css"), "wb").write("/* theme: K\u00fchl */\n".encode("latin-1"))  # not UTF-8
-        assert list_themes(tmp) == [("lcars", "LCARS", False), ("a", "Alpha", False), ("k", "K\ufffdhl", False),
-                                    ("noname", "noname", False), ("b", "Zeta", True)], list_themes(tmp)
-    assert list_themes()[0] == ("lcars", "LCARS", True)
+        assert list_themes(tmp) == [("lcars", "LCARS", "LCARS", False), ("a", "Alpha", "Alpha", False), ("k", "K\ufffdhl", "K\ufffdhl", False),
+                                    ("noname", "noname", "noname", False), ("b", "Zeta", "Zeta", True)], list_themes(tmp)
+    assert parse_theme_head("/* theme: Ocean; de: Ozean */") == ("Ocean", "Ozean", False)
+    assert parse_theme_head("/* theme: LCARS; startrek */") == ("LCARS", "LCARS", True)
+    assert list_themes()[0] == ("lcars", "LCARS", "LCARS", True)
     for f in os.listdir(THEME_DIR):   # every shipped theme names itself in line 1
         assert THEME_HEAD.match(open(os.path.join(THEME_DIR, f), encoding="utf-8").readline()), f
     print("selftest ok")

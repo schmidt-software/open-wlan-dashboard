@@ -1,4 +1,4 @@
-/* theme: Newspaper */
+/* theme: Newspaper; de: Zeitung */
 html[data-theme="newspaper"]{
  --bg:#f4efe4;--on:#f4efe4;--panel:transparent;--o1:#1a1a1a;--o2:#1a1a1a;--pe:#1a1a1a;--li:#1a1a1a;--pw:#1a1a1a;--sk:#1a1a1a;--tan:#1a1a1a;
  --tx:#1a1a1a;--tx2:#3d3a35;--mut:#6b6358;--grid:#ddd5c4;--axis:#1a1a1a;--s1:#1a1a1a;--s2:#a4161a;--good:#2e6b30;--thr:#8a6100;--warn:#f2c200;--crit:#a4161a;--info:#3d3a35;
@@ -9,7 +9,7 @@ html[data-theme="newspaper"]{
  & .inner::before,& .inner::after{display:none}& .inner{padding:10px 0}
  & header{flex-direction:column-reverse;align-items:center;text-align:center;border-bottom:3px double var(--tx);padding-bottom:10px}
  & h1{font-family:'UnifrakturMaguntia',var(--head);font-weight:400;text-transform:none;letter-spacing:0;font-size:clamp(34px,6vw,64px);text-align:center}
- & .sub,& .sd{text-transform:none;font-style:italic;letter-spacing:.04em;text-align:center}& .themesel{justify-content:center;text-transform:none;letter-spacing:0}
+ & .sub,& .sd{text-transform:none;font-style:italic;letter-spacing:.04em;text-align:center}& .prefs,& .themesel{justify-content:center;text-transform:none;letter-spacing:0}
  & .themesel select{border-radius:0;border-color:var(--tx)}
  & .alarm{border-radius:0;border:2px solid var(--tx);font-size:15px;letter-spacing:.2em;padding:2px 14px}
  & .hb{color:var(--tx);font-size:22px;font-weight:900;letter-spacing:.02em;border-top:4px solid var(--tx);padding-top:6px;margin:28px 0 12px}

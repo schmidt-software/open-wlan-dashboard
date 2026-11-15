@@ -1,4 +1,4 @@
-/* theme: Kreidetafel */
+/* theme: Chalkboard; de: Kreidetafel */
 /* Slate board with chalk dust, wooden frame, coloured chalk, hand-drawn lines and lettering. */
 html[data-theme="chalkboard"]{
  --big-fit:20cqi;  /* big numbers: max share of the card width for this font */

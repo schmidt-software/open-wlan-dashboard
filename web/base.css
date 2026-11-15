@@ -68,6 +68,7 @@ tr.click{cursor:pointer}tr.click:hover td,tr.click:focus-visible td{filter:brigh
 .info dt{color:var(--li);text-transform:uppercase;letter-spacing:.12em;font-size:13px;padding-top:3px}.info dd{margin:0;overflow-wrap:anywhere}
 .dhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px}
 h1,.hb,.alarm,.big,.kpi h3,.elbow,.pill b{font-family:var(--head)}.sd{text-align:right}
+.prefs{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:0 18px}
 .themesel{display:flex;justify-content:flex-end;align-items:center;gap:8px;margin-top:8px;font-size:13px;color:var(--tx2);text-transform:uppercase;letter-spacing:.12em}
 .themesel select{font:inherit;color:var(--tx);background:var(--panel);border:1px solid var(--tx2);border-radius:12px;padding:3px 8px;cursor:pointer}
 .themesel option{background:var(--bg);color:var(--tx)}

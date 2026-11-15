@@ -1,4 +1,4 @@
-/* theme: Notizblock */
+/* theme: Notepad; de: Notizblock */
 /* Lined paper with a red margin, handwriting, highlighter colours, index cards and taped notes. */
 html[data-theme="notepad"]{
  --big-fit:21.2cqi;  /* big numbers: max share of the card width for this font */

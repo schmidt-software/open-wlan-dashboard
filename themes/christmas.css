@@ -1,4 +1,4 @@
-/* theme: Weihnachten */
+/* theme: Christmas; de: Weihnachten */
 /* Fir green night with falling snow, gingerbread cards with icing, ornaments and garlands, candy-cane buttons. */
 @keyframes christmas-snow{from{transform:translateY(-50%)}to{transform:translateY(0)}}
 html[data-theme="christmas"]{

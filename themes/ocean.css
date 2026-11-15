@@ -1,4 +1,4 @@
-/* theme: Ozean */
+/* theme: Ocean; de: Ozean */
 /* Deep sea: blue water gradient, rising bubbles, coral and sea-foam accents, rounded glass cards, wavy lines. */
 @keyframes ocean-bubbles{from{transform:translateY(0)}to{transform:translateY(-50%)}}
 html[data-theme="ocean"]{

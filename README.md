@@ -23,6 +23,9 @@ WLAN Dashboard includes 44 themes ranging from sci-fi and retro computers to art
 seasons. LCARS is the default selection, and your choice is remembered per browser. Browse the
 [THEMES.md](THEMES.md) gallery or see [Themes](#themes) for editing instructions.
 
+The page is available in English and German, with English as the default. A language menu next
+to the theme menu lets you switch, and your choice is remembered per browser.
+
 Alerts can be acknowledged or muted for 1 h / 24 h; they re-arm automatically when the
 problem gets worse, when a mute expires, or when a resolved problem comes back.
 
@@ -36,7 +39,8 @@ reads from the FRITZ!Box.
 | `dashboard.py` | The dashboard: web server on http://127.0.0.1:8765, alert logic, data endpoints |
 | `web/index.html` | Page markup |
 | `web/base.css` | Base design (= the LCARS theme): layout, shapes, colour variables, phone layout |
-| `web/app.js` | Page logic: rendering, charts, detail page, acknowledge/mute, theme menu |
+| `web/app.js` | Page logic: rendering, charts, detail page, acknowledge/mute, theme and language menus |
+| `web/i18n.js` | All page texts in English and German, see [Translations](#translations) |
 | `themes/*.css` | One file per theme; the theme menu is built from this folder |
 | `collect.py` | Collector for the 24 h history: WLAN log, link quality per device, channel load. Run every 15 min |
 | `live.py` | FRITZ!Box access helpers used by the dashboard (also a minimal standalone traffic view) |
@@ -71,6 +75,20 @@ reads from the FRITZ!Box.
 
 Self-test of the alert logic: `python3 dashboard.py --selftest`
 
+## Translations
+
+All page texts live in `web/i18n.js` inside a single `I18N` object with `en` and `de` blocks
+that have the same keys. Placeholders like `{name}` are filled in by the page. `dashboard.py`
+sends alerts as a key plus arguments, not as text; their texts are `a.<key>.t` (title) and
+`a.<key>.d` (detail).
+
+To add a language:
+
+1. Copy the `en` block in `web/i18n.js` under a new language code.
+2. Translate the values in the new block.
+3. Add an `<option>` to the language menu (`id="lang"`) in `web/index.html`. Theme names fall
+   back to English.
+
 ## Themes
 
 A theme is one CSS file in `themes/`. The server reads the folder on every page load, so a new
@@ -87,9 +105,12 @@ themes/
 
 1. Copy a theme that is close to what you want, e.g. `cp themes/macbook.css themes/sunset.css`.
    The file name is the theme id: lowercase letters, digits and `-` only.
-2. Line 1 names it in the menu: `/* theme: Sunset */`. Add `; startrek` to show the Star Trek
-   alarm words ("Gelber Alarm", "Alle Systeme nominal") and the stardate in the header; other
-   themes hide the header badge and show the normal date.
+2. Line 1 names it in the menu: `/* theme: Sunset; de: Sonnenuntergang */`. The German name is
+   optional; without `de:` the English name is used in both languages. Add `; startrek` to show
+   the Star Trek alarm words ("Yellow Alert", "All systems nominal" / "Gelber Alarm", "Alle
+   Systeme nominal") and the stardate in the header; other themes hide the header badge and show
+   the normal date. Texts a theme adds in CSS can switch per language with `:lang(de)`, see
+   `bahnhof.css`.
 3. Put every rule inside `html[data-theme="sunset"]{ ... }`, with the id from the file name.
    Rules for elements use CSS nesting with `&`, e.g. `& .kpi{border-radius:0}`.
 4. Reload the dashboard and pick it from the menu. The menu is sorted by name; LCARS stays first.

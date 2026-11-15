@@ -4,16 +4,16 @@ The dashboard ships with 44 themes. Pick one in the header of the page; the choi
 per browser. LCARS is the default. How to edit a theme or add your own is described in the
 [README](README.md#themes).
 
-The screenshots show demo data (no real devices). Animated themes (Bahnhofsanzeige, Matrix, Radar,
-Blade Runner, Sci-Fi Holo, Terminal, Ozean, Polarlicht, Weihnachten) stop moving when the system
+The screenshots show demo data (no real devices). Animated themes (Departure Board, Matrix, Radar,
+Blade Runner, Sci-Fi Holo, Terminal, Ocean, Northern Lights, Christmas) stop moving when the system
 setting "reduce motion" is on.
 
 - **Sci-fi and film:** [LCARS](#lcars), [Klingon](#klingon), [Futuristic](#futuristic), [Tron](#tron), [Matrix](#matrix), [Blade Runner](#blade-runner), [Sci-Fi Holo](#sci-fi-holo), [Radar](#radar), [Synthwave](#synthwave)
 - **Computers:** [Terminal](#terminal), [Windows 95](#windows-95), [MacBook](#macbook), [Amiga 500](#amiga-500), [Retro 8Bit](#retro-8bit), [Game Boy](#game-boy), [Atari 2600](#atari-2600), [Blueprint](#blueprint), [Circuit Board](#circuit-board), [Cockpit](#cockpit)
 - **Art and design:** [Bauhaus](#bauhaus), [Mondrian](#mondrian), [Art déco](#art-déco), [Pop Art](#pop-art), [Hundertwasser](#hundertwasser), [Zen](#zen), [Ukiyo-e](#ukiyo-e), [Newspaper](#newspaper)
-- **Places and things:** [Bahnhofsanzeige](#bahnhofsanzeige), [Kreidetafel](#kreidetafel), [Notizblock](#notizblock), [Kaffeehaus](#kaffeehaus), [Woodworker](#woodworker), [Western](#western), [Abenteuer-Pergament](#abenteuer-pergament), [Funkamateur](#funkamateur)
-- **Nature and seasons:** [Ozean](#ozean), [Wald](#wald), [Polarlicht](#polarlicht), [Herbst](#herbst), [Weihnachten](#weihnachten)
-- **Fun:** [Pokemon](#pokemon), [Unicorn](#unicorn), [Coca-Cola](#coca-cola), [Disco 70er](#disco-70er)
+- **Places and things:** [Departure Board](#departure-board), [Chalkboard](#chalkboard), [Notepad](#notepad), [Coffee House](#coffee-house), [Woodworker](#woodworker), [Western](#western), [Adventure Parchment](#adventure-parchment), [Ham Radio](#ham-radio)
+- **Nature and seasons:** [Ocean](#ocean), [Forest](#forest), [Northern Lights](#northern-lights), [Autumn](#autumn), [Christmas](#christmas)
+- **Fun:** [Pokemon](#pokemon), [Unicorn](#unicorn), [Coca-Cola](#coca-cola), [70s Disco](#70s-disco)
 
 ## Sci-fi and film
 
@@ -117,7 +117,7 @@ File: [`themes/macbook.css`](themes/macbook.css)
 
 ### Amiga 500
 
-Features a blue screen with a white title bar reading '512K Chip-RAM frei'. Windows have white frames, striped drag bars, square bevelled gadgets, and a narrow pixel terminal font.
+Features a blue screen with a white title bar reading '512K chip RAM free'. Windows have white frames, striped drag bars, square bevelled gadgets, and a narrow pixel terminal font.
 
 ![Amiga 500](assets/themes/amiga.jpg)
 
@@ -239,35 +239,35 @@ File: [`themes/newspaper.css`](themes/newspaper.css)
 
 ## Places and things
 
-### Bahnhofsanzeige
+### Departure Board
 
-Mimics a split-flap departure board where values sit on black tiles that flip on refresh. Headings appear as blue station signs with small 'Gleis' plates.
+Mimics a split-flap departure board where values sit on black tiles that flip on refresh. Headings appear as blue station signs with small 'Track' plates.
 
-![Bahnhofsanzeige](assets/themes/bahnhof.jpg)
+![Departure Board](assets/themes/bahnhof.jpg)
 
 File: [`themes/bahnhof.css`](themes/bahnhof.css)
 
-### Kreidetafel
+### Chalkboard
 
 Looks like a slate board with chalk dust and a wooden frame. Uses coloured chalk for hand-drawn lines and lettering throughout the dashboard.
 
-![Kreidetafel](assets/themes/chalkboard.jpg)
+![Chalkboard](assets/themes/chalkboard.jpg)
 
 File: [`themes/chalkboard.css`](themes/chalkboard.css)
 
-### Notizblock
+### Notepad
 
 Resembles lined paper with a red margin and handwriting. Includes highlighter colours, index cards, and taped notes for a casual, analog feel.
 
-![Notizblock](assets/themes/notepad.jpg)
+![Notepad](assets/themes/notepad.jpg)
 
 File: [`themes/notepad.css`](themes/notepad.css)
 
-### Kaffeehaus
+### Coffee House
 
 Uses cream and espresso brown tones with coffee ring stains. Features menu-card typography with dotted leaders for a warm, traditional cafe atmosphere.
 
-![Kaffeehaus](assets/themes/coffeehouse.jpg)
+![Coffee House](assets/themes/coffeehouse.jpg)
 
 File: [`themes/coffeehouse.css`](themes/coffeehouse.css)
 
@@ -287,61 +287,61 @@ Resembles a wanted poster on weathered wood planks with nails. Features wood typ
 
 File: [`themes/western.css`](themes/western.css)
 
-### Abenteuer-Pergament
+### Adventure Parchment
 
 Resembles a fantasy adventure map on parchment with dark edges. Features gold-framed cards, heart symbols, and a palette of forest green and gold.
 
-![Abenteuer-Pergament](assets/themes/parchment.jpg)
+![Adventure Parchment](assets/themes/parchment.jpg)
 
 File: [`themes/parchment.css`](themes/parchment.css)
 
-### Funkamateur
+### Ham Radio
 
 Resembles a valve radio at night with dark bakelite and brass. Features warm amber dial glow, frequency scales, and Morse-code markers.
 
-![Funkamateur](assets/themes/hamradio.jpg)
+![Ham Radio](assets/themes/hamradio.jpg)
 
 File: [`themes/hamradio.css`](themes/hamradio.css)
 
 ## Nature and seasons
 
-### Ozean
+### Ocean
 
 Depicts deep sea with a blue water gradient and rising bubbles. Features coral and sea-foam accents, rounded glass cards, and wavy lines.
 
-![Ozean](assets/themes/ocean.jpg)
+![Ocean](assets/themes/ocean.jpg)
 
 File: [`themes/ocean.css`](themes/ocean.css)
 
-### Wald
+### Forest
 
 Depicts a dark forest floor with light shafts through the canopy. Uses moss and bark colours alongside leaf shapes for a natural aesthetic.
 
-![Wald](assets/themes/forest.jpg)
+![Forest](assets/themes/forest.jpg)
 
 File: [`themes/forest.css`](themes/forest.css)
 
-### Polarlicht
+### Northern Lights
 
 Shows a night sky with stars and slowly moving green-violet northern lights. Icy glass cards complete the look.
 
-![Polarlicht](assets/themes/aurora.jpg)
+![Northern Lights](assets/themes/aurora.jpg)
 
 File: [`themes/aurora.css`](themes/aurora.css)
 
-### Herbst
+### Autumn
 
 Uses warm paper tones with maple red, pumpkin, and mustard colours. Scattered leaves decorate the interface alongside elegant serif headings for a seasonal appearance.
 
-![Herbst](assets/themes/autumn.jpg)
+![Autumn](assets/themes/autumn.jpg)
 
 File: [`themes/autumn.css`](themes/autumn.css)
 
-### Weihnachten
+### Christmas
 
 Displays fir green night skies with falling snow. Features gingerbread cards with icing, ornaments, garlands, and candy-cane buttons for a festive theme.
 
-![Weihnachten](assets/themes/christmas.jpg)
+![Christmas](assets/themes/christmas.jpg)
 
 File: [`themes/christmas.css`](themes/christmas.css)
 
@@ -371,10 +371,10 @@ Features red and white vintage advertising styles without logos. Includes a red 
 
 File: [`themes/cola.css`](themes/cola.css)
 
-### Disco 70er
+### 70s Disco
 
 Uses brown, orange, and mustard colours with 70s stripes. Features mirror-ball sparkle effects, round shapes, and a chunky rounded font for a retro vibe.
 
-![Disco 70er](assets/themes/disco.jpg)
+![70s Disco](assets/themes/disco.jpg)
 
 File: [`themes/disco.css`](themes/disco.css)
