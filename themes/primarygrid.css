@@ -1,6 +1,6 @@
-/* theme: Mondrian */
+/* theme: Primary Grid; de: Farbraster */
 /* Thick black grid lines with red, blue and yellow fields; every card carries a colour block on top. */
-html[data-theme="mondrian"]{
+html[data-theme="primarygrid"]{
  --big-fit:17.9cqi;  /* big numbers: max share of the card width for this font */
  --bg:#f8f6f0;--on:#111;--panel:#fff;--o1:#f05a4f;--o2:#4a86dc;--pe:#f7d842;--li:#f05a4f;--pw:#4a86dc;--sk:#f7d842;--tan:#d9d9d9;
  --tx:#111;--tx2:#333;--mut:#555;--grid:#e6e3da;--axis:#111;--s1:#1356a2;--s2:#d40920;--good:#2e9e4f;--thr:#8a6100;--warn:#f7d842;--crit:#f05a4f;--info:#4a86dc;

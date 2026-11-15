@@ -1,6 +1,6 @@
-/* theme: Atari 2600 */
+/* theme: Wood Console; de: Holz-Spielkonsole */
 /* Wood-veneer side bar, ribbed black console, orange-amber-yellow stripes, chunky block lettering. */
-html[data-theme="atari"]{
+html[data-theme="woodconsole"]{
  --big-fit:14.6cqi;  /* big numbers: max share of the card width for this font */
  --bg:#1a1410;--on:#1a1410;--panel:#231b14;--o1:#ff7a1a;--o2:#ffb000;--pe:#ff8c3a;--li:#ffd27a;--pw:#e8a050;--sk:#ffe0a0;--tan:#c8a87a;
  --tx:#f2e6d0;--tx2:#d8c8a8;--mut:#b8a07a;--grid:rgba(255,176,0,.12);--axis:rgba(255,176,0,.45);--s1:#ffb000;--s2:#ff7a1a;--good:#7ad65a;--warn:#ffd23f;--crit:#ff3b30;--info:#ffe0a0;

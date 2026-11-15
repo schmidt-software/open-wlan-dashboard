@@ -1,7 +1,7 @@
-/* theme: Blade Runner */
+/* theme: Neon Rain; de: Neonregen */
 /* Rainy neon night: pink and cyan neon on dark, drifting rain and fog, hologram scan lines on the cards. */
-@keyframes bladerunner-rain{from{transform:translate(0,-60px)}to{transform:translate(-30px,0)}}
-html[data-theme="bladerunner"]{
+@keyframes neonrain-rain{from{transform:translate(0,-60px)}to{transform:translate(-30px,0)}}
+html[data-theme="neonrain"]{
  --big-fit:18.5cqi;  /* big numbers: max share of the card width for this font */
  --bg:#07070d;--on:#0b0712;--panel:rgba(18,14,30,.86);--o1:#ff3fa4;--o2:#2de2e6;--pe:#ffb347;--li:#c77dff;--pw:#2de2e6;--sk:#ff6ec7;--tan:#ffd9a0;
  --tx:#f1e9ff;--tx2:#c8b8e8;--mut:#a092c0;--grid:rgba(45,226,230,.1);--axis:rgba(45,226,230,.35);--s1:#2de2e6;--s2:#ff3fa4;--good:#4dffb0;--warn:#ffe14d;--crit:#ff3355;--info:#2de2e6;
@@ -10,7 +10,7 @@ html[data-theme="bladerunner"]{
   linear-gradient(#0d0b1a,#07070d 60%) fixed;
  & body{background:transparent}
  & body::before{content:"";position:fixed;inset:-60px -30px 0 0;z-index:-1;pointer-events:none;  /* rain */
-  background:repeating-linear-gradient(105deg,transparent 0 22px,rgba(180,210,255,.07) 22px 23px);animation:bladerunner-rain 1.2s linear infinite;will-change:transform}
+  background:repeating-linear-gradient(105deg,transparent 0 22px,rgba(180,210,255,.07) 22px 23px);animation:neonrain-rain 1.2s linear infinite;will-change:transform}
  & .elbow{background:linear-gradient(160deg,#ff3fa4,#7a2bff);color:#fff;border-radius:2px;text-shadow:0 0 6px rgba(0,0,0,.6)}
  & .pill{background:rgba(18,14,30,.9);color:var(--c);border:1px solid var(--c);border-radius:2px;box-shadow:0 0 14px -4px var(--c),inset 0 0 12px -6px var(--c)}& .pill b{color:var(--tx)}
  & .fill{background:linear-gradient(transparent,rgba(255,63,164,.3));border-radius:2px}
@@ -25,4 +25,4 @@ html[data-theme="bladerunner"]{
  & th{color:#2de2e6}& td{background:var(--panel)}& td:first-child{border-radius:2px 0 0 2px;border-left-width:4px}& td:last-child{border-radius:0 2px 2px 0}
  & .log .t,& .info dt{color:#2de2e6}& .tip{border-radius:2px;border-color:#ff3fa4;background:#0b0712}& .themesel select{border-color:#ff3fa4}
 }
-@media (prefers-reduced-motion:reduce){html[data-theme="bladerunner"] body::before{animation:none}}
+@media (prefers-reduced-motion:reduce){html[data-theme="neonrain"] body::before{animation:none}}

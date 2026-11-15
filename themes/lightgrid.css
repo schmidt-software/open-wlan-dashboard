@@ -1,6 +1,6 @@
-/* theme: Tron */
+/* theme: Light Grid; de: Lichtgitter */
 /* Black grid world: cyan light lines with orange accents, cut corners, glowing grid floor to the horizon. */
-html[data-theme="tron"]{
+html[data-theme="lightgrid"]{
  --big-fit:15.2cqi;  /* big numbers: max share of the card width for this font */
  --bg:#000814;--on:#00121f;--panel:rgba(0,14,28,.88);--o1:#6ff3ff;--o2:#ff9f1c;--pe:#ff9f1c;--li:#6ff3ff;--pw:#a0f8ff;--sk:#6ff3ff;--tan:#ffd29a;
  --tx:#e6fcff;--tx2:#a8e9f5;--mut:#7fbfd0;--grid:rgba(111,243,255,.12);--axis:rgba(111,243,255,.45);--s1:#6ff3ff;--s2:#ff9f1c;--good:#4dffb8;--warn:#ffe14d;--crit:#ff3355;--info:#6ff3ff;

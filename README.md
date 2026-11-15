@@ -21,7 +21,7 @@ maximum rates, Wi-Fi standard, streams, latency, addresses, 24 h signal and rate
 all WLAN events of the device.
 
 WLAN Dashboard includes 100 themes ranging from sci-fi and retro computers to art, places, and
-seasons. LCARS is the default selection, and your choice is remembered per browser. Browse the
+seasons. Starship Console is the default selection, and your choice is remembered per browser. Browse the
 [THEMES.md](THEMES.md) gallery or see [Themes](#themes) for editing instructions.
 
 The page is available in English and German, with English as the default. A language menu next
@@ -39,7 +39,7 @@ reads from the FRITZ!Box.
 |---|---|
 | `dashboard.py` | The dashboard: web server on http://127.0.0.1:8765, alert logic, data endpoints |
 | `web/index.html` | Page markup |
-| `web/base.css` | Base design (= the LCARS theme): layout, shapes, colour variables, phone layout |
+| `web/base.css` | Base design (= the Starship Console theme): layout, shapes, colour variables, phone layout |
 | `web/app.js` | Page logic: rendering, charts, detail page, acknowledge/mute, theme and language menus |
 | `web/i18n.js` | All page texts in English and German, see [Translations](#translations) |
 | `themes/*.css` | One file per theme; the theme menu is built from this folder |
@@ -97,24 +97,24 @@ or edited theme shows up with a browser reload, no restart needed.
 
 ```
 themes/
-  lcars.css        registers LCARS, the base design in web/base.css
-  amiga.css        /* theme: Amiga 500 */  html[data-theme="amiga"]{ ... }
+  starship.css     registers Starship Console, the base design in web/base.css
+  homecomputer.css /* theme: Home Computer; de: Heimcomputer */  html[data-theme="homecomputer"]{ ... }
   ...
 ```
 
 ### Create a theme
 
-1. Copy a theme that is close to what you want, e.g. `cp themes/macbook.css themes/sunset.css`.
+1. Copy a theme that is close to what you want, e.g. `cp themes/desktop.css themes/sunset.css`.
    The file name is the theme id: lowercase letters, digits and `-` only.
 2. Line 1 names it in the menu: `/* theme: Sunset; de: Sonnenuntergang */`. The German name is
-   optional; without `de:` the English name is used in both languages. Add `; startrek` to show
-   the Star Trek alarm words ("Yellow Alert", "All systems nominal" / "Gelber Alarm", "Alle
+   optional; without `de:` the English name is used in both languages. Add `; starship` to show
+   the starship alarm words ("Yellow Alert", "All systems nominal" / "Gelber Alarm", "Alle
    Systeme nominal") and the stardate in the header; other themes hide the header badge and show
    the normal date. Texts a theme adds in CSS can switch per language with `:lang(de)`, see
    `bahnhof.css`.
 3. Put every rule inside `html[data-theme="sunset"]{ ... }`, with the id from the file name.
    Rules for elements use CSS nesting with `&`, e.g. `& .kpi{border-radius:0}`.
-4. Reload the dashboard and pick it from the menu. The menu is sorted by name; LCARS stays first.
+4. Reload the dashboard and pick it from the menu. The menu is sorted by name; Starship Console stays first.
 5. Add the theme to THEMES.md with a heading in alphabetical order, one or two sentences of
    description, a link to the CSS file, and a screenshot saved as `assets/themes/sunset.jpg`. Use demo
    data for the screenshot; never include real device names.
@@ -154,7 +154,7 @@ Beyond colours, a theme can restyle any part of the page. The main classes:
 |---|---|
 | `.rail`, `.elbow`, `.pill`, `.fill` | side bar: corner pieces, buttons, filler |
 | `.main > .bar` | coloured bars above and below the content |
-| `.alarm` | header badge (only visible in `startrek` themes) |
+| `.alarm` | header badge (only visible in `starship` themes) |
 | `.hb` with `::before` / `::after` | section headings and their decorations |
 | `.kpi`, `.big`, `.sm` | summary cards, big numbers, small text |
 | `.alert`, `.alert .tag`, `.btn` | alert rows, their colour field, buttons |

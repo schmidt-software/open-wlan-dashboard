@@ -1,5 +1,5 @@
-/* theme: MacBook */
-html[data-theme="macbook"]{
+/* theme: Modern Desktop; de: Moderner Desktop */
+html[data-theme="desktop"]{
  --bg:#f5f5f7;--on:#fff;--panel:#fff;--o1:#0062cc;--o2:#c93400;--pe:#d30f45;--li:#8944ab;--pw:#3634a3;--sk:#0071a4;--tan:#a2845e;
  --tx:#1d1d1f;--tx2:#515154;--mut:#6e6e73;--grid:#ececf0;--axis:#d2d2d7;--s1:#007aff;--s2:#ff9500;--good:#1f7a36;--thr:#b25000;--warn:#ffcc00;--crit:#d70015;--info:#0062cc;
  --font:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue',Arial,sans-serif;--head:-apple-system,BlinkMacSystemFont,'SF Pro Display','Helvetica Neue',Arial,sans-serif;

@@ -1,6 +1,6 @@
-/* theme: Game Boy */
+/* theme: Handheld; de: Handheld-Konsole */
 /* Grey handheld body, dark bezel around a four-shade green dot-matrix screen, magenta A/B buttons, pixel font. */
-html[data-theme="gameboy"]{
+html[data-theme="handheld"]{
  --bg:#9bbc0f;--on:#9bbc0f;--panel:#8bac0f;--o1:#0f380f;--o2:#0f380f;--pe:#0f380f;--li:#0f380f;--pw:#0f380f;--sk:#0f380f;--tan:#0f380f;
  --tx:#0f380f;--tx2:#0f380f;--mut:#1f4a1f;--grid:rgba(15,56,15,.18);--axis:#0f380f;--s1:#0f380f;--s2:#306230;--good:#0f380f;--warn:#f8d030;--crit:#e0301e;--info:#306230;
  --font:'Silkscreen',monospace;--head:'Silkscreen',monospace;

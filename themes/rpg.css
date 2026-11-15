@@ -1,20 +1,20 @@
-/* theme: Pokemon */
-html[data-theme="pokemon"]{
+/* theme: Retro RPG; de: Retro-Rollenspiel */
+html[data-theme="rpg"]{
  --big-fit:19.3cqi;  /* big numbers: max share of the card width for this font */
  --bg:#eef3fa;--on:#fff;--panel:#fff;--o1:#d4300c;--o2:#3b4cca;--pe:#d4300c;--li:#3b4cca;--pw:#2a7d4f;--sk:#7a3fb0;--tan:#8a5a2b;
  --on-warn:#1d2c5e;--tx:#1d2c5e;--tx2:#3b4a7a;--mut:#56638c;--grid:#dfe6f2;--axis:#9fb0d0;--s1:#3b4cca;--s2:#e3350d;--good:#2a7d4f;--thr:#b35900;--warn:#ffcb05;--crit:#cc0000;--info:#3b4cca;
  --font:'Fredoka','Nunito',sans-serif;--head:'Fredoka','Nunito',sans-serif;
  & body{background:radial-gradient(circle,transparent 9px,rgba(59,76,202,.07) 9px 11px,transparent 11px) 0 0/48px 48px fixed,var(--bg);letter-spacing:.02em}
  & .elbow{border:3px solid var(--tx)}& .elbow.b{background:var(--tx);color:#fff}
- & .elbow.t{color:var(--tx);background:linear-gradient(#e3350d 0 52%,var(--tx) 52% 60%,#fff 60%)}  /* ball: red top, band, white bottom */
+ & .elbow.t{color:var(--on);background:var(--o1)}
  & .pill{border:3px solid var(--tx);border-radius:14px;box-shadow:0 4px 0 var(--tx);margin-bottom:4px}
  & .fill{background:#ffcb05;border:3px solid var(--tx);border-radius:14px}
  & .bar{height:14px}& .bar i{border-radius:7px}& .inner::before,& .inner::after{display:none}& .inner{padding:16px 6px 12px 22px}
  & h1{color:#ffcb05;-webkit-text-stroke:2px #3b4cca;paint-order:stroke fill;text-shadow:3px 3px 0 var(--tx);font-size:clamp(28px,4vw,48px)}
  & .alarm,& .btn{border:3px solid var(--tx);box-shadow:0 3px 0 var(--tx)}& .btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--tx)}
  & .hb{color:var(--tx)}& .hb::after{height:6px;border-radius:3px}
- & .hb::before{width:22px;height:22px;border-radius:50%;border:2px solid var(--tx);
-  background:radial-gradient(circle,#fff 0 3px,var(--tx) 3px 5px,transparent 5px),linear-gradient(#e3350d 0 44%,var(--tx) 44% 56%,#fff 56%)}
+ & .hb::before{width:24px;height:24px;border-radius:0;border:0;background:var(--c);  /* star */
+  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
  & .kpi,& .alert{border:3px solid var(--tx);border-radius:14px;box-shadow:inset 0 0 0 3px #fff,inset 0 0 0 5px #9fb0d0}
  & .kpi{border-top:10px solid var(--c)}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{border-radius:0}
  & td:first-child{border-radius:12px 0 0 12px}& td:last-child{border-radius:0 12px 12px 0}

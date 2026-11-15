@@ -1,4 +1,4 @@
-/* Base design (= LCARS): layout, shapes and colour variables. Themes in ../themes/ override them. */
+/* Base design (= the starship console theme): layout, shapes and colour variables. Themes in ../themes/ override them. */
 :root{--bg:#000;--on:#000;--on-warn:#1a1a1a;--panel:#0a0911;--o1:#ff9c00;--o2:#ffcc66;--pe:#ff9f80;--li:#cc99ff;--pw:#9999ff;--sk:#99ccff;--tan:#d6a77a;
  --tx:#ffdcae;--tx2:#c9b49a;--mut:#8f8376;--grid:#241d2d;--axis:#3d3249;
  --s1:#5b7cf5;--s2:#e06a1f;--good:#33cc66;--warn:#ffd000;--crit:#ff3b3b;--info:#99ccff;

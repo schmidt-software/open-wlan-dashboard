@@ -1,5 +1,5 @@
-/* theme: Klingon; startrek */
-html[data-theme="klingon"]{
+/* theme: Battle Cruiser; de: Schlachtkreuzer; starship */
+html[data-theme="battlecruiser"]{
  --big-fit:16.1cqi;  /* big numbers: max share of the card width for this font */
  --bg:#0a0303;--on:#140404;--panel:#1a0808;--o1:#e8333a;--o2:#d9573a;--pe:#c8892f;--li:#d9a441;--pw:#d4574a;--sk:#c46a3a;--tan:#8c7a5b;
  --tx:#f2d6c2;--tx2:#c9a48c;--mut:#a08070;--grid:#2a1010;--axis:#4a1c1c;--s1:#e0b04a;--s2:#e0412b;--good:#7fae3a;--warn:#f2c12e;--crit:#ff2a1a;--info:#c8892f;

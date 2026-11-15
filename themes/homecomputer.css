@@ -1,12 +1,12 @@
-/* theme: Amiga 500 */
-html[data-theme="amiga"]{
+/* theme: Home Computer; de: Heimcomputer */
+html[data-theme="homecomputer"]{
  --bg:#0055aa;--on:#000022;--on-warn:#000022;--panel:#0055aa;--o1:#ff8800;--o2:#ffffff;--pe:#ffaa55;--li:#ffffff;--pw:#aaccff;--sk:#ffcc88;--tan:#dddddd;
  --tx:#ffffff;--tx2:#dde6ff;--mut:#c4d4f4;--grid:rgba(255,255,255,.18);--axis:rgba(255,255,255,.55);--s1:#ffffff;--s2:#ff8800;--good:#77ee77;--warn:#ffd000;--crit:#ff3b30;--info:#aaccff;
- --font:'VT323',monospace;--head:'VT323',monospace;--bevel:inset 2px 2px 0 #fff,inset -2px -2px 0 #000022;  /* raised Workbench gadget */
+ --font:'VT323',monospace;--head:'VT323',monospace;--bevel:inset 2px 2px 0 #fff,inset -2px -2px 0 #000022;  /* raised window gadget */
  & *{border-radius:0 !important}  /* square windows and gadgets */
  & body{font-size:20px;line-height:1.25;letter-spacing:.02em}
  & .main>.bar:first-child{height:24px;background:#fff;color:#000022;align-items:center;padding:0 10px;font-size:18px}  /* screen title bar */
- & .main>.bar:first-child::before{content:"Workbench 1.3 · 512K chip RAM free"}&:lang(de) .main>.bar:first-child::before{content:"Workbench 1.3 · 512K Chip-RAM frei"}& .main>.bar i{display:none}& .main>.bar:last-child{display:none}
+ & .main>.bar:first-child::before{content:"System 1.3 · 512K chip RAM free"}&:lang(de) .main>.bar:first-child::before{content:"System 1.3 · 512K Chip-RAM frei"}& .main>.bar i{display:none}& .main>.bar:last-child{display:none}
  & .elbow{min-height:0;padding:6px 10px;font-size:20px;color:#000022;justify-content:flex-start;align-items:center;
   background:linear-gradient(90deg,#fff 0 62%,transparent 62%),repeating-linear-gradient(#fff 0 2px,#000022 2px 4px)}  /* title text, then drag bar */
  & .pill{box-shadow:var(--bevel);min-height:58px;font-size:16px;letter-spacing:.04em}& .pill b{font-size:30px}

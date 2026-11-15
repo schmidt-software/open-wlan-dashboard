@@ -35,8 +35,8 @@ const legend=items=>'<div class="legend">'+items.map(i=>'<span><span class="sw" 
 const pill=(id,val)=>{$(id).querySelector('b').textContent=val};
 
 function render(d){
- const st=lv(d.status),trek=!!$('theme').selectedOptions[0]?.hasAttribute('data-startrek');  // set in the theme file header
- // header badge: alarm words only in the Star Trek themes; elsewhere hidden (screen readers still get the status)
+ const st=lv(d.status),trek=!!$('theme').selectedOptions[0]?.hasAttribute('data-starship');  // set in the theme file header
+ // header badge: alarm words only in the starship themes; elsewhere hidden (screen readers still get the status)
  $('alarm').className='alarm'+(d.status=='crit'||d.status=='warn'?' '+d.status:'')+(trek?'':' sr');$('alarm').style.setProperty('--c',st[2]);
  $('alarm').textContent=st[3];
  $('upd').textContent=T('upd',{time:hms(d.time),poll:__POLL_S__})+(d.collector_age_min!=null?T('upd.hist',{min:d.collector_age_min}):'');
@@ -149,14 +149,14 @@ addEventListener('hashchange',()=>{lastDev=null;const mac=devMac();$('s-detail')
  if(mac){$('s-detail').innerHTML='<div class="dhead sub">'+T('loading.device')+'</div>';scrollTo(0,0)}else if(location.hash.length>1)document.getElementById(location.hash.slice(1))?.scrollIntoView();tick()});
 const rerender=()=>{last&&render(last);devMac()&&lastDev&&renderDetail(lastDev)};
 addEventListener('resize',rerender);
-$('theme').value=document.documentElement.dataset.theme;if(!$('theme').value)$('theme').value=document.documentElement.dataset.theme='lcars';  // unknown or removed theme
+$('theme').value=document.documentElement.dataset.theme;if(!$('theme').value)$('theme').value=document.documentElement.dataset.theme='starship';  // unknown or removed theme
 $('theme').addEventListener('change',e=>{document.documentElement.dataset.theme=e.target.value;try{localStorage.setItem('wlan-theme',e.target.value)}catch(_){}rerender()});
 function applyLang(){document.documentElement.lang=LANG;document.title=T('title');
  document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=T(e.dataset.i18n));
  document.querySelectorAll('[data-i18n-aria]').forEach(e=>e.setAttribute('aria-label',T(e.dataset.i18nAria)));
  $('r-24').querySelector('span').textContent=bl('2.4');
  const sel=$('theme'),opts=[...sel.options];opts.forEach(o=>o.textContent=o.dataset[LANG]||o.dataset.en);
- opts.sort((a,b)=>(a.value!='lcars')-(b.value!='lcars')||a.textContent.localeCompare(b.textContent,loc())).forEach(o=>sel.append(o))}  // LCARS (the base design) first
+ opts.sort((a,b)=>(a.value!='starship')-(b.value!='starship')||a.textContent.localeCompare(b.textContent,loc())).forEach(o=>sel.append(o))}  // starship (the base design) first
 $('lang').value=LANG;applyLang();
 $('lang').addEventListener('change',e=>{LANG=e.target.value;try{localStorage.setItem('wlan-lang',LANG)}catch(_){}applyLang();lastAlerts='';rerender();tick()});  // tick also redraws a device error message
 dispatchEvent(new HashChangeEvent('hashchange'));setInterval(tick,__POLL_S__*1000);

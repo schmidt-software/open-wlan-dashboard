@@ -1,13 +1,13 @@
 # Themes
 
 The dashboard ships with 100 themes. Pick one in the header of the page; the choice is remembered
-per browser. LCARS is the default. How to edit a theme or add your own is described in the
+per browser. Starship Console is the default. How to edit a theme or add your own is described in the
 [README](README.md#themes).
 
-The screenshots show demo data (no real devices). Animated themes (Alien Biotech, Art Nouveau, Blade Runner, CMYK Print, Candy Shop, Chart Recorder, Christmas, Cinema Marquee, Circus, Crystal Glass, Departure Board, Film Negative, Floppy Disk, Harbour at Night, Jazz Record, Jigsaw Puzzle, Kite Day, Library, Matrix, Mechanical Keyboard, Moss and Stone, Nebula, Northern Lights, Ocean, Pinball, Punch Card, Radar, Rainy Day, Sci-Fi Holo, Server Room, Spring, Steampunk, Terminal, Video Recorder, Volcano, Winter)
+The screenshots show demo data (no real devices). Animated themes (Alien Biotech, Art Nouveau, CMYK Print, Candy Shop, Chart Recorder, Christmas, Cinema Marquee, Circus, Crystal Glass, Departure Board, Digital Rain, Film Negative, Floppy Disk, Harbour at Night, Jazz Record, Jigsaw Puzzle, Kite Day, Library, Mechanical Keyboard, Moss and Stone, Nebula, Neon Rain, Northern Lights, Ocean, Pinball, Punch Card, Radar, Rainy Day, Sci-Fi Holo, Server Room, Spring, Steampunk, Terminal, Video Recorder, Volcano, Winter)
 stop moving when the system setting "reduce motion" is on.
 
-[70s Disco](#70s-disco) · [Action Painting](#action-painting) · [Adventure Parchment](#adventure-parchment) · [Alien Biotech](#alien-biotech) · [Alpine](#alpine) · [Amiga 500](#amiga-500) · [Art déco](#art-déco) · [Art Nouveau](#art-nouveau) · [Atari 2600](#atari-2600) · [Atomic Age](#atomic-age) · [Autumn](#autumn) · [Bauhaus](#bauhaus) · [Birthday Party](#birthday-party) · [Blade Runner](#blade-runner) · [Blueprint](#blueprint) · [Botanical Garden](#botanical-garden) · [Brutalism](#brutalism) · [Candy Shop](#candy-shop) · [Cassette Tape](#cassette-tape) · [Chalkboard](#chalkboard) · [Chart Recorder](#chart-recorder) · [Christmas](#christmas) · [Cinema Marquee](#cinema-marquee) · [Circuit Board](#circuit-board) · [Circus](#circus) · [Clapperboard](#clapperboard) · [CMYK Print](#cmyk-print) · [Coca-Cola](#coca-cola) · [Cockpit](#cockpit) · [Coffee House](#coffee-house) · [Collage](#collage) · [Constructivism](#constructivism) · [Crystal Glass](#crystal-glass) · [Departure Board](#departure-board) · [Desert Canyon](#desert-canyon) · [Dot Matrix Printout](#dot-matrix-printout) · [Film Negative](#film-negative) · [Floppy Disk](#floppy-disk) · [Forest](#forest) · [Futuristic](#futuristic) · [Game Boy](#game-boy) · [Ham Radio](#ham-radio) · [Harbour at Night](#harbour-at-night) · [Hundertwasser](#hundertwasser) · [Jazz Record](#jazz-record) · [Jigsaw Puzzle](#jigsaw-puzzle) · [Kite Day](#kite-day) · [Klingon](#klingon) · [Knights](#knights) · [LCARS](#lcars) · [Library](#library) · [MacBook](#macbook) · [Matrix](#matrix) · [Mechanical Keyboard](#mechanical-keyboard) · [Miniature City](#miniature-city) · [Mondrian](#mondrian) · [Moss and Stone](#moss-and-stone) · [Museum](#museum) · [Nebula](#nebula) · [Newspaper](#newspaper) · [Northern Lights](#northern-lights) · [Notepad](#notepad) · [Ocean](#ocean) · [Op Art](#op-art) · [Origami](#origami) · [Pinball](#pinball) · [Pokemon](#pokemon) · [Pop Art](#pop-art) · [Post Office](#post-office) · [Post-Apocalyptic](#post-apocalyptic) · [Punch Card](#punch-card) · [Radar](#radar) · [Rainy Day](#rainy-day) · [Receipt Printer](#receipt-printer) · [Retro 8Bit](#retro-8bit) · [Robot Factory](#robot-factory) · [Sci-Fi Holo](#sci-fi-holo) · [Server Room](#server-room) · [Slide Rule](#slide-rule) · [Spellbook](#spellbook) · [Spring](#spring) · [Steampunk](#steampunk) · [Street Art](#street-art) · [Subway Map](#subway-map) · [Summer](#summer) · [Swiss Style](#swiss-style) · [Synthwave](#synthwave) · [Terminal](#terminal) · [Tron](#tron) · [Tropical Jungle](#tropical-jungle) · [Ukiyo-e](#ukiyo-e) · [Unicorn](#unicorn) · [Video Recorder](#video-recorder) · [Vintage Airline](#vintage-airline) · [Volcano](#volcano) · [Western](#western) · [Windows 95](#windows-95) · [Winter](#winter) · [Woodworker](#woodworker) · [Zen](#zen)
+[70s Disco](#70s-disco) · [90s Desktop](#90s-desktop) · [Action Painting](#action-painting) · [Adventure Parchment](#adventure-parchment) · [Alien Biotech](#alien-biotech) · [Alpine](#alpine) · [Art déco](#art-déco) · [Art Nouveau](#art-nouveau) · [Atomic Age](#atomic-age) · [Autumn](#autumn) · [Battle Cruiser](#battle-cruiser) · [Bauhaus](#bauhaus) · [Birthday Party](#birthday-party) · [Blueprint](#blueprint) · [Botanical Garden](#botanical-garden) · [Brutalism](#brutalism) · [Candy Shop](#candy-shop) · [Cassette Tape](#cassette-tape) · [Chalkboard](#chalkboard) · [Chart Recorder](#chart-recorder) · [Christmas](#christmas) · [Cinema Marquee](#cinema-marquee) · [Circuit Board](#circuit-board) · [Circus](#circus) · [Clapperboard](#clapperboard) · [CMYK Print](#cmyk-print) · [Cockpit](#cockpit) · [Coffee House](#coffee-house) · [Collage](#collage) · [Constructivism](#constructivism) · [Crystal Glass](#crystal-glass) · [Departure Board](#departure-board) · [Desert Canyon](#desert-canyon) · [Digital Rain](#digital-rain) · [Dot Matrix Printout](#dot-matrix-printout) · [Film Negative](#film-negative) · [Floppy Disk](#floppy-disk) · [Forest](#forest) · [Futuristic](#futuristic) · [Ham Radio](#ham-radio) · [Handheld](#handheld) · [Harbour at Night](#harbour-at-night) · [Home Computer](#home-computer) · [Jazz Record](#jazz-record) · [Jigsaw Puzzle](#jigsaw-puzzle) · [Kite Day](#kite-day) · [Knights](#knights) · [Library](#library) · [Light Grid](#light-grid) · [Mechanical Keyboard](#mechanical-keyboard) · [Miniature City](#miniature-city) · [Modern Desktop](#modern-desktop) · [Moss and Stone](#moss-and-stone) · [Museum](#museum) · [Nebula](#nebula) · [Neon Rain](#neon-rain) · [Newspaper](#newspaper) · [Northern Lights](#northern-lights) · [Notepad](#notepad) · [Ocean](#ocean) · [Op Art](#op-art) · [Origami](#origami) · [Pinball](#pinball) · [Pop Art](#pop-art) · [Post Office](#post-office) · [Post-Apocalyptic](#post-apocalyptic) · [Primary Grid](#primary-grid) · [Punch Card](#punch-card) · [Radar](#radar) · [Rainy Day](#rainy-day) · [Receipt Printer](#receipt-printer) · [Retro 8Bit](#retro-8bit) · [Retro RPG](#retro-rpg) · [Robot Factory](#robot-factory) · [Sci-Fi Holo](#sci-fi-holo) · [Server Room](#server-room) · [Slide Rule](#slide-rule) · [Spellbook](#spellbook) · [Spiral House](#spiral-house) · [Spring](#spring) · [Starship Console](#starship-console) · [Steampunk](#steampunk) · [Street Art](#street-art) · [Subway Map](#subway-map) · [Summer](#summer) · [Swiss Style](#swiss-style) · [Synthwave](#synthwave) · [Terminal](#terminal) · [Tropical Jungle](#tropical-jungle) · [Ukiyo-e](#ukiyo-e) · [Unicorn](#unicorn) · [Video Recorder](#video-recorder) · [Vintage Airline](#vintage-airline) · [Vintage Soda](#vintage-soda) · [Volcano](#volcano) · [Western](#western) · [Winter](#winter) · [Wood Console](#wood-console) · [Woodworker](#woodworker) · [Zen](#zen)
 
 ## 70s Disco
 
@@ -16,6 +16,14 @@ Uses brown, orange, and mustard colours with 70s stripes. Features mirror-ball s
 ![70s Disco](assets/themes/disco.jpg)
 
 File: [`themes/disco.css`](themes/disco.css)
+
+## 90s Desktop
+
+Mimics a 1990s desktop with a teal background and grey bevelled windows. Features a navy title bar, start menu side bar, and white list view.
+
+![90s Desktop](assets/themes/desktop90s.jpg)
+
+File: [`themes/desktop90s.css`](themes/desktop90s.css)
 
 ## Action Painting
 
@@ -49,14 +57,6 @@ Frames pale sky blue areas with layered mountain silhouettes at the bottom. Uses
 
 File: [`themes/alpine.css`](themes/alpine.css)
 
-## Amiga 500
-
-Features a blue screen with a white title bar reading '512K chip RAM free'. Windows have white frames, striped drag bars, square bevelled gadgets, and a narrow pixel terminal font.
-
-![Amiga 500](assets/themes/amiga.jpg)
-
-File: [`themes/amiga.css`](themes/amiga.css)
-
 ## Art déco
 
 Uses black and gold with sunburst rays. Features double gold frames with stepped corners and slim geometric capitals for a classic decorative style.
@@ -72,14 +72,6 @@ Shows a cream background with flowing whiplash curves and arched gold-framed car
 ![Art Nouveau](assets/themes/artnouveau.jpg)
 
 File: [`themes/artnouveau.css`](themes/artnouveau.css)
-
-## Atari 2600
-
-Displays a wood-veneer side bar and ribbed black console. Includes orange, amber, and yellow stripes with chunky block lettering for a retro gaming feel.
-
-![Atari 2600](assets/themes/atari.jpg)
-
-File: [`themes/atari.css`](themes/atari.css)
 
 ## Atomic Age
 
@@ -97,6 +89,14 @@ Uses warm paper tones with maple red, pumpkin, and mustard colours. Scattered le
 
 File: [`themes/autumn.css`](themes/autumn.css)
 
+## Battle Cruiser
+
+Uses black, blood red, and bronze with angular cut corners and blade shapes. Features military stencil headings, stardates, and alarm words.
+
+![Battle Cruiser](assets/themes/battlecruiser.jpg)
+
+File: [`themes/battlecruiser.css`](themes/battlecruiser.css)
+
 ## Bauhaus
 
 Presents primary colours on paper with geometric sans-serif fonts. Lower-case headings are accompanied by circle, square, or triangle shapes for each section.
@@ -112,14 +112,6 @@ Uses light backgrounds with confetti and balloons. Shows bunting-topped cards an
 ![Birthday Party](assets/themes/birthday.jpg)
 
 File: [`themes/birthday.css`](themes/birthday.css)
-
-## Blade Runner
-
-Features a rainy neon night with pink and cyan lights on dark backgrounds. Drifting rain, fog, and hologram scan lines appear on the cards.
-
-![Blade Runner](assets/themes/bladerunner.jpg)
-
-File: [`themes/bladerunner.css`](themes/bladerunner.css)
 
 ## Blueprint
 
@@ -225,14 +217,6 @@ Sets white paper backgrounds with crop marks and top colour bars. Uses bold sans
 
 File: [`themes/cmyk.css`](themes/cmyk.css)
 
-## Coca-Cola
-
-Features red and white vintage advertising styles without logos. Includes a red side bar with white waves, script titles, and condensed poster fonts.
-
-![Coca-Cola](assets/themes/cola.jpg)
-
-File: [`themes/cola.css`](themes/cola.css)
-
 ## Cockpit
 
 Mimics an aircraft instrument panel with a grey surface and screws. Black displays show green and amber readouts alongside annunciator lights.
@@ -289,6 +273,14 @@ Frames warm sand backgrounds with layered rock strata bands. Light sandstone car
 
 File: [`themes/canyon.css`](themes/canyon.css)
 
+## Digital Rain
+
+Displays a black screen with slowly falling green glyphs behind the page. Text glows green for a digital rain effect.
+
+![Digital Rain](assets/themes/digitalrain.jpg)
+
+File: [`themes/digitalrain.css`](themes/digitalrain.css)
+
 ## Dot Matrix Printout
 
 Shows pale green-striped paper with tractor-feed holes along the side. Features dot-matrix monospace text in black ink with faded blue accents for printed sheets.
@@ -329,14 +321,6 @@ Shows dark neon in cyan and magenta over a faint grid. Features translucent glas
 
 File: [`themes/futuristic.css`](themes/futuristic.css)
 
-## Game Boy
-
-Mimics a grey handheld with a dark bezel around a four-shade green dot-matrix screen. Includes magenta A/B buttons and a pixel font.
-
-![Game Boy](assets/themes/gameboy.jpg)
-
-File: [`themes/gameboy.css`](themes/gameboy.css)
-
 ## Ham Radio
 
 Resembles a valve radio at night with dark bakelite and brass. Features warm amber dial glow, frequency scales, and Morse-code markers.
@@ -344,6 +328,14 @@ Resembles a valve radio at night with dark bakelite and brass. Features warm amb
 ![Ham Radio](assets/themes/hamradio.jpg)
 
 File: [`themes/hamradio.css`](themes/hamradio.css)
+
+## Handheld
+
+Mimics a grey handheld with a dark bezel around a four-shade green dot-matrix screen. Includes magenta A/B buttons and a pixel font.
+
+![Handheld](assets/themes/handheld.jpg)
+
+File: [`themes/handheld.css`](themes/handheld.css)
 
 ## Harbour at Night
 
@@ -353,13 +345,13 @@ Sets dark navy water with orange reflections behind weathered wooden pier boards
 
 File: [`themes/harbour.css`](themes/harbour.css)
 
-## Hundertwasser
+## Home Computer
 
-Features irregularly rounded, slightly tilted cards with black outlines. The side bar has an onion dome and striped column, while the background includes spirals and colour patches with brush lettering.
+Features a blue screen with a white title bar reading '512K chip RAM free'. Windows have white frames, striped drag bars, square bevelled gadgets, and a narrow pixel terminal font.
 
-![Hundertwasser](assets/themes/hundertwasser.jpg)
+![Home Computer](assets/themes/homecomputer.jpg)
 
-File: [`themes/hundertwasser.css`](themes/hundertwasser.css)
+File: [`themes/homecomputer.css`](themes/homecomputer.css)
 
 ## Jazz Record
 
@@ -385,14 +377,6 @@ Sets bright sky blues with soft clouds. Features diamond kite shapes before head
 
 File: [`themes/kite.css`](themes/kite.css)
 
-## Klingon
-
-Uses black, blood red, and bronze with angular cut corners and blade shapes. Features military stencil headings, stardates, and Star Trek alarm words.
-
-![Klingon](assets/themes/klingon.jpg)
-
-File: [`themes/klingon.css`](themes/klingon.css)
-
 ## Knights
 
 Sets grey stone walls behind heraldic shield cards. Displays blackletter headings with red, blue, and gold accents for a medieval castle look.
@@ -400,14 +384,6 @@ Sets grey stone walls behind heraldic shield cards. Displays blackletter heading
 ![Knights](assets/themes/knights.jpg)
 
 File: [`themes/knights.css`](themes/knights.css)
-
-## LCARS
-
-Mimics a Star Trek computer console with orange and lilac rounded bars. Uses condensed capitals, Star Trek alarm words and the stardate in the header; it is the default theme.
-
-![LCARS](assets/themes/lcars.jpg)
-
-File: [`themes/lcars.css`](themes/lcars.css)
 
 ## Library
 
@@ -417,21 +393,13 @@ Sets dark wood shelves with book spines behind leather-bound cards. Features gol
 
 File: [`themes/library.css`](themes/library.css)
 
-## MacBook
+## Light Grid
 
-Resembles a light macOS window with three coloured dots. Features a Finder-like side bar, white rounded cards, system fonts, and standard system colours.
+Features a black grid world with cyan light lines and orange accents. Includes cut corners and a glowing grid floor extending to the horizon.
 
-![MacBook](assets/themes/macbook.jpg)
+![Light Grid](assets/themes/lightgrid.jpg)
 
-File: [`themes/macbook.css`](themes/macbook.css)
-
-## Matrix
-
-Displays a black screen with slowly falling green glyphs behind the page. Text glows green for a digital rain effect.
-
-![Matrix](assets/themes/matrix.jpg)
-
-File: [`themes/matrix.css`](themes/matrix.css)
+File: [`themes/lightgrid.css`](themes/lightgrid.css)
 
 ## Mechanical Keyboard
 
@@ -449,13 +417,13 @@ Uses light green isometric street grids with flat white building cards and drop 
 
 File: [`themes/minicity.css`](themes/minicity.css)
 
-## Mondrian
+## Modern Desktop
 
-Uses thick black grid lines separating red, blue, and yellow fields. Every card carries a distinct colour block on top for a geometric abstract look.
+Resembles a light, modern desktop window with three coloured dots. Features a side bar with coloured dots, white rounded cards, system fonts, and standard system colours.
 
-![Mondrian](assets/themes/mondrian.jpg)
+![Modern Desktop](assets/themes/desktop.jpg)
 
-File: [`themes/mondrian.css`](themes/mondrian.css)
+File: [`themes/desktop.css`](themes/desktop.css)
 
 ## Moss and Stone
 
@@ -480,6 +448,14 @@ Sets swirling violet, magenta, and blue gas clouds behind translucent dark cards
 ![Nebula](assets/themes/nebula.jpg)
 
 File: [`themes/nebula.css`](themes/nebula.css)
+
+## Neon Rain
+
+Features a rainy neon night with pink and cyan lights on dark backgrounds. Drifting rain, fog, and hologram scan lines appear on the cards.
+
+![Neon Rain](assets/themes/neonrain.jpg)
+
+File: [`themes/neonrain.css`](themes/neonrain.css)
 
 ## Newspaper
 
@@ -537,14 +513,6 @@ Frames a dark playfield with lit star inserts. Uses chrome rail cards with glowi
 
 File: [`themes/pinball.css`](themes/pinball.css)
 
-## Pokemon
-
-Uses red, white, blue, and yellow without characters or logos. Features game-menu frames with double edges, 3D buttons, and a ball symbol before each heading.
-
-![Pokemon](assets/themes/pokemon.jpg)
-
-File: [`themes/pokemon.css`](themes/pokemon.css)
-
 ## Pop Art
 
 Features a comic look with halftone dots, loud colours, and thick black outlines. Includes hard offset shadows and speech-bubble alerts for a bold aesthetic.
@@ -568,6 +536,14 @@ Sets a rusty corrugated metal backdrop behind torn cardboard cards with rough ed
 ![Post-Apocalyptic](assets/themes/postapocalyptic.jpg)
 
 File: [`themes/postapocalyptic.css`](themes/postapocalyptic.css)
+
+## Primary Grid
+
+Uses thick black grid lines separating red, blue, and yellow fields. Every card carries a distinct colour block on top for a geometric abstract look.
+
+![Primary Grid](assets/themes/primarygrid.jpg)
+
+File: [`themes/primarygrid.css`](themes/primarygrid.css)
 
 ## Punch Card
 
@@ -609,6 +585,14 @@ Features an 8-bit game look with pixel fonts and a 16-colour palette. Includes s
 
 File: [`themes/retro.css`](themes/retro.css)
 
+## Retro RPG
+
+Uses red, white, blue, and yellow like a retro handheld role-playing game. Features menu frames with double edges, 3D buttons, and a star before each heading.
+
+![Retro RPG](assets/themes/rpg.jpg)
+
+File: [`themes/rpg.css`](themes/rpg.css)
+
 ## Robot Factory
 
 Mimics an assembly line with steel grey gears. Features metal plate cards with bolts and chunky mechanical headings in orange, yellow, and teal.
@@ -649,6 +633,14 @@ Shows deep purple skies with faint stars. Uses old book page cards with gold cor
 
 File: [`themes/spellbook.css`](themes/spellbook.css)
 
+## Spiral House
+
+Features irregularly rounded, slightly tilted cards with black outlines. The side bar has an onion dome and striped column, while the background includes spirals and colour patches with brush lettering.
+
+![Spiral House](assets/themes/spiralhouse.jpg)
+
+File: [`themes/spiralhouse.css`](themes/spiralhouse.css)
+
 ## Spring
 
 Shows a light green meadow with falling cherry blossoms. Uses white rounded cards, gentle serif headings, and blossom pink, fresh green, and daffodil yellow tones.
@@ -656,6 +648,14 @@ Shows a light green meadow with falling cherry blossoms. Uses white rounded card
 ![Spring](assets/themes/spring.jpg)
 
 File: [`themes/spring.css`](themes/spring.css)
+
+## Starship Console
+
+Mimics a starship computer console with orange and lilac rounded bars. Uses condensed capitals, alarm words and the stardate in the header; it is the default theme.
+
+![Starship Console](assets/themes/starship.jpg)
+
+File: [`themes/starship.css`](themes/starship.css)
 
 ## Steampunk
 
@@ -713,14 +713,6 @@ Mimics a green phosphor text console with glow and scan lines. Displays a prompt
 
 File: [`themes/terminal.css`](themes/terminal.css)
 
-## Tron
-
-Features a black grid world with cyan light lines and orange accents. Includes cut corners and a glowing grid floor extending to the horizon.
-
-![Tron](assets/themes/tron.jpg)
-
-File: [`themes/tron.css`](themes/tron.css)
-
 ## Tropical Jungle
 
 Uses deep green rainforest tones with large leaf shapes framing light cards. Features rounded organic corners, bold headings, and hibiscus pink or sun yellow accents.
@@ -761,6 +753,14 @@ Sets cream backgrounds with light blue pinstripes and navy, sky blue, or gold ac
 
 File: [`themes/airline.css`](themes/airline.css)
 
+## Vintage Soda
+
+Features red and white vintage advertising styles. Includes a red side bar with white pinstripes, script titles, and condensed poster fonts.
+
+![Vintage Soda](assets/themes/soda.jpg)
+
+File: [`themes/soda.css`](themes/soda.css)
+
 ## Volcano
 
 Sets a black basalt background with glowing orange lava cracks. Shows dark stone cards with hot orange edges, bold heavy headings, and ember red accents.
@@ -777,14 +777,6 @@ Resembles a wanted poster on weathered wood planks with nails. Features wood typ
 
 File: [`themes/western.css`](themes/western.css)
 
-## Windows 95
-
-Mimics a Windows 95 desktop with a teal background and grey bevelled windows. Features a navy title bar, start menu side bar, and white list view.
-
-![Windows 95](assets/themes/win95.jpg)
-
-File: [`themes/win95.css`](themes/win95.css)
-
 ## Winter
 
 Mimics snowy ice with pale blue backgrounds and falling snowflakes. Uses frosted white cards with icy borders, crisp sans headings, and deep navy accents.
@@ -792,6 +784,14 @@ Mimics snowy ice with pale blue backgrounds and falling snowflakes. Uses frosted
 ![Winter](assets/themes/winter.jpg)
 
 File: [`themes/winter.css`](themes/winter.css)
+
+## Wood Console
+
+Displays a wood-veneer side bar and ribbed black console. Includes orange, amber, and yellow stripes with chunky block lettering for a retro gaming feel.
+
+![Wood Console](assets/themes/woodconsole.jpg)
+
+File: [`themes/woodconsole.css`](themes/woodconsole.css)
 
 ## Woodworker
 

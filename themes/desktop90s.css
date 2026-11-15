@@ -1,6 +1,6 @@
-/* theme: Windows 95 */
+/* theme: 90s Desktop; de: 90er-Desktop */
 /* Teal desktop, grey bevelled window with a navy title bar, start menu as side bar, white list view. */
-html[data-theme="win95"]{
+html[data-theme="desktop90s"]{
  --bg:#c0c0c0;--on:#000;--panel:#c0c0c0;--o1:#000080;--o2:#000080;--pe:#800000;--li:#6b006b;--pw:#004d4d;--sk:#404000;--tan:#404040;
  --tx:#000;--tx2:#222;--mut:#404040;--grid:#a8a8a8;--axis:#000;--s1:#000080;--s2:#800000;--good:#008000;--warn:#ffff00;--crit:#ff0000;--info:#000080;
  --font:Tahoma,Verdana,'Segoe UI',sans-serif;--head:Tahoma,Verdana,'Segoe UI',sans-serif;
@@ -12,7 +12,7 @@ html[data-theme="win95"]{
  & body{background:transparent;font-size:14px;letter-spacing:0}
  & .frame{gap:8px}
  & .rail{position:relative;background:#c0c0c0;box-shadow:var(--raised);padding:4px 4px 4px 30px;gap:2px;align-self:start}
- & .rail::before{content:"WLAN 95";position:absolute;left:3px;top:3px;bottom:3px;width:24px;background:linear-gradient(#000080,#0a5fb0);color:#c0c0c0;
+ & .rail::before{content:"Start";position:absolute;left:3px;top:3px;bottom:3px;width:24px;background:linear-gradient(#000080,#0a5fb0);color:#c0c0c0;
   writing-mode:vertical-rl;transform:rotate(180deg);font-weight:700;font-size:18px;padding-top:8px}  /* start menu band */
  & .elbow{display:none}& .fill{display:none}
  & .pill{background:none;color:#000;text-transform:none;letter-spacing:0;font-size:14px;font-weight:400;min-height:0;padding:6px 8px;flex-direction:row;align-items:center;gap:8px}

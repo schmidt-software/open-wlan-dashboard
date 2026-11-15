@@ -1,5 +1,5 @@
-/* theme: Hundertwasser */
-html[data-theme="hundertwasser"]{
+/* theme: Spiral House; de: Spiralhaus */
+html[data-theme="spiralhouse"]{
  --bg:#fff6e0;--on:#1a1a1a;--panel:#fffdf5;--o1:#ff6b4a;--o2:#ffd400;--pe:#5cc06b;--li:#5aa9ff;--pw:#c48bff;--sk:#ffa94d;--tan:#e0b030;
  --tx:#1a1a1a;--tx2:#3a3326;--mut:#665c48;--grid:#f0e2bf;--axis:#1a1a1a;--s1:#1f5fd0;--s2:#d6331a;--good:#5cc06b;--thr:#a87400;--warn:#ffd400;--crit:#f4513a;--info:#5aa9ff;
  --font:'Nunito',sans-serif;--head:'Caveat Brush',cursive;--blob:28px 12px 34px 16px/18px 30px 14px 26px;
