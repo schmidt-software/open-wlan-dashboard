@@ -32,7 +32,7 @@ html[data-theme="brutalism"]{
  & td:first-child{border-left:12px solid var(--c)}
  & .st{color:var(--tx);text-transform:uppercase;font-family:var(--head);font-weight:700;letter-spacing:.04em}
  & .log .t{color:var(--mut);text-transform:uppercase}
- & .info dt{color:#333330;text-transform:uppercase;font-family:var(--head);font-weight:700;letter-spacing:.05em}
+ & .info dt{color:var(--tx2);text-transform:uppercase;font-family:var(--head);font-weight:700;letter-spacing:.05em}
  & details.muted summary{color:#4b4b47;text-transform:uppercase;letter-spacing:.04em}
  & .themesel select{background:var(--panel);border:3px solid #1a1a1a;border-radius:0;color:#1a1a1a;font-family:var(--font)}
 }

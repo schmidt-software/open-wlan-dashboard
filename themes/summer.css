@@ -42,7 +42,7 @@ html[data-theme="summer"]{
  & td:first-child{border-left:12px solid var(--c)}
  & .st{color:#123a52;font-weight:700;text-transform:none}
  & .log .t{color:var(--mut);font-family:var(--head);font-weight:600}
- & .info dt{color:#0068a5;font-family:var(--head);font-weight:700}
+ & .info dt{color:var(--tx2);font-family:var(--head);font-weight:700}
  & details.muted summary{color:#1d4f6b}
  & .tip{background:#ffffff;color:#0b3d5c;border:2px solid #ff9800;border-radius:10px;box-shadow:0 6px 14px rgba(0,90,130,.2)}
  & .pill.warn,& .pill.warn *{color:var(--on-warn)}

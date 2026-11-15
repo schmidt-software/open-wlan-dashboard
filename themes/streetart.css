@@ -55,7 +55,7 @@ html[data-theme="streetart"]{
  & td:last-child{border-radius:0 4px 4px 0}
  & .st{color:#1b1b20;text-transform:uppercase;font-family:var(--head);letter-spacing:.03em}
  & .log .t{color:#4a4a52;font-family:var(--font)}
- & .info dt{color:#ff2e9a;text-transform:uppercase;letter-spacing:.04em;font-family:var(--head)}
+ & .info dt{color:var(--tx2);text-transform:uppercase;letter-spacing:.04em;font-family:var(--head)}
  & details.muted summary{color:#34343c;text-transform:none}
  & .pill.warn,& .pill.warn *{color:var(--on-warn)}
 }

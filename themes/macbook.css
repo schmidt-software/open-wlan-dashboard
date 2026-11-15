@@ -7,7 +7,7 @@ html[data-theme="macbook"]{
  & .frame{background:rgba(255,255,255,.78);backdrop-filter:blur(30px) saturate(1.6);border-radius:12px;overflow:hidden;min-height:calc(100vh - 48px);box-shadow:0 30px 60px -20px rgba(0,0,0,.35),0 0 0 .5px rgba(0,0,0,.2)}
  & .rail{position:relative;background:rgba(232,232,237,.7);border-right:.5px solid rgba(0,0,0,.12);padding:48px 10px 10px;gap:2px}
  & .rail::before{content:"";position:absolute;top:18px;left:16px;width:12px;height:12px;border-radius:50%;background:#ff5f57;box-shadow:20px 0 #febc2e,40px 0 #28c840}
- & .elbow{background:none;color:var(--mut);font-size:11px;font-weight:600;letter-spacing:0;min-height:0;padding:12px 10px 4px;justify-content:flex-start;border-radius:0}
+ & .elbow{background:none;color:var(--tx2);font-size:11px;font-weight:600;letter-spacing:0;min-height:0;padding:12px 10px 4px;justify-content:flex-start;border-radius:0}
  & .pill{background:none;color:var(--tx);text-transform:none;letter-spacing:0;font-size:13px;font-weight:500;min-height:0;padding:6px 10px;border-radius:6px;flex-direction:row;align-items:center;gap:8px}
  & .pill::before{content:"";flex:none;width:10px;height:10px;border-radius:50%;background:var(--c)}& .pill span{flex:1}
  & .pill b{font-size:13px;font-weight:600;color:var(--tx2)}& .pill:hover,& .pill:focus-visible{background:rgba(0,0,0,.06);filter:none}

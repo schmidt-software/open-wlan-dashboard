@@ -41,7 +41,7 @@ html[data-theme="museum"]{
  & td:first-child{border-left:12px solid var(--c)}
  & .st{font-family:var(--head);color:#2b2720;text-transform:uppercase;letter-spacing:.05em}
  & .log .t{color:var(--mut);font-family:'IBM Plex Mono',monospace}
- & .info dt{color:#8a6d2f;font-family:var(--head);text-transform:uppercase;letter-spacing:.05em}
+ & .info dt{color:var(--tx2);font-family:var(--head);text-transform:uppercase;letter-spacing:.05em}
  & details.muted summary{color:#6b6455;font-style:italic}
  & .pill.warn,& .pill.warn *{color:var(--on-warn)}
 }
