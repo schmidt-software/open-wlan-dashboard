@@ -191,3 +191,7 @@ or weak-signal alerts. The file is git-ignored because it contains MAC addresses
 The collector and the dashboard write MAC addresses, device names and network events into
 this directory (`*.csv`, `*.jsonl`, `*.log`, `acks.json`, `config.local.json`). They are excluded via
 `.gitignore`, as is the password file. Python standard library only, no dependencies.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
