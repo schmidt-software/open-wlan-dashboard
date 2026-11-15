@@ -1,0 +1,53 @@
+/* theme: Pinball; de: Flipper */
+/* Dark pinball playfield with chrome rails, glowing red yellow and electric blue inserts and star rollovers. */
+@keyframes pinball-blink{0%,49%{opacity:1}50%,100%{opacity:.28}}
+html[data-theme="pinball"]{
+ --big-fit:14cqi;
+ --bg:#0a0d16;--panel:#141b2e;--tx:#eaf1ff;--tx2:#b9c8ea;--mut:#7f93bb;
+ --o1:#ff3b3b;--o2:#ffd21f;--pe:#447dff;--li:#00d9ff;--pw:#b652ff;--sk:#00ffa3;--tan:#ff7a1a;
+ --on:#08101f;--on-warn:#1a1400;
+ --good:#2ecc71;--warn:#ffd21f;--crit:#ff3b3b;--info:#2a6bff;--thr:#ff7a1a;
+ --s1:#00d9ff;--s2:#ff3b3b;--grid:#26314f;--axis:#5a6c96;
+ --font:'Rajdhani','Segoe UI',sans-serif;--head:'Orbitron',sans-serif;
+ background:
+  radial-gradient(ellipse at 18% 12%,rgba(0,217,255,.14),transparent 34%),
+  radial-gradient(ellipse at 82% 20%,rgba(255,59,59,.16),transparent 36%),
+  radial-gradient(ellipse at 50% 92%,rgba(255,210,31,.12),transparent 42%),
+  repeating-linear-gradient(115deg,rgba(42,107,255,.05) 0 3px,transparent 3px 26px),
+  #0a0d16;
+ background-attachment:fixed;
+ & body{background:transparent;color:var(--tx);font-family:var(--font)}
+ & .elbow{background:linear-gradient(180deg,#2b3a5e,#141b2e);color:#eaf1ff;border-radius:8px;min-height:0;padding:16px 12px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.1em;text-align:center;line-height:1.15}
+ & .pill{border-radius:8px;min-height:56px;background:var(--c);color:var(--on);font-family:var(--head);text-transform:uppercase;letter-spacing:.04em;box-shadow:inset 0 2px 0 rgba(255,255,255,.35),inset 0 -3px 6px rgba(0,0,0,.4),0 0 12px color-mix(in srgb,var(--c) 55%,transparent);overflow:hidden}
+ & .pill b{color:var(--on)}
+ & .fill{background:linear-gradient(90deg,#2a6bff,#ff3b3b,#ffd21f);border-radius:4px;opacity:.5}
+ & .main>.bar{height:8px}& .main>.bar i{background:linear-gradient(90deg,#ff3b3b,#ffd21f,#2a6bff) !important;border-radius:4px;box-shadow:0 0 14px rgba(255,120,60,.5)}
+ & .inner::before,& .inner::after{display:none}
+ & h1{color:#fff;font-family:var(--head);text-transform:uppercase;letter-spacing:.06em;font-size:clamp(30px,4.4vw,54px);text-shadow:0 0 18px rgba(0,217,255,.6),0 0 4px #fff}
+ & .sub{color:var(--tx2);letter-spacing:.08em;text-transform:uppercase;font-family:var(--head);font-size:13px}
+ & .themesel select{background:#141b2e;color:#eaf1ff;border:1px solid #2a6bff;border-radius:6px;padding:6px 10px;font-family:var(--head)}
+ & .hb{color:var(--c);font-family:var(--head);text-transform:uppercase;letter-spacing:.08em;font-size:22px;text-shadow:0 0 10px color-mix(in srgb,var(--c) 60%,transparent);position:relative}
+ & .hb::before{content:"";width:20px;height:20px;background:var(--c);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);filter:drop-shadow(0 0 6px var(--c))}
+ & .hb::after{content:"";height:4px;border-radius:2px;background:linear-gradient(90deg,var(--c),transparent);box-shadow:0 0 8px var(--c)}
+ & .kpi{position:relative;background:var(--panel);border:none;border-radius:16px;box-shadow:inset 0 0 0 2px #3a4a72,inset 0 0 0 5px color-mix(in srgb,var(--c) 70%,#1a2238),0 0 22px color-mix(in srgb,var(--c) 40%,transparent)}
+ & .kpi::before{content:"";position:absolute;left:14px;top:14px;width:16px;height:16px;background:var(--c);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);filter:drop-shadow(0 0 6px var(--c));animation:pinball-blink 1.8s steps(1) infinite}
+ & .kpi h3{color:var(--c);font-family:var(--head);text-transform:uppercase;letter-spacing:.06em;text-shadow:0 0 8px color-mix(in srgb,var(--c) 50%,transparent)}
+ & .big{font-family:var(--head);color:#fff;text-shadow:0 0 14px color-mix(in srgb,var(--c) 70%,#fff),0 0 3px #fff}
+ & .sm{color:var(--tx2);letter-spacing:.04em}
+ & .alert{position:relative;background:var(--panel);border-radius:12px;box-shadow:inset 0 0 0 2px #3a4a72,0 0 16px color-mix(in srgb,var(--c) 35%,transparent);overflow:hidden}
+ & .alert .tag{background:var(--c);border-radius:12px 0 0 12px;box-shadow:inset 0 0 14px rgba(0,0,0,.4),0 0 12px var(--c)}
+ & .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border-radius:8px;font-family:var(--head);text-transform:uppercase;letter-spacing:.05em;padding:8px 16px;box-shadow:inset 0 2px 0 rgba(255,255,255,.3),0 0 12px color-mix(in srgb,var(--b) 55%,transparent)}
+ & .panel h4{color:var(--tx);font-family:var(--head);text-transform:uppercase;letter-spacing:.06em}
+ & .legend span{color:var(--tx2);letter-spacing:.04em}
+ & .tip{background:#0c1322;border:1px solid #2a6bff;border-radius:8px;color:#eaf1ff;box-shadow:0 0 14px rgba(42,107,255,.5)}
+ & table th{color:var(--tx2);font-family:var(--head);text-transform:uppercase;letter-spacing:.06em;background:#0c1322}
+ & td{background:var(--panel);border-bottom:1px solid #26314f;color:var(--tx)}
+ & td:first-child{border-left:12px solid var(--c);box-shadow:inset 0 0 10px color-mix(in srgb,var(--c) 50%,transparent)}
+ & .st{color:var(--tx);font-family:var(--head);text-transform:uppercase;letter-spacing:.04em}
+ & .log .t{color:var(--li);font-family:var(--head)}
+ & .info dt{color:var(--o2);font-family:var(--head);text-transform:uppercase;letter-spacing:.05em}
+ & details.muted summary{color:var(--tx2);letter-spacing:.04em}
+ & .kpi::before,.hb::before{animation-duration:1.6s}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="pinball"] .kpi::before,html[data-theme="pinball"] .hb::before{animation:none}}

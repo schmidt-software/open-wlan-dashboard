@@ -1,0 +1,40 @@
+/* theme: Dot Matrix Printout; de: Nadeldrucker */
+/* Continuous tractor-feed paper with pale green stripes, pin-perforated side bar, dot-matrix monospace type and faded blue ink accents. */
+html[data-theme="dotmatrix"]{
+ --big-fit:15cqi;
+ --bg:#eef4e8;--panel:#fbfdf9;--tx:#1a271d;--tx2:#364a3b;--mut:#54675a;
+ --o1:#0f3d6e;--o2:#1c5a8a;--pe:#2f6b46;--li:#173e63;--pw:#0f3d6e;--sk:#2f6b46;--tan:#54675a;
+ --on:#ffffff;--on-warn:#2b2000;
+ --good:#2f6b46;--warn:#f2c200;--crit:#c62828;--info:#1c5a8a;
+ --thr:#8a937e;--s1:#0f3d6e;--s2:#2f6b46;--grid:#dde6d8;--axis:#364a3b;
+ --font:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;--head:'VT323','IBM Plex Mono',ui-monospace,monospace;
+ background:
+  repeating-linear-gradient(90deg,rgba(15,61,110,.05) 0 2px,transparent 2px 48px),
+  linear-gradient(#f6faf3,#eef4e8);
+ & body{background:transparent;letter-spacing:.01em;font-family:var(--font)}
+ & .rail{position:relative;background:repeating-linear-gradient(180deg,rgba(15,61,110,.12) 0 7px,transparent 7px 16px),#f4f8f1;box-shadow:inset -3px 0 0 rgba(15,61,110,.18)}
+ & .rail::before{content:"";position:absolute;top:0;bottom:0;left:9px;width:12px;background-image:radial-gradient(circle at 50% 50%,#cdd6cb 0 3px,#eef4e8 3.5px);background-size:12px 18px;background-repeat:repeat-y}
+ & .elbow{background:#0f3d6e;color:#fff;border-radius:0;min-height:0;padding:14px 14px 14px 26px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.1em}
+ & .pill{border-radius:0;min-height:54px;text-transform:uppercase;box-shadow:inset -3px 0 0 rgba(0,0,0,.28)}
+ & .fill{background:repeating-linear-gradient(90deg,#eef4e8 0 10px,#f6faf3 10px 20px);opacity:1}
+ & .main>.bar{height:5px}& .main>.bar i{background:#0f3d6e !important;border-radius:0}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 10px 14px 24px}
+ & h1{color:#0f3d6e;font-family:var(--head);font-weight:400;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:uppercase;letter-spacing:.12em;color:#364a3b}
+ & .hb{color:var(--c);font-family:var(--head);text-transform:uppercase;letter-spacing:.08em;font-size:26px}
+ & .hb::before{content:"";width:12px;height:12px;border-radius:0;background:#0f3d6e;box-shadow:4px 0 0 #0f3d6e,8px 0 0 #0f3d6e;margin-right:10px}
+ & .hb::after{content:"";height:0;border-bottom:2px dashed var(--c);margin-left:12px;flex:1}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #b9c6b7;border-radius:0;box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 4px #d5e0cf}
+ & .kpi{position:relative;border-left:12px solid var(--c);text-align:left}
+ & .kpi::before{content:"";position:absolute;top:6px;right:8px;width:9px;height:9px;background:#b9c6b7;box-shadow:inset 0 0 0 1.5px #eef4e8;border-radius:50%}
+ & .kpi h3{color:var(--c);text-transform:uppercase;letter-spacing:.1em;font-family:var(--head)}
+ & .big{font-family:var(--head);font-weight:400;color:#1a271d}& .sm{color:#54675a}
+ & .alert{position:relative;overflow:hidden}& .alert .tag{border-radius:0;box-shadow:inset -3px 0 0 rgba(0,0,0,.2)}& .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border-radius:0;text-transform:uppercase;letter-spacing:.1em;font-family:var(--head);box-shadow:inset -3px 0 0 rgba(0,0,0,.28)}
+ & .panel h4{color:#0f3d6e;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head)}
+ & th{color:#1a271d;text-transform:uppercase;letter-spacing:.08em;border-bottom:2px solid #b9c6b7}
+ & td{background:var(--panel);border-bottom:1px dashed #cdd6cb}& td:first-child{border-left:12px solid var(--c)}& .st{color:#1a271d;text-transform:uppercase;letter-spacing:.06em}
+ & .legend{color:#364a3b;letter-spacing:.05em}
+ & .log .t{color:#0f3d6e}& .info dt{color:#364a3b;text-transform:uppercase;letter-spacing:.08em}& details.muted summary{color:#54675a;text-transform:uppercase;letter-spacing:.08em}
+ & .tip{background:var(--panel);border:1px solid #0f3d6e;border-radius:0;color:#1a271d}
+ & .themesel select{background:var(--panel);color:#1a271d;border:1px solid #b9c6b7;border-radius:0;font-family:var(--font)}
+}

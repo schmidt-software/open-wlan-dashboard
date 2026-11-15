@@ -1,0 +1,29 @@
+/* theme: Post-Apocalyptic; de: Endzeit */
+/* Wasteland of rusty corrugated metal, torn cardboard cards with rough edges, stencil headings and yellow-black hazard stripes. */
+html[data-theme="postapocalyptic"]{
+ --big-fit:16cqi;
+ --bg:#beb193;--panel:#cdbf9f;--tx:#2a2117;--tx2:#403425;--mut:#4f4231;
+ --o1:#6f2f10;--o2:#4b4324;--pe:#4f4231;--li:#553f16;--pw:#573c2f;--sk:#6f2f10;--tan:#4b4324;
+ --on:#f4ead0;--on-warn:#2a2117;
+ --good:#4a7a2c;--warn:#f2c200;--crit:#b5281d;--info:#6e6234;
+ --thr:#b5281d;--s1:#8a3a14;--s2:#6e6234;--grid:#9a8c72;--axis:#2a2117;
+ --font:'Bitter',Georgia,serif;--head:'Black Ops One',sans-serif;
+ background:repeating-linear-gradient(90deg,rgba(0,0,0,.2) 0 4px,transparent 4px 9px),linear-gradient(180deg,#4a3d2f,#3b3228);
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#2a2117;color:#f4ead0;border-radius:2px 8px 2px 6px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.05em}
+ & .pill{border-radius:3px;min-height:58px;text-transform:uppercase;letter-spacing:.04em;border:2px solid #2a2117}& .fill{background:repeating-linear-gradient(45deg,#f2c200 0 10px,#2a2117 10px 20px);border-radius:3px;opacity:.8}
+ & .main>.bar{height:8px}& .main>.bar i{background:#2a2117 !important;border-radius:0}& .inner::before,& .inner::after{display:none}& .inner{background:var(--bg);border-radius:12px;padding:18px 10px 14px 22px}
+ & h1{color:var(--tx);font-weight:400;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:uppercase;letter-spacing:.08em}
+ & .hb{color:var(--c);font-weight:400;text-transform:uppercase;letter-spacing:.06em;font-size:24px}
+ & .hb::before{content:"";width:26px;height:26px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23f2c200' stroke='%232a2117' stroke-width='1.5' d='M12 2l8 5v10l-8 5-8-5V7z'/%3E%3Cpath fill='%23b5281d' d='M12 6l4 2.5v5L12 16l-4-2.5v-5z'/%3E%3C/svg%3E") no-repeat center/contain}
+ & .hb::after{content:"";height:8px;border-radius:0;background:repeating-linear-gradient(45deg,#f2c200 0 12px,#2a2117 12px 24px)}
+ & .kpi,& .alert{background:var(--panel);border:2px solid #2a2117;border-radius:6px 2px 8px 3px;box-shadow:inset 0 0 0 2px var(--panel),inset 0 0 0 3px rgba(92,77,57,.4)}
+ & .kpi{border-left:12px solid var(--c);text-align:center}& .kpi h3{color:#2a2117;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head);font-weight:400}
+ & .big{font-family:var(--head);font-weight:400;color:#2a2117}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:3px;text-transform:uppercase;letter-spacing:.05em;border:2px solid #2a2117}
+ & th{color:#2a2117;text-transform:uppercase;letter-spacing:.06em}& td{background:var(--panel);border-bottom:2px solid rgba(92,77,57,.4)}
+ & td:first-child{border-radius:3px 0 0 3px}& td:last-child{border-radius:0 3px 3px 0}& .st{color:#2a2117;text-transform:uppercase}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:uppercase;letter-spacing:.05em}& .log .t,& .info dt{color:var(--mut)}
+ & .tip{border-radius:3px;border-color:#2a2117;background:var(--panel)}& .themesel select{background:var(--panel);border-color:#2a2117;color:#2a2117}
+}

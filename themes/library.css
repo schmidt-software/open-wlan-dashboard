@@ -1,0 +1,37 @@
+/* theme: Library; de: Bibliothek */
+/* Dark walnut bookshelves, leather-bound cards with gold tooling and Playfair Display headings. */
+@keyframes library-glow{0%,100%{opacity:.35}50%{opacity:.7}}
+html[data-theme="library"]{
+ --big-fit:16cqi;
+ --bg:#2b1d14;--panel:#3a281a;--tx:#f3e9d7;--tx2:#d8cbb2;--mut:#a99778;
+ --o1:#7a9f68;--o2:#ca8080;--pe:#c9a44a;--li:#7f9e64;--pw:#bf8787;--sk:#b48d61;--tan:#ac8e65;
+ --on:#1a120a;--on-warn:#2b1d08;--good:#6b8e5a;--warn:#f2c200;--crit:#c62828;--info:#7a9cc0;
+ --thr:#c9a44a;--s1:#c9a44a;--s2:#6b8e5a;--grid:rgba(201,164,74,.18);--axis:#a99778;
+ --font:'Lora',Georgia,serif;--head:'Playfair Display',Georgia,serif;
+ background:
+  repeating-linear-gradient(90deg,transparent 0 132px,rgba(0,0,0,.4) 132px 138px),
+  repeating-linear-gradient(0deg,#3a2617 0 150px,#2b1d14 150px 160px),
+  radial-gradient(circle at 50% -20%,rgba(201,164,74,.12) 0,transparent 55%),
+  #2b1d14;
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#3a281a;color:#f3e9d7;border-radius:6px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.04em;border:1px solid #c9a44a}
+ & .pill{border-radius:4px;min-height:58px;text-transform:none;border:1px solid rgba(201,164,74,.3)}& .fill{background:linear-gradient(#4a5d3a,#3a281a);border-radius:4px;opacity:.4}
+ & .main>.bar{height:5px}& .main>.bar i{background:#c9a44a !important;border-radius:0}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#f3e9d7;font-weight:700;text-transform:none;letter-spacing:.02em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em;font-style:italic}
+ & .hb{color:#c9a44a;font-weight:700;text-transform:none;letter-spacing:.04em;font-size:26px}
+ & .hb::before{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,#c9a44a 0 5px,#3a281a 6px);border:2px solid #c9a44a}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:2px solid rgba(201,164,74,.5)}
+ & .kpi,& .alert{position:relative;background:var(--panel);border:1px solid #c9a44a;border-radius:6px;box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 4px rgba(201,164,74,.5)}
+ & .kpi{border-left:1px solid #c9a44a;text-align:center;overflow:hidden}
+ & .kpi::before{content:"";position:absolute;inset:6px;border:1px solid rgba(201,164,74,.4);border-radius:3px;pointer-events:none;animation:library-glow 5s ease-in-out infinite}
+ & .kpi h3{color:#c9a44a;text-transform:none;letter-spacing:.08em;font-family:var(--head);font-weight:700}
+ & .big{font-family:var(--head);font-weight:700}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:4px;text-transform:none;letter-spacing:.04em;border:1px solid rgba(201,164,74,.3)}
+ & th{color:#c9a44a;text-transform:none;letter-spacing:.06em;font-style:italic}& td{background:var(--panel);border-bottom:1px solid rgba(201,164,74,.25)}
+ & td:first-child{border-radius:4px 0 0 4px}& td:last-child{border-radius:0 4px 4px 0}& .st{color:#f3e9d7;text-transform:none}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em;color:#c9a44a}
+ & .log .t,& .info dt{color:var(--mut)}
+ & .tip{border-radius:4px;border-color:#c9a44a;background:var(--panel)}& .themesel select{background:var(--panel);border-color:#c9a44a;color:#f3e9d7}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="library"] .kpi::before{animation:none}}

@@ -1,0 +1,61 @@
+/* theme: Street Art; de: Street-Art */
+/* Graffiti concrete wall with spray drips, pasted poster cards, stencil headings and neon pink, lime and electric blue accents. */
+html[data-theme="streetart"]{
+ --big-fit:14cqi;
+ --bg:#dcdad3;--panel:#eceae4;--tx:#0f0f12;--tx2:#101013;--mut:#111113;
+ --o1:#290015;--o2:#051500;--pe:#001119;--li:#141100;--pw:#190c00;--sk:#1a0038;--tan:#001312;
+ --on:#eceae4;--on-warn:#1b1b20;
+ --good:#39e600;--warn:#f2c200;--crit:#ff3b3b;--info:#00a8ff;--thr:#d16400;
+ --s1:#ff2e9a;--s2:#00a8ff;--grid:#d6d3cb;--axis:#5a5a63;
+ --font:'Barlow Condensed','Arial Narrow',sans-serif;--head:'Bangers','Impact',sans-serif;
+ background:
+  radial-gradient(140% 70% at 20% -12%,rgba(255,255,255,.18),transparent 55%),
+  radial-gradient(120% 90% at 100% 118%,rgba(0,0,0,.34),transparent 60%),
+  repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0 2px,transparent 2px 7px),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 1px,transparent 1px 6px),
+  radial-gradient(circle at 12% 28%,rgba(255,46,154,.12) 0 70px,transparent 74px),
+  radial-gradient(circle at 86% 18%,rgba(57,230,0,.11) 0 58px,transparent 62px),
+  radial-gradient(circle at 72% 82%,rgba(0,168,255,.11) 0 64px,transparent 68px),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+  #7b7d80;
+ & body{background:transparent}& .inner{background:var(--bg);border-radius:6px}
+ & .rail{background:#2a2b30;border-radius:14px;padding:12px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.06),6px 8px 0 rgba(0,0,0,.35)}
+ & .elbow{background:#141419;color:#eceae4;border-radius:10px;min-height:0;padding:14px 10px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.06em;line-height:1}
+ & .pill{position:relative;background:var(--c);color:var(--on);border-radius:8px;border:2px solid #141419;min-height:56px;box-shadow:3px 3px 0 rgba(0,0,0,.4)}
+ & .pill::before{content:"";position:absolute;left:8px;top:-7px;width:11px;height:11px;border-radius:50%;background:#eceae4;border:2px solid #141419;box-shadow:0 0 0 2px rgba(0,0,0,.15)}
+ & .pill b{font-family:var(--head);letter-spacing:.03em}
+ & .fill{background:repeating-linear-gradient(45deg,#ff2e9a 0 8px,#141419 8px 16px);border-radius:8px;opacity:.85;border:2px solid #141419}
+ & .main>.bar{height:8px}& .main>.bar i{background:repeating-linear-gradient(90deg,var(--c) 0 18px,#141419 18px 26px) !important;border-radius:0}
+ & .inner::before,& .inner::after{display:none}
+ & h1{color:var(--tx);font-family:var(--head);font-weight:400;text-transform:uppercase;letter-spacing:.03em;font-size:clamp(34px,5vw,62px);text-shadow:4px 4px 0 #ff2e9a,-2px -2px 0 rgba(0,168,255,.7)}
+ & .sub{color:var(--tx2);text-transform:none;letter-spacing:.05em}
+ & .themesel{text-transform:none}& .themesel select{background:#141419;color:#eceae4;border:2px solid #ff2e9a;border-radius:6px;padding:5px 8px;font-family:var(--font)}
+ & .hb{position:relative;color:var(--c);font-family:var(--head);font-weight:400;text-transform:uppercase;letter-spacing:.03em;font-size:clamp(24px,3vw,36px);text-shadow:2px 2px 0 rgba(0,0,0,.5)}
+ & .hb::before{content:"";position:absolute;left:-14px;top:8%;width:9px;height:84%;background:var(--c);border-radius:2px;transform:skewX(-8deg);box-shadow:3px 0 0 rgba(0,0,0,.4)}
+ & .hb::after{content:"";position:absolute;left:12%;bottom:-6px;width:52%;height:7px;background:linear-gradient(90deg,var(--c),transparent);border-radius:3px}
+ & .kpi{position:relative;background:var(--panel);border:none;border-radius:4px;box-shadow:8px 10px 0 rgba(0,0,0,.42);transform:rotate(-.6deg)}
+ & .kpi:nth-child(even){transform:rotate(.7deg)}
+ & .kpi::before{content:"";position:absolute;left:50%;top:-9px;width:120px;height:20px;transform:translateX(-50%) rotate(-2deg);background:rgba(236,234,228,.85);border:1px solid rgba(0,0,0,.18);box-shadow:0 2px 3px rgba(0,0,0,.2)}
+ & .kpi::after{content:"";position:absolute;left:0;right:0;top:0;height:7px;background:repeating-linear-gradient(90deg,var(--c) 0 16px,#141419 16px 22px);border-radius:4px 4px 0 0}
+ & .kpi h3{color:var(--c);font-family:var(--head);text-transform:uppercase;letter-spacing:.04em}
+ & .big{font-family:var(--head);color:#1b1b20;letter-spacing:.01em;text-shadow:2px 2px 0 rgba(0,0,0,.18)}
+ & .sm{color:var(--tx2);text-transform:none}
+ & .alert{position:relative;background:var(--panel);border:none;border-radius:4px;box-shadow:6px 7px 0 rgba(0,0,0,.38);overflow:hidden}
+ & .alert::before{content:"";position:absolute;left:-12px;top:50%;width:10px;height:10px;border-radius:50%;background:#eceae4;border:2px solid #141419;transform:translateY(-50%);box-shadow:0 0 0 2px rgba(0,0,0,.15)}
+ & .alert .tag{background:var(--c);border-radius:0}
+ & .alert .end{display:none}
+ & .btn{position:relative;background:var(--b);color:var(--on);border:2px solid #141419;border-radius:6px;text-transform:uppercase;letter-spacing:.05em;font-family:var(--head);box-shadow:3px 3px 0 rgba(0,0,0,.4)}
+ & .btn::after{content:"";position:absolute;left:6px;right:6px;bottom:-4px;height:4px;background:repeating-linear-gradient(90deg,var(--b) 0 8px,#141419 8px 12px);border-radius:2px}
+ & .panel h4{color:#34343c;text-transform:uppercase;letter-spacing:.05em;font-family:var(--head)}
+ & .legend{text-transform:none;color:#34343c}
+ & .tip{background:#141419;border:2px solid var(--o1);border-radius:6px;color:#eceae4;padding:6px 8px;box-shadow:4px 4px 0 rgba(0,0,0,.4)}
+ & th{color:#34343c;text-transform:uppercase;letter-spacing:.05em;font-family:var(--head);background:rgba(255,255,255,.35)}
+ & td{background:var(--panel);border-bottom:2px dashed #d6d3cb;color:#1b1b20}
+ & td:first-child{border-radius:4px 0 0 4px}
+ & td:last-child{border-radius:0 4px 4px 0}
+ & .st{color:#1b1b20;text-transform:uppercase;font-family:var(--head);letter-spacing:.03em}
+ & .log .t{color:#4a4a52;font-family:var(--font)}
+ & .info dt{color:#ff2e9a;text-transform:uppercase;letter-spacing:.04em;font-family:var(--head)}
+ & details.muted summary{color:#34343c;text-transform:none}
+ & .pill.warn,& .pill.warn *{color:var(--on-warn)}
+}

@@ -1,0 +1,31 @@
+/* theme: Alpine; de: Alpen */
+/* Pale sky blue with layered mountain silhouettes, snow peaks, white hut cards with red trim and sturdy condensed headings. */
+html[data-theme="alpine"]{
+ --big-fit:15cqi;
+ --bg:#d9ecf6;--panel:#ffffff;--tx:#14283a;--tx2:#274155;--mut:#4e6478;
+ --o1:#b02318;--o2:#1f6b4a;--pe:#2d6aa6;--li:#366a97;--pw:#346a95;--sk:#3a6b8a;--tan:#516c81;
+ --on:#ffffff;--on-warn:#3a2a00;--good:#1f6b4a;--warn:#f2c200;--crit:#c62828;--info:#2f6fae;
+ --thr:#8a5a00;--s1:#b02318;--s2:#2f6fae;--grid:#cfe0ec;--axis:#4e6478;
+ --font:'Nunito',system-ui,sans-serif;--head:'Barlow Condensed','Arial Narrow',sans-serif;
+ background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='260' viewBox='0 0 1440 260'%3E%3Cpath d='M0 260 L0 150 L180 70 L360 160 L540 90 L720 170 L900 80 L1080 150 L1260 100 L1440 160 L1440 260 Z' fill='%235b93c4'/%3E%3Cpath d='M0 260 L0 200 L200 120 L400 210 L600 140 L800 220 L1000 150 L1200 200 L1440 170 L1440 260 Z' fill='%233a6b8a'/%3E%3Cpath d='M0 260 L0 230 L240 170 L480 240 L720 190 L960 250 L1200 200 L1440 230 L1440 260 Z' fill='%231f6b4a'/%3E%3C/svg%3E") bottom/cover no-repeat fixed,
+  linear-gradient(180deg,#cfe9f7 0%,#e4f2fa 55%,#f0f8fc 100%) fixed;
+ background-attachment:fixed,fixed;
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:linear-gradient(160deg,#b02318,#7a140d);color:#fff;border-radius:12px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.06em;border-bottom:5px solid #fff}
+ & .pill{border-radius:8px;min-height:60px;text-transform:none;box-shadow:inset 0 -3px 0 rgba(255,255,255,.4)}& .fill{background:linear-gradient(#8fb8d8,#3a6b8a);border-radius:8px;opacity:.4}
+ & .main>.bar{height:8px}& .main>.bar i{background:var(--o1) !important;border-radius:0 0 4px 4px;box-shadow:inset 0 -2px 0 #fff}& .inner::before,& .inner::after{display:none}& .inner{background:var(--bg);border-radius:10px;padding:18px 8px 12px 22px}
+ & h1{color:#14283a;font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em}
+ & .hb{color:#14283a;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:26px}
+ & .hb::before{width:20px;height:20px;background:linear-gradient(135deg,#fff 0 45%,var(--c) 45% 100%);clip-path:polygon(50% 0,100% 100%,0 100%)}
+ & .hb::after{height:4px;border-radius:2px;background:linear-gradient(90deg,var(--c),transparent)}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #d5e3ee;border-top:6px solid var(--c);border-radius:10px;box-shadow:0 4px 12px rgba(20,40,60,.08)}
+ & .kpi{border-left:1px solid #d5e3ee;text-align:center}& .kpi h3{color:var(--c);text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);font-weight:700}
+ & .big{font-family:var(--head);font-weight:700;color:#14283a}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:8px;text-transform:uppercase;letter-spacing:.05em;font-family:var(--head);font-weight:700;box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+ & th{color:#274155;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head);font-weight:700}& td{background:var(--panel);border-bottom:1px solid #e3edf5}
+ & td:first-child{border-radius:4px 0 0 4px}& td:last-child{border-radius:0 4px 4px 0}& .st{color:#274155;text-transform:uppercase;font-weight:700}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:uppercase;letter-spacing:.04em;font-family:var(--head);font-weight:700;color:#274155}& .log .t,& .info dt{color:var(--mut)}
+ & .tip{border-radius:8px;border-color:#b02318;background:var(--panel)}& .themesel select{background:var(--panel);border-color:#b02318}
+}

@@ -1,0 +1,46 @@
+/* theme: Video Recorder; de: Videorekorder */
+/* 1980s VCR dark grey plastic with faint static, cyan segment-display headings and red/silver recorder-panel accents. */
+@keyframes vcr-blink{0%,52%{opacity:1}53%,100%{opacity:.2}}
+html[data-theme="vcr"]{
+ --bg:#26282b;--panel:#34373c;--tx:#e9edf2;--tx2:#c3c9d0;--mut:#a3abb5;
+ --o1:#47abda;--o2:#ff7771;--pe:#cdd3da;--li:#46b6e6;--pw:#ff7a70;--sk:#9aa3ad;--tan:#7fd0f0;
+ --on:#14181d;--on-warn:#20180a;
+ --good:#54c07a;--warn:#f2c200;--crit:#ff3b3b;--info:#46b6e6;
+ --thr:#f2c200;--s1:#46b6e6;--s2:#ff7a70;--grid:#3d4148;--axis:#9aa3ad;
+ --font:'Rajdhani','Segoe UI',sans-serif;--head:'Orbitron','Arial',sans-serif;--big-fit:15cqi;
+ background:
+  repeating-linear-gradient(0deg,rgba(255,255,255,.014) 0 1px,transparent 1px 3px),
+  radial-gradient(rgba(255,255,255,.028) 1px,transparent 1.6px) 0 0/3px 3px,
+  linear-gradient(180deg,#2c2f34,#232529);
+ & body{background:transparent;letter-spacing:.02em}
+ & .elbow{background:#1b1d20;color:#cdd3da;border-radius:6px;min-height:0;padding:16px 8px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.14em;border:1px solid #45494f}
+ & .pill{border-radius:4px;min-height:52px;text-transform:uppercase;letter-spacing:.06em;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),inset 0 -2px 0 rgba(0,0,0,.3)}
+ & .pill b{font-family:var(--head);letter-spacing:.04em}
+ & .fill{background:repeating-linear-gradient(90deg,#3a3e44 0 8px,#2f3339 8px 16px);border-radius:4px;opacity:.55}
+ & .main>.bar{height:8px}& .main>.bar i{background:#ff5a52 !important;border-radius:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -2px 0 rgba(0,0,0,.4)}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 10px 12px 22px}
+ & h1{color:#e9edf2;font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:uppercase;letter-spacing:.1em}
+ & .hb{color:#46b6e6;font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:24px}
+ & .hb::before{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,#ff3b3b 0 6px,transparent 7px);box-shadow:0 0 8px #ff3b3b;animation:vcr-blink 1.4s steps(1,end) infinite}
+ & .hb::after{height:2px;background:linear-gradient(90deg,#46b6e6,transparent);border-radius:0}
+ & .kpi,& .alert{position:relative;background:var(--panel);border:1px solid #45494f;border-radius:8px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),inset 0 -3px 0 rgba(0,0,0,.3)}
+ & .kpi{border-left:4px solid var(--c);overflow:hidden}
+ & .kpi::after{content:"";position:absolute;left:0;right:0;top:0;height:60%;background:linear-gradient(180deg,rgba(255,255,255,.05),transparent);pointer-events:none}
+ & .kpi h3{color:#cdd3da;font-family:var(--head);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+ & .big{font-family:var(--head);font-weight:700;color:#46b6e6;text-shadow:0 0 8px rgba(70,182,230,.5)}
+ & .sm{color:#a3abb5;letter-spacing:.04em}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:0;background:var(--c)}& .alert .end{display:none}
+ & .btn{border-radius:4px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -2px 0 rgba(0,0,0,.4)}
+ & .panel h4{color:#cdd3da;text-transform:uppercase;letter-spacing:.1em;font-family:var(--head);font-weight:600}
+ & .legend{color:#a3abb5;letter-spacing:.05em}
+ & .tip{border-radius:4px;border-color:#45494f;background:var(--panel);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+ & th{color:#cdd3da;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);font-weight:600}
+ & td{background:var(--panel);border-bottom:1px solid #3d4148}
+ & td:first-child{border-radius:0}& .st{color:#e9edf2;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head)}
+ & .log .t{color:#7fd0f0;font-family:var(--head);letter-spacing:.04em}
+ & .info dt{color:#a3abb5;text-transform:uppercase;letter-spacing:.08em}
+ & details.muted summary{color:#a3abb5;letter-spacing:.06em}
+ & .themesel select{background:var(--panel);border-color:#45494f;color:#e9edf2;font-family:var(--font)}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="vcr"] .hb::before{animation:none}}

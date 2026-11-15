@@ -1,0 +1,45 @@
+/* theme: Steampunk; de: Steampunk */
+/* Victorian machinery: dark leather, riveted copper and brass frames, engraved serif headings with gears, amber and verdigris accents. */
+@keyframes steampunk-spin{to{transform:rotate(360deg)}}
+html[data-theme="steampunk"]{
+ --big-fit:15cqi;
+ --bg:#241811;--panel:#33231a;--tx:#f0e2cb;--tx2:#d6c29b;--mut:#b39a72;
+ --o1:#d99a3c;--o2:#5fae8a;--pe:#e6c46a;--li:#e2814f;--pw:#b096d6;--sk:#7fb0a0;--tan:#c98b4a;
+ --on:#241811;--on-warn:#2b1c05;
+ --good:#5fae8a;--warn:#f2c200;--crit:#ff3b3b;--info:#7fb0a0;
+ --thr:#d99a3c;--s1:#e6c46a;--s2:#5fae8a;--grid:#4a3526;--axis:#b39a72;
+ --font:'Old Standard TT',Georgia,serif;--head:'Playfair Display',Georgia,serif;
+ background:
+  repeating-linear-gradient(45deg,rgba(0,0,0,.14) 0 2px,transparent 2px 8px),
+  radial-gradient(circle at 12% 18%,rgba(120,70,30,.28) 0 60px,transparent 130px),
+  radial-gradient(circle at 85% 72%,rgba(120,70,30,.24) 0 50px,transparent 120px),
+  linear-gradient(160deg,#2c1d13,#1c120b);
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#3a281c;color:#f0e2cb;border-radius:8px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.04em;border:2px solid #b5793a}
+ & .pill{border-radius:8px;min-height:60px;text-transform:none;border:2px solid #6e4a2c;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 -3px 6px rgba(0,0,0,.4)}
+ & .fill{background:linear-gradient(#6e4a2c,#3a281c);border-radius:8px;opacity:.5}
+ & .main>.bar{height:8px}& .main>.bar i{background:linear-gradient(90deg,#b5793a,#d99a3c) !important;border-radius:4px;border-bottom:2px solid #6e4a2c}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#f0e2cb;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:clamp(32px,4.6vw,58px);text-shadow:0 2px 0 #1a1009,0 0 14px rgba(217,154,60,.25)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em;font-style:italic}
+ & .hb{color:#e6c46a;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:26px}
+ & .hb::before{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,#f0e2cb 0 4px,var(--c) 5px 9px,transparent 10px);border:3px solid var(--c);animation:steampunk-spin 8s linear infinite}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:3px double var(--c)}
+ & .kpi,& .alert{position:relative;background:var(--panel);border:2px solid #b5793a;border-radius:10px;box-shadow:inset 0 0 0 4px var(--panel),inset 0 0 0 6px #8a5a2c,0 4px 10px rgba(0,0,0,.4)}
+ & .kpi{border-left:2px solid #b5793a;text-align:center}
+ & .kpi::before,& .kpi::after,& .alert::before,& .alert::after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f6e2b0,#8a5a2c);box-shadow:inset 0 -1px 1px rgba(0,0,0,.6)}
+ & .kpi::before,& .alert::before{top:8px;left:8px}& .kpi::after,& .alert::after{bottom:8px;right:8px}
+ & .kpi h3{color:var(--c);text-transform:uppercase;letter-spacing:.08em;font-family:var(--font);font-weight:700}
+ & .big{font-family:var(--head);font-weight:700}& .sm{color:#d6c29b}
+ & .alert{overflow:hidden;padding-left:14px}& .alert .tag{border-radius:0;border-right:2px solid #8a5a2c}& .alert .end{display:none}
+ & .btn{border-radius:8px;text-transform:none;letter-spacing:.04em;border:2px solid #6e4a2c;box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+ & th{color:#e6c46a;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head);border-bottom:2px solid #b5793a}
+ & td{background:var(--panel);border-bottom:1px solid #4a3526}
+ & td:first-child{border-radius:8px 0 0 8px}& td:last-child{border-radius:0 8px 8px 0}
+ & .st{color:#f0e2cb;text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:uppercase;letter-spacing:.06em;color:#d99a3c}
+ & .log .t,& .info dt{color:#d99a3c}& .legend{color:#d6c29b}
+ & .tip{border-radius:8px;border-color:#b5793a;background:var(--panel);box-shadow:0 4px 10px rgba(0,0,0,.5)}
+ & .themesel select{background:var(--panel);border-color:#b5793a;color:#f0e2cb}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="steampunk"] .hb::before{animation:none}}

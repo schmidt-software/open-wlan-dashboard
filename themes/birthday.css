@@ -1,0 +1,53 @@
+/* theme: Birthday Party; de: Geburtstagsparty */
+/* Light cream with confetti, bunting garlands on cards, balloon accents and playful rounded type. */
+html[data-theme="birthday"]{
+ --big-fit:16cqi;
+ --bg:#fff8ec;--panel:#ffffff;--tx:#3a2b4d;--tx2:#5a4770;--mut:#7a6a90;
+ --o1:#db1f59;--o2:#1f6fd6;--pe:#926a09;--li:#c2185b;--pw:#3949ab;--sk:#ca3f14;--tan:#b75300;
+ --on:#ffffff;--on-warn:#3a2b00;
+ --good:#2e7d32;--warn:#f2c200;--crit:#d32f2f;--info:#1f6fd6;
+ --thr:#ef6c00;--s1:#e0245e;--s2:#1f6fd6;--grid:#efe4ff;--axis:#7a6a90;
+ --font:'Nunito',system-ui,sans-serif;--head:'Fredoka','Comic Neue',cursive;
+ background:
+  radial-gradient(circle at 8% 12%,#e0245e 0 3px,transparent 4px),
+  radial-gradient(circle at 22% 30%,#f2c200 0 3px,transparent 4px),
+  radial-gradient(circle at 46% 18%,#1f6fd6 0 3px,transparent 4px),
+  radial-gradient(circle at 70% 40%,#ef6c00 0 3px,transparent 4px),
+  radial-gradient(circle at 90% 24%,#e0245e 0 3px,transparent 4px),
+  radial-gradient(circle at 14% 70%,#1f6fd6 0 3px,transparent 4px),
+  radial-gradient(circle at 38% 84%,#f2c200 0 3px,transparent 4px),
+  radial-gradient(circle at 62% 78%,#e0245e 0 3px,transparent 4px),
+  radial-gradient(circle at 84% 66%,#1f6fd6 0 3px,transparent 4px),
+  linear-gradient(180deg,#fff8ec 0%,#fff3d9 100%) fixed;
+ & body{background:transparent;font-family:var(--font);letter-spacing:.01em}
+ & .elbow{background:linear-gradient(135deg,var(--o1),var(--o2));color:#fff;border-radius:24px;padding:18px 14px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.06em;box-shadow:inset 0 -6px 0 rgba(0,0,0,.15)}
+ & .rail{background:repeating-linear-gradient(90deg,#fff 0 2px,transparent 2px 18px),linear-gradient(#fdeef7,#eaf1ff);border-radius:24px;box-shadow:inset 0 0 0 3px rgba(255,255,255,.6)}
+ & .pill{background:var(--c);color:var(--on);border:none;border-radius:999px;padding:12px 16px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),0 3px 0 rgba(0,0,0,.08);font-family:var(--head)}
+ & .pill b{display:inline-block;margin-left:8px;background:rgba(255,255,255,.9);color:var(--c);border-radius:999px;padding:1px 10px;font-weight:700}
+ & .fill{background:linear-gradient(var(--o2),var(--pe));border-radius:14px;opacity:.5}
+ & .main>.bar{height:12px}& .main>.bar i{background:repeating-linear-gradient(90deg,var(--o1) 0 18px,var(--pe) 18px 36px,var(--o2) 36px 54px) !important;border-radius:999px}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:22px 10px 16px 24px}
+ & h1{color:var(--o1);font-family:var(--head);text-transform:none;letter-spacing:.03em;font-size:clamp(34px,4.8vw,60px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em;color:var(--tx2)}
+ & .hb{color:var(--c);font-family:var(--head);text-transform:none;letter-spacing:.04em;font-size:27px}
+ & .hb::before{content:"";width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 6px,var(--c) 7px);border:3px solid var(--c);box-shadow:inset -4px -4px 0 rgba(0,0,0,.12)}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:3px dotted var(--c)}
+ & .kpi,& .alert{position:relative;overflow:hidden;background:var(--panel);border:2px solid #fff;box-shadow:0 6px 14px rgba(90,71,112,.18),inset 0 0 0 2px var(--c);border-radius:22px}
+ & .kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:16px;background:repeating-linear-gradient(90deg,var(--o1) 0 22px,transparent 22px 44px)}
+ & .kpi::after{content:"";position:absolute;top:-2px;left:0;right:0;height:0;border-left:22px solid transparent;border-right:22px solid transparent;border-top:16px solid var(--o2);background:none}
+ & .kpi{border-left:8px solid var(--c);text-align:center;padding-top:26px}
+ & .kpi h3{color:var(--c);font-family:var(--head);text-transform:none;letter-spacing:.05em;margin-top:14px}
+ & .big{font-family:var(--head);font-weight:700;color:var(--tx)}& .sm{color:var(--mut)}
+ & .alert{padding-left:12px}& .alert .tag{background:var(--c);border-radius:0 999px 999px 0}
+ & .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border:none;border-radius:999px;padding:10px 20px;font-family:var(--head);box-shadow:inset 0 -5px 0 rgba(0,0,0,.18)}
+ & .panel h4{color:var(--tx);font-family:var(--head);text-transform:none;letter-spacing:.04em}
+ & .legend{color:var(--tx2)}& .tip{background:var(--panel);border:2px solid var(--o1);border-radius:12px;color:var(--tx)}
+ & table th{color:var(--tx);font-family:var(--head);text-transform:none;letter-spacing:.04em}
+ & td{background:var(--panel);border-bottom:2px dashed #efe4ff;border-radius:0}
+ & td:first-child{border-left:12px solid var(--c);border-radius:12px 0 0 12px}& td:last-child{border-radius:0 12px 12px 0}
+ & .st{color:var(--tx);font-weight:700;text-transform:none}
+ & .log .t{color:var(--o2);font-family:var(--head)}& .info dt{color:var(--pe);font-weight:700}
+ & details.muted summary{color:var(--mut)}& .themesel select{background:var(--panel);border:2px solid var(--o1);border-radius:999px;color:var(--tx)}
+ & .pill.warn,& .pill.warn *{color:var(--on-warn)}
+}

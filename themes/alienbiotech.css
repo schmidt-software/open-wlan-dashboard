@@ -1,0 +1,44 @@
+/* theme: Alien Biotech; de: Außerirdische Biotechnik */
+/* Organic alien lab: very dark green-black background with a cell-like blob pattern, glossy cards with iridescent teal-to-violet borders and organic rounded shapes, neon lime and teal accents. */
+@keyframes alienbiotech-pulse{0%{box-shadow:0 0 12px rgba(53,208,87,.15),inset 0 0 0 1px transparent}50%{box-shadow:0 0 26px rgba(45,212,191,.35),inset 0 0 0 1px rgba(167,139,250,.3)}100%{box-shadow:0 0 12px rgba(53,208,87,.15),inset 0 0 0 1px transparent}}
+html[data-theme="alienbiotech"]{
+ --big-fit:14cqi;
+ --bg:#060d09;--panel:#0b1a12;--tx:#dff3e6;--tx2:#a8c9b4;--mut:#7f9c88;
+ --o1:#a3e635;--o2:#2dd4bf;--pe:#c4b5fd;--li:#6ee7b7;--pw:#f0abfc;--sk:#5eead4;--tan:#bef264;
+ --on:#05130d;--on-warn:#1a1200;
+ --good:#4ade80;--warn:#f2c200;--crit:#ff3b3b;--info:#2dd4bf;
+ --thr:#f2c200;--s1:#a3e635;--s2:#c4b5fd;--grid:rgba(127,156,136,.28);--axis:#7f9c88;
+ --font:'Jost',system-ui,sans-serif;--head:'Orbitron','Jost',sans-serif;
+ background-color:var(--bg);
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cg fill='none' stroke-width='1.5'%3E%3Cellipse cx='45' cy='45' rx='26' ry='19' stroke='%23a3e635' opacity='.10'/%3E%3Cellipse cx='135' cy='70' rx='30' ry='22' stroke='%23c4b5fd' opacity='.08'/%3E%3Cellipse cx='80' cy='135' rx='22' ry='26' stroke='%232dd4bf' opacity='.09'/%3E%3Cellipse cx='155' cy='150' rx='18' ry='14' stroke='%23a3e635' opacity='.07'/%3E%3Ccircle cx='110' cy='30' r='7' fill='%23c4b5fd' opacity='.10'/%3E%3Ccircle cx='25' cy='110' r='5' fill='%23a3e635' opacity='.10'/%3E%3C/g%3E%3C/svg%3E"),radial-gradient(ellipse at 50% -10%,rgba(45,212,191,.10),transparent 60%),radial-gradient(ellipse at 100% 100%,rgba(167,139,250,.08),transparent 55%);
+ background-size:180px 180px,cover,cover;
+ & body{background:transparent;color:var(--tx);font-family:var(--font)}
+ & .rail{background:rgba(6,13,9,.5);border-right:1px solid rgba(45,212,191,.2)}
+ & .elbow{background:linear-gradient(180deg,#0b1a12,#08130c);color:#a3e635;border-radius:20px 20px 6px 6px;padding:14px 12px;font-family:var(--head);text-transform:uppercase;letter-spacing:.12em;border:1px solid rgba(45,212,191,.3)}
+ & .pill{border-radius:22px 8px 22px 8px;min-height:56px;text-transform:none;font-family:var(--head);box-shadow:0 0 14px rgba(163,230,53,.25),inset 0 1px 0 rgba(255,255,255,.2)}
+ & .fill{background:linear-gradient(90deg,rgba(45,212,191,.25),rgba(167,139,250,.2));border-radius:8px;opacity:.5}
+ & .main>.bar i{background:linear-gradient(90deg,#a3e635,#2dd4bf,#c4b5fd) !important;border-radius:4px;box-shadow:0 0 12px rgba(45,212,191,.4)}
+ & .inner::before,& .inner::after{display:none}
+ & h1{color:#a3e635;font-family:var(--head);text-transform:uppercase;letter-spacing:.1em;text-shadow:0 0 18px rgba(163,230,53,.4)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em;color:#a8c9b4}
+ & .hb{color:#a3e635;font-family:var(--head);text-transform:uppercase;letter-spacing:.12em}
+ & .hb::before{content:"";width:14px;height:14px;border-radius:50% 50% 50% 0;background:radial-gradient(circle at 30% 30%,#bef264,#a3e635);box-shadow:0 0 10px #a3e635}
+ & .hb::after{content:"";height:3px;border-radius:3px;background:linear-gradient(90deg,#a3e635,transparent)}
+ & .kpi,& .alert{position:relative;background:var(--panel);border:1px solid transparent;border-radius:28px 14px 28px 14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 0 22px rgba(45,212,191,.12);animation:alienbiotech-pulse 5s ease-in-out infinite}
+ & .kpi{background-image:linear-gradient(var(--panel),var(--panel)),linear-gradient(135deg,#a3e635,#2dd4bf,#c4b5fd);background-origin:border-box;background-clip:padding-box,border-box;border-left:none;text-align:left}
+ & .kpi h3{color:#a3e635;font-family:var(--head);text-transform:uppercase;letter-spacing:.1em}
+ & .big{font-family:var(--head);font-weight:700;color:#bef264;text-shadow:0 0 14px rgba(190,242,100,.35)}
+ & .sm{color:#a8c9b4}
+ & .alert .tag{border-radius:14px 0 0 14px;box-shadow:0 0 16px var(--c)}
+ & .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border-radius:20px 8px 20px 8px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);box-shadow:0 0 14px var(--b),inset 0 1px 0 rgba(255,255,255,.3)}
+ & .panel h4{color:#a3e635;font-family:var(--head);text-transform:uppercase;letter-spacing:.1em}
+ & .legend{color:#a8c9b4}& .tip{background:var(--panel);border:1px solid #2dd4bf;border-radius:14px 6px 14px 6px;box-shadow:0 0 16px rgba(45,212,191,.3)}
+ & table th{color:#a3e635;font-family:var(--head);text-transform:uppercase;letter-spacing:.08em}
+ & td{background:var(--panel);border-bottom:1px solid rgba(45,212,191,.15)}
+ & td:first-child{border-left:12px solid var(--c);border-radius:14px 0 0 14px}
+ & .st{font-family:var(--head);text-transform:uppercase;letter-spacing:.08em}
+ & .log .t,& .info dt{color:#7f9c88}& details.muted summary{color:#a8c9b4;text-transform:none;letter-spacing:.04em}
+ & .themesel select{background:var(--panel);border:1px solid rgba(45,212,191,.3);border-radius:12px 6px 12px 6px;color:#dff3e6}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="alienbiotech"] .kpi,html[data-theme="alienbiotech"] .alert{animation:none}}

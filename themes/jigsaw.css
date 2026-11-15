@@ -1,0 +1,48 @@
+/* theme: Jigsaw Puzzle; de: Puzzle */
+/* Light wooden table background with jigsaw puzzle-piece cards, rounded headings and bright blue/orange piece accents. */
+@keyframes jigsaw-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+html[data-theme="jigsaw"]{
+ --big-fit:16cqi;
+ --bg:#e2b479;--panel:#fffaf0;--tx:#3a2a1a;--tx2:#5a4630;--mut:#58472f;
+ --o1:#1042ae;--o2:#7f3007;--pe:#713e03;--li:#0c5727;--pw:#6a13b8;--sk:#8e184d;--tan:#07524c;
+ --on:#ffffff;--on-warn:#3a2a1a;
+ --good:#15803d;--warn:#f2c200;--crit:#dc2626;--info:#2563eb;--thr:#b45309;
+ --s1:#2563eb;--s2:#ea580c;--grid:#e7d6ba;--axis:#8a6f4a;
+ --font:'Nunito',system-ui,sans-serif;--head:'Fredoka',system-ui,sans-serif;
+ background:repeating-linear-gradient(90deg,rgba(120,80,35,.07) 0 2px,transparent 2px 46px),linear-gradient(180deg,#eabf85,#dca46a);
+ & body{background:transparent}
+ & .elbow{background:#fffaf0;color:#3a2a1a;border-radius:18px;min-height:0;padding:16px 10px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em;border:2px solid #e7d6ba}
+ & .pill{border-radius:14px;min-height:56px;text-transform:none;border:2px solid rgba(0,0,0,.08)}
+ & .fill{background:repeating-linear-gradient(45deg,#fffaf0 0 8px,#f3e6d2 8px 16px);border-radius:14px;opacity:.7}
+ & .main>.bar{height:6px}
+ & .main>.bar i{background:var(--o1) !important;border-radius:6px}
+ & .inner::before,& .inner::after{display:none}
+ & h1{color:#3a2a1a;font-family:var(--head);font-weight:700;text-transform:none;letter-spacing:.01em}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.04em;color:var(--tx2)}
+ & .hb{color:var(--c);font-family:var(--head);font-weight:600;text-transform:none;letter-spacing:.02em;position:relative;padding-left:34px}
+ & .hb::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:8px;background:var(--c);box-shadow:inset 0 -3px 0 rgba(0,0,0,.15)}
+ & .hb::after{content:"";position:absolute;left:24px;top:50%;transform:translateY(-50%);width:9px;height:9px;border-radius:50%;background:#fffaf0}
+ & .kpi{position:relative;background:var(--panel);border:2px solid #e7d6ba;border-radius:18px;box-shadow:0 4px 10px rgba(120,80,35,.18);overflow:hidden;animation:jigsaw-float 6s ease-in-out infinite}
+ & .kpi::before{content:"";position:absolute;left:-9px;top:38%;width:26px;height:26px;border-radius:50%;background:var(--panel);border:2px solid #e7d6ba;box-shadow:inset 0 -3px 0 rgba(120,80,35,.12)}
+ & .kpi::after{content:"";position:absolute;right:-9px;top:58%;width:26px;height:26px;border-radius:50%;background:var(--panel);border:2px solid #e7d6ba;box-shadow:inset 0 -3px 0 rgba(120,80,35,.12)}
+ & .kpi h3{color:var(--c);font-family:var(--head);font-weight:600;text-transform:none;letter-spacing:.03em}
+ & .big{font-family:var(--head);font-weight:700;color:#3a2a1a}
+ & .sm{color:var(--tx2)}
+ & .alert{position:relative;background:var(--panel);border:2px solid #e7d6ba;border-radius:18px;overflow:hidden}
+ & .alert::before{content:"";position:absolute;left:-9px;top:40%;width:26px;height:26px;border-radius:50%;background:var(--panel);border:2px solid #e7d6ba}
+ & .alert .tag{border-radius:0 8px 8px 0}
+ & .alert .end{display:none}
+ & .btn{border-radius:14px;text-transform:none;letter-spacing:.03em;border:2px solid rgba(0,0,0,.1)}
+ & .panel h4{color:var(--c);font-family:var(--head);font-weight:600;text-transform:none}
+ & .legend{color:var(--tx2);text-transform:none}
+ & .tip{background:#fffaf0;border:2px solid #e7d6ba;border-radius:12px;color:#3a2a1a}
+ & th{color:#3a2a1a;text-transform:none;font-family:var(--head);font-weight:600}
+ & td{background:var(--panel);border-bottom:1px solid #e7d6ba}
+ & td:first-child{border-radius:8px 0 0 8px}
+ & .st{color:#3a2a1a;font-family:var(--head);font-weight:600;text-transform:none}
+ & .log .t{color:var(--mut);font-family:var(--font)}
+ & .info dt{color:var(--tx2);text-transform:none}
+ & details.muted summary{color:var(--mut);text-transform:none}
+ & .themesel select{background:#fffaf0;border-color:#e7d6ba;color:#3a2a1a;border-radius:10px}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="jigsaw"] .kpi{animation:none}}

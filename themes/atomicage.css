@@ -1,0 +1,43 @@
+/* theme: Atomic Age; de: Atomzeitalter */
+/* 1950s retro-future: pastel pink and mint with atom starbursts, chrome-bordered bubbly cards, boomerang shapes, turquoise and coral accents. */
+html[data-theme="atomicage"]{
+ --bg:#fde9f2;--panel:#fffdfb;--tx:#4a2c58;--tx2:#6e4d7e;--mut:#7d5f85;
+ --o1:#007777;--o2:#d50032;--pe:#007676;--li:#c53500;--pw:#007676;--sk:#d60040;--tan:#317770;
+ --on:#fffdfb;--on-warn:#4a2c58;--good:#2e9e6b;--warn:#f2c200;--crit:#e13b3b;--info:#008b8b;
+ --thr:#ff5a1d;--s1:#008b8b;--s2:#ff6f91;--grid:#f3d3e4;--axis:#8b6a94;
+ --font:'Fredoka','Quicksand',sans-serif;--head:'Righteous','Comfortaa',sans-serif;--big-fit:15cqi;
+ background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='none' stroke='%2300b3b3' stroke-opacity='.28' stroke-width='2'%3E%3Cellipse cx='70' cy='70' rx='26' ry='11'/%3E%3Cellipse cx='70' cy='70' rx='26' ry='11' transform='rotate(60 70 70)'/%3E%3Cellipse cx='70' cy='70' rx='26' ry='11' transform='rotate(120 70 70)'/%3E%3C/g%3E%3Ccircle cx='70' cy='70' r='5' fill='%23ff6f91' fill-opacity='.4'/%3E%3C/svg%3E") fixed,
+  radial-gradient(circle at 18% 22%,rgba(0,179,179,.14) 0 12px,transparent 13px),
+  radial-gradient(circle at 82% 68%,rgba(255,111,145,.14) 0 12px,transparent 13px),
+  linear-gradient(135deg,#fde9f2 0%,#dff6ef 100%);
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:linear-gradient(#ff8fb3,#ff6f91);color:#fffdfb;border-radius:24px;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(120,40,90,.2)}
+ & .pill{border-radius:20px;min-height:60px;text-transform:none;font-family:var(--head);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(0,0,0,.18)}
+ & .fill{background:linear-gradient(#9fe6e0,#4db6ac);border-radius:14px;opacity:.5}
+ & .main>.bar{height:10px}& .main>.bar i{background:linear-gradient(90deg,#ff6f91,#00b3b3) !important;border-radius:8px}
+ & .inner::before,& .inner::after{display:none}
+ & h1{color:#4a2c58;font-family:var(--head);text-transform:none;letter-spacing:.02em;font-size:clamp(32px,4.6vw,58px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em}
+ & .hb{color:var(--c);font-family:var(--head);text-transform:none;letter-spacing:.04em;font-size:26px;position:relative;padding-left:46px}
+ & .hb::before{content:"";position:absolute;left:0;top:50%;width:34px;height:18px;margin-top:-9px;background:linear-gradient(90deg,var(--c),transparent);clip-path:polygon(0 0,72% 0,100% 50%,72% 100%,0 100%)}
+ & .hb::after{content:"";height:4px;border-radius:3px;background:linear-gradient(90deg,var(--c),transparent);margin-top:8px}
+ & .kpi,& .alert{background:var(--panel);border:2px solid #dfe6ea;border-radius:26px;box-shadow:inset 0 0 0 3px #fffdfb,inset 0 0 0 4px #c9ccd2,0 8px 18px rgba(74,44,88,.1)}
+ & .kpi{border-left:none;text-align:center;position:relative}
+ & .kpi::before{content:"";position:absolute;top:-6px;left:50%;width:30px;height:14px;margin-left:-15px;background:var(--c);clip-path:polygon(0 0,100% 0,78% 100%,22% 100%);border-radius:4px}
+ & .kpi h3{color:var(--c);font-family:var(--head);text-transform:none;letter-spacing:.06em}
+ & .big{font-family:var(--head)}& .sm{color:var(--tx2)}
+ & .alert{overflow:hidden;border-radius:22px}& .alert .tag{border-radius:0 0 0 22px}& .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border-radius:20px;font-family:var(--head);text-transform:none;letter-spacing:.04em;box-shadow:inset 0 2px 0 rgba(255,255,255,.4),inset 0 -3px 0 rgba(0,0,0,.18)}
+ & .panel h4{color:var(--tx);font-family:var(--head);text-transform:none;letter-spacing:.04em}
+ & .legend{color:var(--tx2)}
+ & th{color:#4a2c58;font-family:var(--head);text-transform:none;letter-spacing:.05em;background:#fde9f2}
+ & td{background:var(--panel);border-bottom:1px solid #f3d3e4;border-radius:0}
+ & td:first-child{border-left:12px solid var(--c);border-radius:16px 0 0 16px}
+ & td:last-child{border-radius:0 16px 16px 0}
+ & .st{color:#4a2c58;font-family:var(--head);text-transform:none}
+ & .log .t,& .info dt{color:var(--mut)}& .info dt{text-transform:none;letter-spacing:.03em}
+ & details.muted summary{color:var(--tx2);text-transform:none;letter-spacing:.03em}
+ & .tip{background:var(--panel);border:2px solid #c9ccd2;border-radius:16px;color:#4a2c58}
+ & .themesel select{background:var(--panel);border:2px solid #dfe6ea;border-radius:14px;color:#4a2c58;font-family:var(--font)}
+}

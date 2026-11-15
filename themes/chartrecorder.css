@@ -1,0 +1,45 @@
+/* theme: Chart Recorder; de: Messschreiber */
+/* Lab chart recorder: white paper with a fine light red millimetre grid, cards like paper strips with perforated edges, technical monospace headings, red and blue pen lines as accents. */
+@keyframes chartrecorder-drift{from{background-position:0 0}to{background-position:256px 256px}}
+html[data-theme="chartrecorder"]{
+ --big-fit:16cqi;
+ --bg:#f3efe4;--panel:#fffefb;--tx:#2a2722;--tx2:#514c44;--mut:#6e685d;
+ --o1:#c62828;--o2:#1a4fa0;--pe:#c62828;--li:#1a4fa0;--pw:#7a2b2b;--sk:#2f5fb0;--tan:#3a352e;
+ --on:#fffefb;--on-warn:#2b2000;
+ --good:#2f8f46;--warn:#f2c200;--crit:#c62828;--info:#1a4fa0;
+ --thr:#9c7a1e;--s1:#c62828;--s2:#1a4fa0;--grid:#e6b9b0;--axis:#3a352e;
+ --font:'IBM Plex Mono',ui-monospace,monospace;--head:'Share Tech Mono',ui-monospace,monospace;
+ background:
+  repeating-linear-gradient(0deg,transparent 0 19px,rgba(198,40,40,.16) 19px 20px),
+  repeating-linear-gradient(90deg,transparent 0 19px,rgba(198,40,40,.16) 19px 20px),
+  repeating-linear-gradient(0deg,transparent 0 95px,rgba(198,40,40,.30) 95px 97px),
+  repeating-linear-gradient(90deg,transparent 0 95px,rgba(198,40,40,.30) 95px 97px),
+  linear-gradient(#f3efe4,#ede7da);
+ background-attachment:fixed;
+ animation:chartrecorder-drift 60s linear infinite;
+ & body{background:transparent;letter-spacing:.01em;color:var(--tx)}
+ & .elbow{background:#2a2722;color:#f3efe4;border-radius:2px;min-height:0;padding:14px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.06em}
+ & .pill{border-radius:2px;min-height:58px;text-transform:none;font-family:var(--head)}& .fill{background:repeating-linear-gradient(90deg,#c62828 0 6px,transparent 6px 12px);opacity:.3}
+ & .main>.bar{height:4px}& .main>.bar i{background:#2a2722 !important;border-radius:0}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 10px 12px 22px}
+ & h1{color:#2a2722;font-family:var(--head);font-weight:400;text-transform:uppercase;letter-spacing:.1em;font-size:clamp(30px,4.4vw,56px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.08em;font-family:var(--head)}
+ & .hb{color:#2a2722;font-family:var(--head);font-weight:400;text-transform:uppercase;letter-spacing:.1em;font-size:24px}
+ & .hb::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--c)}  /* pen dot */
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:2px solid var(--c);border-style:dashed}
+ & .kpi,& .alert{position:relative;background:var(--panel);border:1px solid #d8cfbd;border-radius:2px;box-shadow:0 2px 6px rgba(42,39,34,.12)}
+ & .kpi::before,& .alert::before{content:"";position:absolute;left:-7px;top:0;bottom:0;width:12px;background:repeating-linear-gradient(0deg,var(--panel) 0 6px,transparent 6px 12px);border-right:1px solid #d8cfbd}
+ & .kpi{border-left:none;text-align:left;padding-left:16px}& .kpi h3{color:var(--c);text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);font-weight:400}
+ & .big{font-family:var(--head);font-weight:400;letter-spacing:.02em}& .sm{color:var(--mut)}
+ & .alert{overflow:hidden;padding-left:16px}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:2px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);font-weight:400}
+ & .panel h4{color:#2a2722;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head);font-weight:400}
+ & .legend{font-family:var(--head);letter-spacing:.04em}
+ & th{color:#514c44;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head);font-weight:400;background:#f3efe4;border-bottom:2px solid #2a2722}
+ & td{background:var(--panel);border-bottom:1px dotted #d8cfbd;font-family:var(--font)}
+ & td:first-child{border-radius:0}& .st{color:#2a2722;text-transform:uppercase;letter-spacing:.04em;font-family:var(--head)}
+ & .log .t,& .info dt{color:#c62828;font-family:var(--head);text-transform:none}
+ & details.muted summary{color:#514c44;text-transform:none;letter-spacing:.04em;font-family:var(--font)}
+ & .tip{border-radius:2px;border:1px solid #2a2722;background:var(--panel);box-shadow:0 3px 8px rgba(42,39,34,.2)}
+ & .themesel select{background:var(--panel);border:1px solid #2a2722;color:#2a2722;border-radius:2px;font-family:var(--head)}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="chartrecorder"]{animation:none}}

@@ -1,0 +1,38 @@
+/* theme: Mechanical Keyboard; de: Mechanische Tastatur */
+/* Dark aluminium plate, ivory keycaps with raised bevels, red escape and grey modifier accents. */
+@keyframes keyboard-breathe{0%,100%{box-shadow:inset 0 3px 0 rgba(255,255,255,.7),inset 0 -4px 0 rgba(0,0,0,.35),0 6px 12px rgba(0,0,0,.4)}50%{box-shadow:inset 0 3px 0 rgba(255,255,255,.85),inset 0 -4px 0 rgba(0,0,0,.3),0 6px 16px rgba(0,0,0,.5)}}
+html[data-theme="keyboard"]{
+ --bg:#ddd8cb;--panel:#efe9da;--tx:#2b2e33;--tx2:#474b52;--mut:#575c65;
+ --o1:#b12424;--o2:#575c65;--pe:#805300;--li:#3b6555;--pw:#3a4a7a;--sk:#6b4a6a;--tan:#775738;
+ --on:#fffaf0;--on-warn:#2b1a12;--good:#3f8a4a;--warn:#f2c200;--crit:#c62828;--info:#3a4a7a;
+ --thr:#8a5a00;--s1:#c62828;--s2:#3a4a7a;--grid:#d9d2c0;--axis:#474b52;
+ --font:'Rajdhani','Barlow Condensed',system-ui,sans-serif;--head:'Oswald','Rajdhani',system-ui,sans-serif;
+ --big-fit:15cqi;
+ background:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px),
+  radial-gradient(circle at 18% 12%,#4a4d52 0,#3a3d42 60%,#2f3237 100%) fixed;
+ & body{background:transparent;color:var(--tx);letter-spacing:.02em}
+ & .elbow{background:#2b2e33;color:#efe9da;border-radius:8px;padding:14px 10px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.12em;font-weight:700}
+ & .pill{border-radius:10px;min-height:58px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head);box-shadow:inset 0 3px 0 rgba(255,255,255,.25),inset 0 -4px 0 rgba(0,0,0,.35),0 5px 10px rgba(0,0,0,.4)}
+ & .pill b{font-family:var(--head);font-weight:700}
+ & .fill{background:#2b2e33;border-radius:6px;opacity:.5}
+ & .main>.bar{height:8px}& .main>.bar i{background:#2b2e33 !important;border-radius:4px;box-shadow:inset 0 1px 0 rgba(255,255,255,.15),inset 0 -2px 0 rgba(0,0,0,.4)}
+ & .inner::before,& .inner::after{display:none}& .inner{background:var(--bg);border-radius:12px;padding:16px 8px 12px 22px}
+ & h1{color:var(--tx);font-family:var(--head);text-transform:uppercase;letter-spacing:.1em;font-weight:700;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:uppercase;letter-spacing:.08em;color:var(--tx2)}
+ & .hb{color:var(--c);font-family:var(--head);text-transform:uppercase;letter-spacing:.12em;font-weight:700;font-size:24px}
+ & .hb::before{width:16px;height:16px;border-radius:3px;background:var(--c);box-shadow:inset 0 2px 0 rgba(255,255,255,.3),inset 0 -2px 0 rgba(0,0,0,.3)}
+ & .hb::after{height:4px;border-radius:2px;background:#2b2e33}
+ & .kpi,& .alert{background:var(--panel);border-radius:12px;box-shadow:inset 0 3px 0 rgba(255,255,255,.7),inset 0 -4px 0 rgba(0,0,0,.3),0 6px 12px rgba(0,0,0,.4);animation:keyboard-breathe 6s ease-in-out infinite}
+ & .kpi{border-left:none;text-align:left}& .kpi h3{color:var(--c);text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);font-weight:700}
+ & .big{font-family:var(--head);font-weight:700;color:var(--tx)}& .sm{color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:12px 0 0 12px}& .alert .end{display:none}
+ & .btn{border-radius:8px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);font-weight:700;box-shadow:inset 0 3px 0 rgba(255,255,255,.3),inset 0 -4px 0 rgba(0,0,0,.3),0 5px 10px rgba(0,0,0,.35)}
+ & th{color:var(--tx);text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);font-weight:700}
+ & td{background:var(--panel);border-bottom:2px solid var(--grid)}
+ & td:first-child{border-radius:8px 0 0 8px}& td:last-child{border-radius:0 8px 8px 0}& .st{color:var(--tx);text-transform:uppercase;font-weight:700}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:uppercase;letter-spacing:.06em;color:var(--tx2)}
+ & .log .t,& .info dt{color:var(--mut)}
+ & .tip{border-radius:8px;border-color:#2b2e33;background:var(--panel);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),0 4px 10px rgba(0,0,0,.4)}
+ & .themesel select{background:var(--panel);border-color:#2b2e33;border-radius:8px}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="keyboard"] .kpi,html[data-theme="keyboard"] .alert{animation:none}}

@@ -1,0 +1,32 @@
+/* theme: Botanical Garden; de: Botanischer Garten */
+/* Soft ivory botanical-illustration paper with fine line ferns, white cards with thin green borders and elegant serif headings. */
+html[data-theme="botanical"]{
+ --big-fit:16cqi;
+ --bg:#f4eedd;--panel:#fffdf8;--tx:#2a3627;--tx2:#4b5a44;--mut:#5e6c54;
+ --o1:#2d5a3d;--o2:#6b4a2a;--pe:#9c3a5a;--li:#3a7058;--pw:#4a6a8a;--sk:#5a4a3a;--tan:#80683b;
+ --on:#fffdf8;--on-warn:#2b1d00;
+ --good:#2d5a3d;--warn:#f2c200;--crit:#c62828;--info:#4a6a8a;
+ --thr:#9c3a5a;--s1:#2d5a3d;--s2:#b87333;--grid:#dfe4d4;--axis:#5e6c54;
+ --font:'Lora',Georgia,serif;--head:'Playfair Display',Georgia,serif;
+ background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cg fill='none' stroke='%232d5a3d' stroke-width='1.4' opacity='0.16'%3E%3Cpath d='M90 22 C74 52 74 88 90 116 C106 88 106 52 90 22 Z'/%3E%3Cline x1='90' y1='30' x2='90' y2='110'/%3E%3Cpath d='M90 44 C78 40 68 42 60 50'/%3E%3Cpath d='M90 44 C102 40 112 42 120 50'/%3E%3Cpath d='M90 62 C78 58 68 60 60 68'/%3E%3Cpath d='M90 62 C102 58 112 60 120 68'/%3E%3Cpath d='M90 80 C78 76 68 78 60 86'/%3E%3Cpath d='M90 80 C102 76 112 78 120 86'/%3E%3Cpath d='M90 98 C80 94 72 96 66 102'/%3E%3Cpath d='M90 98 C100 94 108 96 114 102'/%3E%3C/g%3E%3Cg fill='none' stroke='%23b87333' stroke-width='1.2' opacity='0.13'%3E%3Cpath d='M20 150 C40 140 60 140 80 150'/%3E%3Cpath d='M20 150 L78 150'/%3E%3Cpath d='M34 150 L30 142'/%3E%3Cpath d='M52 150 L48 141'/%3E%3Cpath d='M70 150 L66 142'/%3E%3C/g%3E%3C/svg%3E") fixed,
+  radial-gradient(circle at 12% 16%,rgba(58,112,88,.10),transparent 42%),
+  radial-gradient(circle at 88% 84%,rgba(156,58,90,.07),transparent 46%),#f4eedd;
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#2d5a3d;color:#fffdf8;border-radius:10px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.04em}
+ & .pill{border-radius:8px;min-height:58px;text-transform:none}& .fill{background:linear-gradient(#3a7058,#2d5a3d);border-radius:8px;opacity:.4}
+ & .main>.bar{height:5px}& .main>.bar i{background:#2d5a3d !important;border-radius:3px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#2d5a3d;font-weight:400;text-transform:none;letter-spacing:.02em;font-size:clamp(30px,4.4vw,56px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em;font-style:italic}
+ & .hb{color:#2d5a3d;font-weight:400;text-transform:none;letter-spacing:.04em;font-size:26px}
+ & .hb::before{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,#2d5a3d 0 5px,transparent 6px);border:2px solid var(--c)}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:1px solid #b87333}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #2d5a3d;border-radius:6px;box-shadow:inset 0 0 0 2px var(--panel),inset 0 0 0 3px #b87333}
+ & .kpi{border-left:1px solid #2d5a3d;text-align:center}& .kpi h3{color:var(--c);text-transform:none;letter-spacing:.06em;font-family:var(--font);font-weight:600;font-style:italic}
+ & .big{font-family:var(--head);font-weight:400}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:6px;text-transform:none;letter-spacing:.04em}
+ & th{color:#2d5a3d;text-transform:none;letter-spacing:.05em;font-style:italic}& td{background:var(--panel);border-bottom:1px solid #b87333}
+ & td:first-child{border-radius:6px 0 0 6px}& td:last-child{border-radius:0 6px 6px 0}& .st{color:#2a3627;text-transform:none}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em}& .log .t,& .info dt{color:#9c3a5a}
+ & .tip{border-radius:6px;border-color:#2d5a3d;background:var(--panel)}& .themesel select{background:var(--panel);border-color:#2d5a3d}
+}

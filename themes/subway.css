@@ -1,0 +1,47 @@
+/* theme: Subway Map; de: U-Bahn-Plan */
+/* White metro-map look with coloured route lines, round station dots and clean sans typography. */
+html[data-theme="subway"]{
+ --big-fit:16cqi;
+ --bg:#ffffff;--panel:#ffffff;--tx:#20242a;--tx2:#3d4550;--mut:#5b6470;
+ --o1:#e2231a;--o2:#ad6106;--pe:#0072ce;--li:#00863b;--pw:#8c1d92;--sk:#20828c;--tan:#697582;
+ --on:#ffffff;--on-warn:#26221a;
+ --good:#009a44;--warn:#f2c200;--crit:#e2231a;--info:#0072ce;
+ --thr:#5b6470;--s1:#0072ce;--s2:#e2231a;--grid:#dfe4ea;--axis:#9aa3ad;
+ --font:'Nunito',system-ui,sans-serif;--head:'Oswald','Arial Narrow',sans-serif;
+ background:
+  radial-gradient(circle at 8% 22%,rgba(0,114,206,.05) 0 9px,transparent 10px),
+  radial-gradient(circle at 92% 30%,rgba(0,154,68,.05) 0 9px,transparent 10px),
+  radial-gradient(circle at 78% 82%,rgba(226,35,26,.05) 0 9px,transparent 10px),
+  linear-gradient(#ffffff,#f4f7fa);
+ & body{background:transparent;letter-spacing:.01em;color:var(--tx)}
+ & .elbow{background:linear-gradient(135deg,var(--o1) 0 50%,var(--pe) 50% 100%);color:#fff;border-radius:14px;padding:18px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+ & .pill{border-radius:12px;min-height:56px;text-transform:uppercase;letter-spacing:.05em;font-family:var(--head);font-weight:600}
+ & .fill{background:linear-gradient(90deg,var(--o1),var(--pe));border-radius:8px;opacity:.4}
+ & .main>.bar{height:7px}& .main>.bar i{background:var(--o1) !important;border-radius:4px 4px 0 0}
+ & .inner::before,& .inner::after{display:none}
+ & h1{color:var(--tx);font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:clamp(28px,4vw,52px)}
+ & .sub{color:var(--mut);text-transform:none;letter-spacing:.03em}
+ & .themesel{text-transform:none}& .themesel select{background:var(--panel);border:1.5px solid var(--grid);border-radius:8px;color:var(--tx2)}
+ & .hb{color:var(--c);font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:22px}
+ & .hb::before{width:14px;height:14px;border-radius:50%;background:#fff;border:3.5px solid var(--c)}
+ & .hb::after{height:5px;border-radius:3px;background:var(--c);opacity:.85}
+ & .kpi{position:relative;background:var(--panel);border:1.5px solid var(--grid);border-left:none;border-radius:14px;overflow:hidden}
+ & .kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:var(--c)}
+ & .kpi h3{color:var(--c);font-family:var(--head);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+ & .big{font-family:var(--head);font-weight:600;color:var(--tx)}
+ & .sm{color:var(--mut)}
+ & .alert{position:relative;background:var(--panel);border:1.5px solid var(--grid);border-radius:12px;overflow:hidden}
+ & .alert .tag{background:var(--c);border-radius:0 6px 6px 0}
+ & .alert .end{display:none}
+ & .btn{border-radius:10px;text-transform:uppercase;letter-spacing:.05em;font-family:var(--head);font-weight:600}
+ & .panel h4{text-transform:uppercase;letter-spacing:.05em;font-family:var(--head);color:var(--tx2)}
+ & .legend{color:var(--mut)}
+ & .tip{background:#20242a;border:1.5px solid var(--o1);border-radius:8px;color:#fff}
+ & th{text-transform:uppercase;letter-spacing:.06em;font-family:var(--head);color:var(--tx2);font-weight:600}
+ & td{background:var(--panel);border-bottom:1.5px solid var(--grid)}
+ & td:first-child{border-radius:8px 0 0 8px}
+ & .st{text-transform:uppercase;font-family:var(--head);letter-spacing:.04em;color:var(--tx2)}
+ & .log .t{color:var(--mut);font-family:var(--head)}
+ & .info dt{color:var(--mut);text-transform:uppercase;letter-spacing:.05em;font-size:13px}
+ & details.muted summary{color:var(--mut)}
+}

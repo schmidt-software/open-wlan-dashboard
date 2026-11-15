@@ -1,0 +1,33 @@
+/* theme: Moss and Stone; de: Moos und Stein */
+/* Forest stream bed: dark grey stone with moss patches, river-pebble cards in light grey, earthy serif headings with moss green, lichen yellow and slate accents. */
+@keyframes moss-drift{from{background-position:0 0,0 0,0 0}to{background-position:120px 60px,-80px 40px,60px -50px}}
+html[data-theme="moss"]{
+ --big-fit:15.5cqi; /* big numbers: max share of the card width for this font */
+ --bg:#d5d2c8;--on:#e6e3d8;--on-warn:#2b2408;--panel:#e6e3d8;--o1:#495f35;--o2:#6b541b;--pe:#495f35;--li:#6b5616;--pw:#455d6b;--sk:#515b61;--tan:#535d4b;
+ --tx:#232724;--tx2:#3a423c;--mut:#515b61;--grid:#cbc6b6;--axis:#3a423c;--s1:#4f6b7a;--s2:#5f7c46;--good:#3f6b3a;--thr:#8a5a00;--warn:#e9b800;--crit:#c62828;--info:#4f6b7a;
+ --font:'Bitter',Georgia,serif;--head:'Old Standard TT',Georgia,serif;
+ background:repeating-linear-gradient(115deg,rgba(255,255,255,.02) 0 2px,transparent 2px 9px),
+  radial-gradient(38% 46% at 78% 22%,rgba(95,124,70,.30) 0%,rgba(95,124,70,0) 62%),
+  radial-gradient(46% 40% at 16% 78%,rgba(95,124,70,.22) 0%,rgba(95,124,70,0) 60%),#393d3a;
+ background-attachment:fixed,fixed,fixed,scroll;animation:moss-drift 42s linear infinite alternate;
+ & body{background:transparent;letter-spacing:.008em}
+ & .elbow{background:#2c312e;color:#e6e3d8;border-radius:12px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em;box-shadow:inset 0 0 0 1px rgba(230,227,216,.12)}
+ & .pill{border-radius:999px;min-height:60px;text-transform:none;box-shadow:0 2px 5px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.18)}
+ & .fill{background:linear-gradient(#5f7c46,#4f6b7a);border-radius:999px;opacity:.3}
+ & .main>.bar{height:7px}& .main>.bar i{background:#5f7c46 !important;border-radius:4px}& .inner::before,& .inner::after{display:none}& .inner{background:var(--bg);border-radius:12px;padding:20px 10px 14px 24px}
+ & h1{color:var(--tx);font-weight:400;text-transform:none;letter-spacing:.02em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em;color:var(--tx2)}
+ & .hb{color:var(--c);font-weight:400;text-transform:none;letter-spacing:.04em;font-size:26px}
+ & .hb::before{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#aeb8ac 0 4px,transparent 5px);border:3px solid var(--c)} /* stone chip */
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:3px dotted #7e8d72}
+ & .kpi,& .alert{background:var(--panel);border:1px solid rgba(43,50,44,.25);border-radius:26px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 3px 8px rgba(0,0,0,.28)}
+ & .kpi{border-left:1px solid rgba(43,50,44,.25);text-align:center}& .kpi h3{color:var(--c);text-transform:none;letter-spacing:.07em;font-family:var(--font);font-weight:600}
+ & .big{font-family:var(--head);font-weight:400;color:#232724}& .alert{overflow:hidden;border-radius:18px}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:999px;text-transform:none;letter-spacing:.03em;box-shadow:inset 0 1px 0 rgba(255,255,255,.2)}
+ & th{color:#232724;text-transform:none;letter-spacing:.05em;font-family:var(--head)}& td{background:var(--panel);border-bottom:1px solid #cbc6b6}
+ & td:first-child{border-radius:14px 0 0 14px}& td:last-child{border-radius:0 14px 14px 0}& .st{color:#232724;text-transform:none;font-weight:600}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em;color:#3a423c}
+ & .log .t,& .info dt{color:var(--mut)}& .legend{color:#3a423c}
+ & .tip{border-radius:12px;border-color:#2c312e;background:var(--panel);box-shadow:0 3px 8px rgba(0,0,0,.3)}& .themesel select{background:var(--panel);color:#232724;border-color:#2c312e;border-radius:999px}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="moss"]{animation:none}}

@@ -1,0 +1,44 @@
+/* theme: Post Office; de: Postamt */
+/* Airmail paper, postage-stamp cards with scalloped edges, round postmarks and postal red/blue inks. */
+html[data-theme="postoffice"]{
+ --bg:#f6efe2;--panel:#fffdf7;--tx:#33291d;--tx2:#5a4c3b;--mut:#786a56;
+ --o1:#a5201e;--o2:#1f4070;--pe:#a5201e;--li:#1f4070;--pw:#8b6521;--sk:#4a5568;--tan:#7a6a4f;
+ --on:#fffdf7;--on-warn:#3a2c00;--good:#2e7d32;--warn:#f2c200;--crit:#c62828;--info:#1f4070;
+ --thr:#b8862c;--s1:#a5201e;--s2:#1f4070;--grid:#e7dcc6;--axis:#33291d;
+ --font:'Bitter',Georgia,serif;--head:'Playfair Display','Old Standard TT',Georgia,serif;--big-fit:15cqi;
+ background:
+  repeating-linear-gradient(45deg,rgba(165,32,30,.05) 0 12px,transparent 12px 26px),
+  repeating-linear-gradient(-45deg,rgba(31,64,112,.05) 0 12px,transparent 12px 26px),
+  radial-gradient(circle at 12% 8%,rgba(165,32,30,.06) 0 3px,transparent 4px),#f6efe2;
+ & body{background:transparent;color:var(--tx);font-family:var(--font);letter-spacing:.01em}
+ & .elbow{background:#a5201e;color:#fffdf7;border-radius:8px;min-height:0;padding:14px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em;box-shadow:inset 0 0 0 2px #fffdf7,inset 0 0 0 4px #a5201e}
+ & .pill{border-radius:6px;min-height:58px;text-transform:none;font-family:var(--head);letter-spacing:.03em;box-shadow:inset 0 0 0 2px rgba(255,253,247,.5)}
+ & .fill{background:linear-gradient(#1f4070,#a5201e);border-radius:6px;opacity:.4}
+ & .main>.bar{height:8px}& .main>.bar i{background:#a5201e !important;border-radius:4px}& .inner::before,& .inner::after{display:none}& .inner{padding:20px 10px 14px 24px}
+ & h1{color:#a5201e;font-weight:700;text-transform:none;letter-spacing:.03em;font-size:clamp(32px,4.8vw,60px);font-family:var(--head)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em;color:var(--tx2)}
+ & .hb{color:#1f4070;font-weight:700;text-transform:none;letter-spacing:.04em;font-size:26px;font-family:var(--head);position:relative;padding-left:8px}
+ & .hb::before{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#fffdf7 0 9px,transparent 10px);border:3px double #a5201e;box-shadow:inset 0 0 0 1px rgba(165,32,30,.3)}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:3px dashed #a5201e}
+ & .kpi,& .alert{background:var(--panel);border:2px solid #a5201e;border-radius:4px;box-shadow:inset 0 0 0 4px var(--panel),inset 0 0 0 6px rgba(165,32,30,.35)}
+ & .kpi{border-left:2px solid #a5201e;text-align:center;position:relative}
+ & .kpi::before,& .kpi::after{content:"";position:absolute;width:14px;height:14px;border-radius:50%;background:var(--bg);z-index:1}
+ & .kpi::before{top:-8px;left:-8px;box-shadow:26px 0 var(--bg),52px 0 var(--bg),78px 0 var(--bg),104px 0 var(--bg),130px 0 var(--bg),156px 0 var(--bg)}
+ & .kpi::after{bottom:-8px;left:-8px;box-shadow:26px 0 var(--bg),52px 0 var(--bg),78px 0 var(--bg),104px 0 var(--bg),130px 0 var(--bg),156px 0 var(--bg)}
+ & .kpi h3{color:#a5201e;text-transform:none;letter-spacing:.06em;font-family:var(--head);font-weight:700}
+ & .big{font-family:var(--head);font-weight:700;color:#33291d}
+ & .sm{color:var(--tx2)}
+ & .alert{overflow:hidden;position:relative}
+ & .alert .tag{border-radius:0;background:var(--c)}
+ & .alert .end{display:none}
+ & .btn{border-radius:6px;text-transform:none;letter-spacing:.04em;font-family:var(--head);box-shadow:inset 0 0 0 2px rgba(255,253,247,.5)}
+ & th{color:#1f4070;text-transform:none;letter-spacing:.05em;font-family:var(--head)}
+ & td{background:var(--panel);border-bottom:1px dashed #d8cbb0}
+ & td:first-child{border-radius:4px 0 0 4px;border-left:12px solid var(--c)}
+ & td:last-child{border-radius:0 4px 4px 0}
+ & .st{color:#33291d;text-transform:none;font-weight:600}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em;color:#5a4c3b}
+ & .log .t,& .info dt{color:#a5201e}
+ & .tip{border-radius:6px;border-color:#a5201e;background:var(--panel)}
+ & .themesel select{background:var(--panel);border-color:#a5201e;color:#33291d}
+}

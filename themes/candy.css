@@ -1,0 +1,38 @@
+/* theme: Candy Shop; de: Süßwarenladen */
+/* Pastel pink with sprinkles, candy-stripe borders and bubbly Fredoka headings in strawberry, mint and lemon. */
+@keyframes candy-drift{0%{background-position:0 0,0 0,0 0}100%{background-position:92px 54px,78px -66px,64px 42px}}
+html[data-theme="candy"]{
+ --big-fit:15.5cqi;
+ --bg:#ffdcec;--panel:#fffafd;--tx:#5a1f3d;--tx2:#7a3559;--mut:#8e5074;
+ --o1:#c2185b;--o2:#006f64;--pe:#c2185b;--li:#2a722e;--pw:#8e24aa;--sk:#a24900;--tan:#5d4037;
+ --on:#fffafd;--on-warn:#3a2a00;--good:#2e7d32;--warn:#f2c200;--crit:#c62828;--info:#00897b;
+ --thr:#ea6a00;--s1:#c2185b;--s2:#00897b;--grid:#f4c3d8;--axis:#7a3559;
+ --font:'Nunito',system-ui,sans-serif;--head:'Fredoka','Comic Neue',system-ui,sans-serif;
+ background:repeating-linear-gradient(112deg,rgba(255,255,255,.22) 0 6px,transparent 6px 30px),radial-gradient(circle at 18% 22%,#fff0f7 0 4px,transparent 5px),radial-gradient(circle at 72% 64%,#fff0f7 0 3px,transparent 4px),linear-gradient(135deg,#ffe3f0,#ffdcec);
+ background-size:auto,92px 92px,78px 78px,auto;
+ animation:candy-drift 60s linear infinite;
+ & body{background:transparent;color:var(--tx);font-family:var(--font)}
+ & .elbow{background:linear-gradient(135deg,#ff6fae,#c2185b);color:#fffafd;border-radius:16px;min-height:0;padding:14px 10px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.04em}
+ & .pill{border-radius:999px;min-height:58px;background:var(--c);color:var(--on);font-family:var(--head);box-shadow:0 3px 0 rgba(162,24,74,.35)}
+ & .fill{background:repeating-linear-gradient(45deg,#ff9ecb 0 8px,#fffafd 8px 16px);border-radius:999px;opacity:.85}
+ & .main>.bar{height:12px}& .main>.bar i{background:repeating-linear-gradient(45deg,#ff6fae 0 12px,#fff3d6 12px 24px) !important;border-radius:999px}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 10px 14px 22px}
+ & h1{color:#c2185b;font-family:var(--head);font-weight:700;text-transform:none;letter-spacing:.02em;font-size:clamp(30px,4.4vw,56px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.04em;color:var(--tx2)}
+ & .hb{color:var(--c);font-family:var(--head);font-weight:700;text-transform:none;letter-spacing:.03em;font-size:26px}
+ & .hb::before{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 34% 30%,#fff 0 5px,var(--c) 6px);box-shadow:0 0 0 3px #fff,0 0 0 5px var(--c)}
+ & .hb::after{height:12px;border-radius:999px;background:repeating-linear-gradient(45deg,var(--c) 0 6px,#fffafd 6px 12px)}
+ & .kpi,& .alert{background:var(--panel);border:3px solid var(--c);border-radius:28px;box-shadow:0 6px 0 rgba(194,24,91,.18),inset 0 0 0 4px #fffafd,inset 0 0 0 7px var(--c)}
+ & .kpi{border-left:3px solid var(--c);text-align:center}& .kpi h3{color:var(--c);font-family:var(--head);font-weight:700;text-transform:none;letter-spacing:.05em}
+ & .big{font-family:var(--head);font-weight:700;color:#c2185b}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:0;background:var(--c)}& .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border-radius:999px;font-family:var(--head);font-weight:700;text-transform:none;letter-spacing:.03em;box-shadow:0 4px 0 rgba(0,0,0,.18)}
+ & .panel h4{color:var(--c);font-family:var(--head);font-weight:700;text-transform:none}
+ & table th{background:#ffe3f0;color:#5a1f3d;font-family:var(--head);font-weight:700;text-transform:none;letter-spacing:.04em;border-bottom:2px solid #ff9ecb}
+ & td{background:var(--panel);border-bottom:2px dashed #ffdcec}& td:first-child{border-left:12px solid var(--c)}& .st{font-family:var(--head);font-weight:700;color:#5a1f3d;text-transform:none}
+ & .log .t,& .info dt{color:var(--tx2)}& details.muted summary{color:var(--mut);font-style:italic}
+ & .tip{background:#fffafd;border:3px solid #ff6fae;border-radius:14px;color:#5a1f3d;box-shadow:0 6px 0 rgba(194,24,91,.2)}
+ & .themesel select{background:#fffafd;border:2px solid #ff9ecb;border-radius:999px;color:#5a1f3d;font-family:var(--head);font-weight:700}
+ & .pill.warn,& .pill.warn *{color:var(--on-warn)}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="candy"]{animation:none}}

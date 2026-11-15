@@ -1,0 +1,36 @@
+/* theme: Vintage Airline; de: Nostalgie-Flugreise */
+/* 1960s air travel: cream pinstripe background, boarding-pass cards with perforated stubs, navy sky blue and gold. */
+html[data-theme="airline"]{
+ --big-fit:16cqi;
+ --bg:#f3ecda;--panel:#fffdf6;--tx:#1b2a4a;--tx2:#33456b;--mut:#5b6a8e;
+ --o1:#1b2a4a;--o2:#27709c;--pe:#83621f;--li:#27709c;--pw:#1b2a4a;--sk:#226fa0;--tan:#83621f;
+ --on:#f7f1e1;--on-warn:#3a2a05;
+ --good:#3f7d4f;--warn:#f2c200;--crit:#c62828;--info:#2c7fb0;
+ --thr:#b98a2c;--s1:#1b2a4a;--s2:#3d9bd6;--grid:#d8cfb4;--axis:#5b6a8e;
+ --font:'Jost',system-ui,sans-serif;--head:'Playfair Display',Georgia,serif;
+ background:repeating-linear-gradient(90deg,#f3ecda 0 12px,#e9edf5 12px 14px);
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#1b2a4a;color:#f7f1e1;border-radius:8px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em}
+ & .pill{border-radius:6px;min-height:60px;text-transform:none;font-family:var(--head);letter-spacing:.03em}& .fill{background:linear-gradient(#2c7fb0,#1b2a4a);border-radius:6px;opacity:.4}
+ & .main>.bar{height:8px}& .main>.bar i{background:#1b2a4a !important;border-radius:4px}& .inner::before,& .inner::after{display:none}& .inner{padding:20px 10px 14px 24px}
+ & h1{color:#1b2a4a;font-weight:700;text-transform:none;letter-spacing:.02em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em;font-style:italic}
+ & .hb{color:#1b2a4a;font-weight:700;text-transform:none;letter-spacing:.03em;font-size:26px}
+ & .hb::before{width:24px;height:24px;border-radius:50%;background:radial-gradient(circle,var(--c) 0 8px,transparent 9px);border:3px solid var(--c)}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:2px dashed var(--c)}
+ & .kpi,& .alert{position:relative;background:var(--panel);border:1px solid #d8cfb4;border-radius:6px;box-shadow:0 3px 10px rgba(27,42,74,.12)}
+ & .kpi{overflow:hidden}
+ & .kpi::before{content:"";position:absolute;left:-15px;top:-15px;width:30px;height:30px;border-radius:50%;background:var(--bg)}
+ & .kpi::after{content:"";position:absolute;right:-15px;top:-15px;width:30px;height:30px;border-radius:50%;background:var(--bg)}
+ & .kpi h3{color:var(--c);text-transform:none;letter-spacing:.08em;font-family:var(--font);font-weight:600}
+ & .big{font-family:var(--head);font-weight:700}& .sm{color:var(--tx2)}
+ & .alert{overflow:hidden;border-left:14px solid var(--c)}
+ & .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:6px;text-transform:none;letter-spacing:.04em;font-family:var(--head)}
+ & th{color:#1b2a4a;text-transform:none;letter-spacing:.05em;font-weight:700}
+ & td{background:var(--panel);border-bottom:1px solid #e6dcc0}
+ & td:first-child{border-radius:4px 0 0 4px}& td:last-child{border-radius:0 4px 4px 0}& .st{color:#1b2a4a;text-transform:none;font-weight:700}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em;font-family:var(--head)}
+ & .log .t,& .info dt{color:var(--mut)}
+ & .tip{border-radius:6px;border-color:#1b2a4a;background:var(--panel)}& .themesel select{background:var(--panel);border-color:#d8cfb4;color:#1b2a4a}
+}

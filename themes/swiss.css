@@ -1,0 +1,40 @@
+/* theme: Swiss Style; de: Schweizer Stil */
+/* International typographic style: white background, visible column grid, flat white cards with a thin black top rule, bold grotesque headings flush left, single red accent. */
+html[data-theme="swiss"]{
+ --bg:#ffffff;--panel:#ffffff;--tx:#101010;--tx2:#2b2b2b;--mut:#4a4a4a;
+ --o1:#d9000f;--o2:#101010;--pe:#d9000f;--li:#101010;--pw:#101010;--sk:#101010;--tan:#101010;
+ --on:#ffffff;--on-warn:#1a1a1a;--good:#1a7d43;--warn:#f2c200;--crit:#d9000f;--info:#101010;
+ --thr:#d9000f;--s1:#101010;--s2:#d9000f;--grid:#e6e6e6;--axis:#101010;
+ --font:'Jost','Helvetica Neue',Arial,sans-serif;--head:'Oswald','Arial Narrow',sans-serif;
+ --big-fit:15cqi;
+ background-color:#ffffff;
+ background-image:repeating-linear-gradient(to right,transparent 0 calc(25% - 1px),rgba(16,16,16,.13) calc(25% - 1px) 25%);
+ background-attachment:fixed;
+ & body{background:transparent;color:var(--tx);font-family:var(--font)}
+ & .elbow{background:#101010;color:#ffffff;border-radius:0;min-height:0;padding:14px 16px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.18em}
+ & .pill{border-radius:0;min-height:56px;text-transform:uppercase;letter-spacing:.12em;font-family:var(--head)}
+ & .fill{background:#f0f0f0;border-radius:0;opacity:1}
+ & .main>.bar{height:8px}& .main>.bar i{background:#101010 !important;border-radius:0}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:26px 24px 22px}
+ & h1{color:#101010;font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.02em;line-height:.98;font-size:clamp(34px,5vw,64px)}
+ & .sub,& .themesel{text-transform:uppercase;letter-spacing:.16em;font-style:normal}
+ & .hb{color:var(--c);font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:24px;margin-bottom:14px}
+ & .hb::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);width:16px;height:16px;background:var(--c)}
+ & .hb::after{content:"";position:absolute;right:0;top:50%;transform:translateY(-50%);width:42px;height:3px;background:#101010}
+ & .kpi,& .alert{background:var(--panel);border-radius:0;border-left:none;box-shadow:none}
+ & .kpi{position:relative;padding-top:26px;text-align:left}
+ & .kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:#101010}
+ & .kpi h3{color:var(--c);text-transform:uppercase;letter-spacing:.14em;font-family:var(--head);font-weight:600}
+ & .big{font-family:var(--head);font-weight:700;color:#101010;line-height:1}
+ & .sm{text-transform:uppercase;letter-spacing:.12em}
+ & .alert{position:relative;border-top:3px solid var(--c)}
+ & .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border-radius:0;text-transform:uppercase;letter-spacing:.14em;font-family:var(--head);font-weight:600}
+ & th{color:#101010;text-transform:uppercase;letter-spacing:.12em;font-family:var(--head)}
+ & td{background:var(--panel);border-bottom:1px solid #e6e6e6}
+ & td:first-child{border-radius:0}& .st{text-transform:uppercase;letter-spacing:.1em}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:uppercase;letter-spacing:.12em;font-family:var(--head)}
+ & .log .t,& .info dt{color:#4a4a4a}
+ & .tip{border-radius:0;border-color:#101010;background:#ffffff;color:#101010}
+ & .themesel select{background:#ffffff;border-color:#101010;border-radius:0;text-transform:uppercase;letter-spacing:.1em;font-family:var(--head)}
+}

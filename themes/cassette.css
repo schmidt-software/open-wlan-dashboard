@@ -1,0 +1,30 @@
+/* theme: Cassette Tape; de: Kompaktkassette */
+/* Audio cassette shell with dark brown-black body, cream label cards with coloured stripes and a window showing two tape reels. */
+html[data-theme="cassette"]{
+ --big-fit:15cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#ded1b8;--on:#f7ecd4;--on-warn:#2a1a0e;--panel:#f3e6cb;--o1:#824a17;--o2:#7c4a24;--pe:#8d4321;--li:#2c654b;--pw:#285e7e;--sk:#834c29;--tan:#735328;
+ --tx:#2a1a0e;--tx2:#4a3320;--mut:#6c543e;--grid:#d8c199;--axis:#2a1a0e;--s1:#d97b26;--s2:#2f6f95;--good:#2f7d4f;--thr:#a87a1a;--warn:#f2c200;--crit:#c62828;--info:#2f6f95;
+ --font:'Zilla Slab',Georgia,serif;--head:'Rajdhani','Segoe UI',sans-serif;
+ background:repeating-linear-gradient(90deg,rgba(247,236,212,.03) 0 2px,transparent 2px 9px),linear-gradient(180deg,#2c1f15,#1b120d);
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#3a2416;color:#f7ecd4;border-radius:10px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em}
+ & .pill{border-radius:8px;min-height:60px;text-transform:none}& .fill{background:linear-gradient(#7c4a24,#3a2416);border-radius:8px;opacity:.4}
+ & .main>.bar{height:6px}& .main>.bar i{background:#7c4a24 !important;border-radius:3px}& .inner::before,& .inner::after{display:none}& .inner{background:var(--bg);border-radius:12px;padding:18px 8px 12px 22px}
+ & h1{color:var(--tx);font-weight:700;text-transform:none;letter-spacing:.02em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em;font-style:normal}
+ & .hb{color:var(--c);font-weight:700;text-transform:none;letter-spacing:.05em;font-size:26px}
+ & .hb::before{width:26px;height:18px;border-radius:9px;background:#3a2416;border:3px solid var(--c)}  /* cassette window */
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:3px dotted #7c4a24}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #7c4a24;border-radius:14px;box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 4px #d8c199}
+ & .kpi{position:relative;border-left:1px solid #7c4a24;text-align:center;padding-top:26px;background-image:linear-gradient(90deg,var(--c) 0 14px,transparent 14px),radial-gradient(circle at 32% 58%,#3a2416 0 11px,#f7ecd4 12px 15px,#3a2416 16px 20px,transparent 21px),radial-gradient(circle at 68% 58%,#3a2416 0 11px,#f7ecd4 12px 15px,#3a2416 16px 20px,transparent 21px);background-repeat:no-repeat;background-size:100% 100%,auto,auto}
+ & .kpi::before{display:none;content:"";position:absolute;top:14px;left:18px;width:74px;height:34px;border-radius:6px;background:#3a2416;box-shadow:inset 0 0 0 2px #d8c199}
+ & .kpi h3{color:var(--c);text-transform:none;letter-spacing:.08em;font-family:var(--font);font-weight:700;font-style:normal}
+ & .big{font-family:var(--head);font-weight:700}& .alert{overflow:hidden;position:relative;background-image:linear-gradient(90deg,var(--c) 0 14px,transparent 14px)}
+ & .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:8px;text-transform:none;letter-spacing:.04em}
+ & th{color:#2a1a0e;text-transform:none;letter-spacing:.06em;font-style:normal}& td{background:var(--panel);border-bottom:1px solid #d8c199}
+ & td:first-child{border-radius:8px 0 0 8px}& td:last-child{border-radius:0 8px 8px 0}& .st{color:#2a1a0e;text-transform:none}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em}& .log .t,& .info dt{color:var(--mut)}
+ & .tip{border-radius:8px;border-color:#7c4a24;background:var(--panel)}& .themesel select{background:var(--panel);border-color:#7c4a24;color:#2a1a0e}
+ & .kpi{background-image:linear-gradient(90deg,var(--c) 0 14px,transparent 14px);padding:8px 14px 10px 26px}
+}

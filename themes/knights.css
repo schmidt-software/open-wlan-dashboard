@@ -1,0 +1,35 @@
+/* theme: Knights; de: Ritter */
+/* Grey stone walls, heraldic shield cards with blackletter headings and royal red, blue and gold accents. */
+html[data-theme="knights"]{
+ --big-fit:15cqi;
+ --bg:#2b2d31;--panel:#3a3d43;--tx:#e9e3d2;--tx2:#cdc7b6;--mut:#afa99b;
+ --o1:#e5938b;--o2:#88aade;--pe:#d4af37;--li:#db9893;--pw:#9aa9c8;--sk:#afa798;--tan:#c3a572;
+ --on:#1a1408;--on-warn:#1a1408;
+ --good:#5fa85f;--warn:#f2c200;--crit:#ff3b3b;--info:#5b7fb5;--thr:#d4af37;
+ --s1:#e6b84a;--s2:#6ea0e0;--grid:#50535a;--axis:#cdc7b6;
+ --font:'Bitter',Georgia,serif;--head:'UnifrakturMaguntia','Old Standard TT',Georgia,serif;
+ background:repeating-linear-gradient(90deg,rgba(255,255,255,.03) 0 2px,transparent 2px 48px),repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 2px,transparent 2px 34px),radial-gradient(circle at 18% 12%,#35373c,#2b2d31 70%),#2b2d31;
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#1a1408;color:#e9e3d2;border-radius:6px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em;border:2px solid #d4af37}
+ & .pill{border-radius:4px;min-height:58px;text-transform:none;box-shadow:inset 0 0 0 1px rgba(212,175,55,.5)}& .fill{background:linear-gradient(#d4af37,#8a6d3b);border-radius:4px;opacity:.5}
+ & .main>.bar{height:6px}& .main>.bar i{background:#d4af37 !important;border-radius:2px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#e9e3d2;font-weight:400;text-transform:none;letter-spacing:.02em;font-size:clamp(30px,4.6vw,56px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em}
+ & .hb{color:#d4af37;font-weight:400;text-transform:none;letter-spacing:.03em;font-size:26px}
+ & .hb::before{width:16px;height:22px;border-radius:50% 50% 8px 8px;background:radial-gradient(circle,var(--c) 0 5px,#d4af37 6px);border:2px solid #d4af37}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:2px solid var(--c)}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #5c5548;border-radius:6px;box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 4px #d4af37}
+ & .kpi{position:relative;padding-top:38px;border-left:1px solid #5c5548;text-align:center}
+ & .kpi::before{content:"";position:absolute;top:-2px;left:50%;transform:translateX(-50%);width:46px;height:30px;background:#1a1408;border:2px solid #d4af37;border-radius:50% 50% 6px 6px;z-index:1}
+ & .kpi h3{color:var(--c);text-transform:none;letter-spacing:.06em;font-family:var(--head);font-weight:400;margin-top:0}
+ & .big{font-family:var(--head);font-weight:400;color:#e9e3d2}& .sm{color:var(--tx2)}
+ & .alert{overflow:hidden;position:relative}& .alert .tag{border-radius:0;border-right:2px solid #d4af37}& .alert .end{display:none}
+ & .btn{border-radius:4px;text-transform:none;letter-spacing:.05em;box-shadow:inset 0 0 0 1px rgba(212,175,55,.6)}
+ & th{color:#e9e3d2;text-transform:none;letter-spacing:.05em;background:#1a1408;border-bottom:2px solid #d4af37}
+ & td{background:var(--panel);border-bottom:1px solid #5c5548}& td:first-child{border-radius:4px 0 0 4px}
+ & .st{color:#e9e3d2;text-transform:none;font-weight:600}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em}
+ & .log .t,& .info dt{color:#d4af37}& .legend{color:#cdc7b6}
+ & .tip{border-radius:4px;border-color:#d4af37;background:#1a1408;color:#e9e3d2}
+ & .themesel select{background:var(--panel);border-color:#5c5548;color:#e9e3d2}
+}

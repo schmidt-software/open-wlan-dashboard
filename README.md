@@ -19,7 +19,7 @@ Clicking a device opens its detail page: connection, signal and noise margin, ne
 maximum rates, Wi-Fi standard, streams, latency, addresses, 24 h signal and rate history and
 all WLAN events of the device.
 
-WLAN Dashboard includes 44 themes ranging from sci-fi and retro computers to art, places, and
+WLAN Dashboard includes 100 themes ranging from sci-fi and retro computers to art, places, and
 seasons. LCARS is the default selection, and your choice is remembered per browser. Browse the
 [THEMES.md](THEMES.md) gallery or see [Themes](#themes) for editing instructions.
 
@@ -114,7 +114,7 @@ themes/
 3. Put every rule inside `html[data-theme="sunset"]{ ... }`, with the id from the file name.
    Rules for elements use CSS nesting with `&`, e.g. `& .kpi{border-radius:0}`.
 4. Reload the dashboard and pick it from the menu. The menu is sorted by name; LCARS stays first.
-5. Add the theme to THEMES.md with a heading in the matching group, one or two sentences of
+5. Add the theme to THEMES.md with a heading in alphabetical order, one or two sentences of
    description, a link to the CSS file, and a screenshot saved as `assets/themes/sunset.jpg`. Use demo
    data for the screenshot; never include real device names.
 

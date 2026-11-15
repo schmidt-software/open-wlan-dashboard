@@ -1,0 +1,38 @@
+/* theme: Jazz Record; de: Jazz-Schallplatte */
+/* 1950s jazz record sleeves: near-black with faint vinyl grooves, sleeve cards with a coloured block and circular label, condensed bold type in mustard, teal and burnt orange. */
+@keyframes jazz-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+html[data-theme="jazz"]{
+ --big-fit:15cqi;
+ --bg:#0d0b08;--panel:#1a1510;--tx:#f2e9d7;--tx2:#d4c6a8;--mut:#b3a487;
+ --o1:#e8b830;--o2:#3fbcb0;--pe:#e07a28;--li:#d98c2b;--pw:#5ecfc4;--sk:#f2e9d7;--tan:#cfa24a;
+ --on:#14110a;--on-warn:#14110a;
+ --good:#63b34f;--warn:#f2c200;--crit:#ff5545;--info:#3fbcb0;
+ --thr:#e8b830;--s1:#e8b830;--s2:#3fbcb0;--grid:#3a3126;--axis:#b3a487;
+ --font:'Barlow Condensed','Arial Narrow',sans-serif;--head:'Oswald','Arial Narrow',sans-serif;
+ background:
+  repeating-radial-gradient(circle at 50% 42%,transparent 0 3px,rgba(255,255,255,.018) 3px 4px),
+  radial-gradient(circle at 50% 42%,rgba(255,255,255,.05) 0 26px,transparent 27px),
+  linear-gradient(#0d0b08,#100d09);
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#e8b830;color:#14110a;border-radius:6px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em}
+ & .pill{border-radius:6px;min-height:58px;text-transform:none;font-family:var(--head);font-weight:700}& .fill{background:linear-gradient(#e07a28,#14110a);border-radius:6px;opacity:.3}
+ & .main>.bar{height:6px}& .main>.bar i{background:#e8b830 !important;border-radius:3px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#f2e9d7;font-weight:700;text-transform:uppercase;letter-spacing:.03em;font-size:clamp(30px,4.4vw,56px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em;color:#d4c6a8}
+ & .hb{color:var(--c);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:24px}
+ & .hb::before{content:"";width:18px;height:18px;border-radius:50%;background:radial-gradient(circle,#14110a 0 3px,var(--c) 3px 6px,transparent 7px)}
+ & .hb::after{height:0;border-bottom:2px solid var(--c);opacity:.5}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #3a3126;border-radius:8px;box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 4px rgba(255,255,255,.04)}
+ & .kpi{position:relative;border-left:16px solid var(--c);border-radius:8px;overflow:hidden}
+ & .kpi::before{content:"";position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,#14110a 0 6px,var(--c) 6px 12px,transparent 13px);animation:jazz-spin 8s linear infinite}
+ & .kpi h3{color:var(--c);text-transform:uppercase;letter-spacing:.06em;font-family:var(--head);font-weight:700}
+ & .big{font-family:var(--head);font-weight:700}& .sm{color:#d4c6a8}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:6px;text-transform:uppercase;letter-spacing:.05em;font-family:var(--head);font-weight:700}
+ & th{color:#f2e9d7;text-transform:uppercase;letter-spacing:.05em}& td{background:var(--panel);border-bottom:1px solid #3a3126}
+ & td:first-child{border-radius:4px 0 0 4px}& td:last-child{border-radius:0 4px 4px 0}& .st{color:#f2e9d7;text-transform:uppercase;font-family:var(--head)}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:uppercase;letter-spacing:.05em;color:#d4c6a8}
+ & .log .t,& .info dt{color:#e8b830}
+ & .tip{border-radius:6px;border-color:#e8b830;background:var(--panel)}& .themesel select{background:var(--panel);border-color:#3a3126;color:#f2e9d7}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="jazz"] .kpi::before{animation:none}}

@@ -1,0 +1,39 @@
+/* theme: Harbour at Night; de: Hafen bei Nacht */
+/* Dark navy water with orange light reflections, weathered wooden pier boards, lighthouse glow and sodium orange accents. */
+@keyframes harbour-sweep{0%{transform:rotate(-12deg)}50%{transform:rotate(12deg)}100%{transform:rotate(-12deg)}}
+html[data-theme="harbour"]{
+ --big-fit:16cqi;
+ --bg:#081426;--panel:#16294a;--tx:#eef3f9;--tx2:#bccde2;--mut:#8aa2bd;
+ --o1:#ffb35c;--o2:#ff7d2b;--pe:#ffcf8a;--li:#ffd9a6;--pw:#f4b066;--sk:#e8cfa6;--tan:#d3b98a;
+ --on:#10203a;--on-warn:#241b00;
+ --good:#57c98a;--warn:#f2c200;--crit:#ff5a5a;--info:#6fb2e6;
+ --thr:#ffb35c;--s1:#ffb35c;--s2:#6fb2e6;--grid:rgba(120,150,190,.18);--axis:#8aa2bd;
+ --font:'Jost','Segoe UI',sans-serif;--head:'Barlow Condensed','Arial Narrow',sans-serif;
+ background:radial-gradient(120% 60% at 84% -10%,rgba(255,179,92,.30),transparent 55%),
+  radial-gradient(1px 1px at 20% 30%,#fff,transparent),radial-gradient(1px 1px at 70% 18%,#dfeaff,transparent),
+  radial-gradient(1.4px 1.4px at 40% 52%,#ffe6c2,transparent),radial-gradient(1px 1px at 90% 40%,#fff,transparent),
+  repeating-linear-gradient(180deg,rgba(255,179,92,.05) 0 3px,transparent 3px 11px),
+  linear-gradient(180deg,#0b1a30 0%,#081426 55%,#060f1e 100%) fixed;
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:linear-gradient(180deg,#1d3457,#12233f);color:#ffd9a6;border-radius:10px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em;border:1px solid rgba(255,179,92,.35)}
+ & .pill{border-radius:8px;min-height:58px;text-transform:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 10px rgba(0,0,0,.35)}& .fill{background:linear-gradient(#ff7d2b,#12233f);border-radius:8px;opacity:.4}
+ & .main>.bar{height:6px}& .main>.bar i{background:var(--o1) !important;border-radius:3px;box-shadow:0 0 10px rgba(255,179,92,.5)}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 10px 14px 24px}
+ & h1{color:#ffd9a6;font-weight:600;text-transform:uppercase;letter-spacing:.03em;font-size:clamp(30px,4.4vw,54px);text-shadow:0 0 18px rgba(255,179,92,.35)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em;color:#bccde2}
+ & .hb{color:var(--c);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:24px;position:relative}
+ & .hb::before{width:14px;height:30px;border-radius:50%;background:radial-gradient(circle at 50% 30%,#fff7e6 0 3px,rgba(255,217,166,.9) 4px 7px,transparent 8px);box-shadow:0 0 16px rgba(255,217,166,.7)}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:2px solid var(--c);opacity:.5}
+ & .kpi,& .alert{background:linear-gradient(180deg,#1a3054,#12233f);border:1px solid rgba(255,179,92,.28);border-radius:10px;box-shadow:inset 0 0 0 2px #16294a,inset 0 0 0 3px rgba(255,179,92,.18),0 6px 16px rgba(0,0,0,.4)}
+ & .kpi{border-left:6px solid var(--c);position:relative;overflow:hidden}
+ & .kpi::before{content:"";position:absolute;top:-30%;left:-10%;width:70%;height:160%;background:linear-gradient(120deg,transparent 40%,rgba(255,217,166,.18) 50%,transparent 60%);transform:rotate(8deg);animation:harbour-sweep 9s ease-in-out infinite;pointer-events:none}
+ & .kpi h3{color:var(--c);text-transform:uppercase;letter-spacing:.1em;font-family:var(--head);font-weight:600}
+ & .big{font-family:var(--head);font-weight:600;color:#fff;text-shadow:0 0 14px rgba(255,179,92,.3)}& .sm{color:#bccde2}
+ & .alert{overflow:hidden;position:relative}& .alert .tag{border-radius:0;background:var(--c);box-shadow:inset -2px 0 0 rgba(0,0,0,.25)}& .alert .end{display:none}
+ & .btn{border-radius:8px;text-transform:uppercase;letter-spacing:.06em;box-shadow:0 3px 8px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.2)}
+ & .panel h4,& .legend{text-transform:uppercase;letter-spacing:.06em;color:#ffd9a6;font-family:var(--head)}& .tip{border-radius:8px;border-color:rgba(255,179,92,.5);background:#12233f;box-shadow:0 6px 16px rgba(0,0,0,.5)}
+ & table th{color:#ffd9a6;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head)}& td{background:transparent;border-bottom:1px solid rgba(120,150,190,.15);color:#eef3f9}
+ & td:first-child{border-radius:6px 0 0 6px}& td:last-child{border-radius:0 6px 6px 0}& .st{font-family:var(--head);text-transform:uppercase;letter-spacing:.08em;color:#fff}
+ & .log .t,& .info dt{color:#ffcf8a;font-family:var(--head)}& details.muted summary{color:#8aa2bd;text-transform:none;letter-spacing:.04em}
+ & .themesel select{background:#12233f;border-color:rgba(255,179,92,.4);color:#eef3f9;border-radius:6px}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="harbour"] .kpi::before{animation:none}}

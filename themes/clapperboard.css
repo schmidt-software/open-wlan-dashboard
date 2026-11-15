@@ -1,0 +1,37 @@
+/* theme: Clapperboard; de: Filmklappe */
+/* Dark charcoal film set with clapperboard striped cards, chalk headings and yellow tape accents. */
+html[data-theme="clapperboard"]{
+ --big-fit:14cqi;
+ --bg:#1a1b1d;--on:#242629;--on-warn:#241806;--panel:#242629;--o1:#eae7db;--o2:#f2c200;--pe:#bdc0c4;--li:#d9dce0;--pw:#f5f3ea;--sk:#a7abb0;--tan:#e8e4d6;
+ --tx:#eceae1;--tx2:#cfd1d5;--mut:#9aa0a6;--grid:#34363b;--axis:#8b9096;--s1:#f2c200;--s2:#dfe1e5;--good:#57c977;--thr:#9e6700;--warn:#f2c200;--crit:#ff3b3b;--info:#eae7db;
+ --font:'Jost','Segoe UI',sans-serif;--head:'Oswald','Arial Narrow',sans-serif;
+ background:radial-gradient(ellipse at 50% -12%,rgba(242,194,0,.06),transparent 55%),linear-gradient(180deg,#1e2023,#17181a) fixed,var(--bg);
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#101113;color:var(--tx);border-radius:6px 6px 0 0;min-height:0;padding:12px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.14em;border-bottom:3px solid var(--o2)}
+ & .pill{background:var(--c);color:var(--on);border-radius:5px;min-height:58px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+ & .pill b{font-weight:700;color:var(--on)}
+ & .fill{background:repeating-linear-gradient(90deg,#3a3c40 0 10px,#161719 10px 20px);border-radius:5px;opacity:.8}
+ & .main>.bar{height:10px}& .main>.bar i{background:repeating-linear-gradient(90deg,var(--o1) 0 14px,#101113 14px 28px) !important;border-radius:2px}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:20px 10px 14px 24px}
+ & h1{color:var(--tx);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:clamp(30px,4.6vw,54px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.08em;color:var(--tx2)}
+ & .hb{color:var(--c);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:24px}
+ & .hb::before{width:18px;height:18px;border-radius:3px;background:linear-gradient(135deg,var(--o2) 0 6px,#101113 6px 12px,var(--o2) 12px);border:2px solid #101113}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:2px dashed var(--mut)}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #101113;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.45),inset 0 0 0 2px var(--panel)}
+ & .kpi{position:relative;border-left:none;text-align:left;padding-top:30px}
+ & .kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:16px;background:repeating-linear-gradient(45deg,#f5f3ea 0 12px,#101113 12px 24px);border-radius:8px 8px 0 0;border-bottom:2px solid #101113}
+ & .kpi h3{color:var(--c);text-transform:uppercase;letter-spacing:.1em;font-family:var(--head);font-weight:600}
+ & .big{font-family:var(--head);font-weight:700;color:var(--tx)}& .sm{color:var(--tx2)}
+ & .alert{position:relative;overflow:hidden}& .alert .tag{background:var(--c);border-radius:0 4px 4px 0;border-right:3px solid #101113}
+ & .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border-radius:5px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+ & .panel h4,& .legend{color:var(--tx2);text-transform:uppercase;letter-spacing:.08em;font-family:var(--head)}
+ & th{color:var(--tx);text-transform:uppercase;letter-spacing:.08em;background:#1b1c1f}
+ & td{background:var(--panel);border-bottom:1px solid var(--grid)}
+ & td:first-child{border-radius:5px 0 0 5px}& td:last-child{border-radius:0 5px 5px 0}& .st{color:var(--tx);text-transform:uppercase;font-family:var(--head);letter-spacing:.06em}
+ & .log .t,& .info dt{color:var(--mut)}& .info dt{text-transform:uppercase;letter-spacing:.08em;font-family:var(--head)}
+ & details.muted summary{color:var(--tx2);text-transform:none;letter-spacing:.04em}
+ & .tip{border-radius:6px;border-color:#101113;background:#101113;color:var(--tx);box-shadow:0 8px 20px rgba(0,0,0,.5)}
+ & .themesel select{background:var(--panel);color:var(--tx);border-color:#101113;border-radius:5px}
+}

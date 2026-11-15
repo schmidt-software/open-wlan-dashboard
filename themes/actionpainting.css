@@ -1,0 +1,49 @@
+/* theme: Action Painting; de: Action Painting */
+/* Abstract expressionist canvas: off-white paint texture with splatters and drips, brush-stroke cards, hand-painted headings in red blue black and yellow. */
+html[data-theme="actionpainting"]{
+ --big-fit:16cqi;
+ --bg:#efe8d8;--panel:#f7f2e7;--tx:#191713;--tx2:#3a352d;--mut:#5b5449;
+ --o1:#c62828;--o2:#1e3a8a;--pe:#191713;--li:#7d6400;--pw:#191713;--sk:#c62828;--tan:#1e3a8a;
+ --on:#f7f2e7;--on-warn:#191713;
+ --good:#2f7d32;--warn:#f2c200;--crit:#c62828;--info:#1e3a8a;
+ --thr:#5b5449;--s1:#c62828;--s2:#1e3a8a;--grid:#d8cfba;--axis:#3a352d;
+ --font:'Patrick Hand',cursive;--head:'Caveat Brush',cursive;
+ background:
+  radial-gradient(circle at 10% 16%,rgba(198,40,40,.16) 0 2px,transparent 3px),
+  radial-gradient(circle at 84% 24%,rgba(30,58,138,.15) 0 3px,transparent 4px),
+  radial-gradient(circle at 24% 74%,rgba(198,40,40,.13) 0 2px,transparent 3px),
+  radial-gradient(circle at 70% 62%,rgba(25,23,19,.12) 0 2px,transparent 3px),
+  radial-gradient(circle at 48% 40%,rgba(242,194,0,.14) 0 2px,transparent 3px),
+  radial-gradient(circle at 92% 86%,rgba(30,58,138,.13) 0 3px,transparent 4px),
+  radial-gradient(circle at 6% 90%,rgba(198,40,40,.12) 0 2px,transparent 3px),
+  repeating-linear-gradient(115deg,rgba(25,23,19,.02) 0 2px,transparent 2px 7px),
+  #efe8d8;
+ & body{background:transparent}
+ & .elbow{background:#191713;color:#f7f2e7;border-radius:4px;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.02em}
+ & .pill{border-radius:4px;min-height:58px;text-transform:none;box-shadow:inset 0 0 0 2px rgba(247,242,231,.18)}& .fill{background:linear-gradient(135deg,#c62828,#1e3a8a);border-radius:4px;opacity:.3}
+ & .main>.bar i{background:#191713 !important;border-radius:3px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#191713;font-weight:400;text-transform:none;letter-spacing:.01em;font-size:clamp(34px,5vw,62px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.03em}
+ & .hb{color:var(--c);font-weight:400;text-transform:none;letter-spacing:.01em;font-size:30px}
+ & .hb::before{content:"";width:26px;height:8px;background:var(--c);border-radius:5px 12px 6px 14px;transform:rotate(-3deg)}
+ & .hb::after{content:"";height:0;border-bottom:3px solid var(--c);border-radius:2px;opacity:.5}
+ & .kpi{position:relative;background:var(--panel);border:none;border-radius:8px 14px 10px 16px;border-left:6px solid transparent;border-image:linear-gradient(180deg,var(--c),transparent) 1;box-shadow:inset 0 0 0 3px var(--panel),inset 0 0 0 5px rgba(25,23,19,.5)}
+ & .kpi::before{content:"";position:absolute;top:-8px;left:14px;width:44px;height:10px;background:var(--c);border-radius:6px 16px 4px 14px;transform:rotate(-4deg)}
+ & .kpi h3{color:var(--c);text-transform:none;letter-spacing:.02em;font-family:var(--font);font-weight:700}
+ & .big{font-family:var(--head);font-weight:400;color:#191713}
+ & .sm{color:#5b5449}
+ & .alert{position:relative;background:var(--panel);border:none;border-radius:6px 12px 8px 14px;box-shadow:inset 0 0 0 2px rgba(25,23,19,.4)}
+ & .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{background:var(--b);color:#f7f2e7;border-radius:5px;text-transform:none;letter-spacing:.02em;box-shadow:inset 0 0 0 2px rgba(247,242,231,.2)}
+ & .panel h4{color:#191713;text-transform:none;font-family:var(--font);font-weight:700}
+ & .legend{color:#5b5449}
+ & .tip{background:#191713;color:#f7f2e7;border:2px solid #c62828;border-radius:6px 12px 6px 12px}
+ & table th{color:#191713;text-transform:none;font-family:var(--font);font-weight:700}
+ & td{background:var(--panel);border-bottom:2px solid #d8cfba}
+ & td:first-child{border-left:6px solid var(--c)}
+ & .st{color:#191713;font-family:var(--font);font-weight:700}
+ & .log .t{color:#5b5449;font-family:'IBM Plex Mono',monospace}
+ & .info dt{color:#3a352d;text-transform:none;font-weight:700}
+ & details.muted summary{color:#5b5449;text-transform:none}
+ & .themesel select{background:var(--panel);border:2px solid #191713;border-radius:5px;color:#191713}
+}

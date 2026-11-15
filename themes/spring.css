@@ -1,0 +1,40 @@
+/* theme: Spring; de: Frühling */
+/* A light spring meadow with drifting cherry-blossom petals, soft white cards and gentle serif headings. */
+@keyframes spring-sway{0%,100%{transform:translateX(-6px) rotate(-4deg)}50%{transform:translateX(8px) rotate(5deg)}}
+html[data-theme="spring"]{
+ --big-fit:15.5cqi;  /* big numbers: max share of the card width for this font */
+ --bg:#e9f4e2;--panel:#ffffff;--tx:#30402a;--tx2:#4b5d43;--mut:#617158;
+ --o1:#8e3b62;--o2:#3d7a39;--pe:#8c6308;--li:#2b7398;--pw:#3e7739;--sk:#7d6a4f;--tan:#b14d26;
+ --on:#ffffff;--on-warn:#3a2e00;
+ --good:#3f7d3b;--warn:#f2c200;--crit:#c62828;--info:#2f7fa8;
+ --thr:#a9780a;--s1:#3f7d3b;--s2:#8e3b62;--grid:#d5e5cb;--axis:#6b7c61;
+ --font:'Nunito',system-ui,sans-serif;--head:'Playfair Display',Georgia,serif;
+ background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18'%3E%3Cpath d='M9 2c4 5 4 9 0 14-4-5-4-9 0-14z' fill='%23f7c6d8'/%3E%3C/svg%3E") fixed,
+  radial-gradient(circle at 12% 10%,rgba(255,255,255,.55),transparent 42%),
+  radial-gradient(circle at 90% 88%,rgba(255,228,160,.35),transparent 45%),#e9f4e2;
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#8e3b62;color:#fff;border-radius:14px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em}
+ & .pill{border-radius:999px;min-height:58px;text-transform:none;box-shadow:0 2px 8px rgba(142,59,98,.18)}& .fill{background:linear-gradient(#bfe3b6,#8fce86);border-radius:999px;opacity:.5}
+ & .main>.bar{height:6px}& .main>.bar i{background:#8e3b62 !important;border-radius:3px 0 0 3px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 14px 22px}
+ & h1{color:#8e3b62;font-weight:700;text-transform:none;letter-spacing:.01em;font-size:clamp(32px,4.6vw,58px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em;color:var(--tx2)}
+ & .hb{color:#30402a;font-weight:700;text-transform:none;letter-spacing:.02em;font-size:26px}
+ & .hb::before{content:"";width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 50% 45%,#fff 0 3px,#f7c6d8 4px 8px,transparent 9px);box-shadow:0 0 0 2px rgba(247,198,216,.6)}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:3px solid #bfe3b6}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #e3efe0;border-radius:22px;box-shadow:0 8px 22px rgba(90,120,70,.12)}
+ & .kpi{position:relative;overflow:hidden;border-left:none;text-align:left;padding-top:26px}
+ & .kpi::before{content:"";position:absolute;top:-14px;left:-14px;width:52px;height:52px;border-radius:0 0 100% 0;background:radial-gradient(circle at 30% 30%,#fff,#f7c6d8);opacity:.9;animation:spring-sway 7s ease-in-out infinite}
+ & .kpi h3{color:var(--c);text-transform:none;letter-spacing:.02em;font-family:var(--font);font-weight:700}
+ & .big{font-family:var(--head);font-weight:600}& .sm{color:var(--tx2)}
+ & .alert{overflow:hidden;border-radius:18px}& .alert .tag{border-radius:0 0 0 18px;background:var(--c)}& .alert .end{display:none}
+ & .btn{border-radius:999px;text-transform:none;letter-spacing:.03em;box-shadow:0 2px 8px rgba(63,125,59,.2)}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.02em}
+ & th{color:#2f6a2c;text-transform:none;letter-spacing:.04em;font-weight:700}
+ & td{background:var(--panel);border-bottom:1px solid #e3efe0}
+ & td:first-child{border-radius:12px 0 0 12px}& td:last-child{border-radius:0 12px 12px 0}& .st{color:#30402a;text-transform:none;font-weight:700}
+ & .log .t,& .info dt{color:var(--mut)}
+ & .tip{border-radius:14px;border-color:#e3efe0;background:var(--panel);box-shadow:0 8px 20px rgba(90,120,70,.18)}
+ & .legend{color:var(--tx2)}& .themesel select{background:var(--panel);border-color:#d5e5cb;border-radius:12px;color:var(--tx)}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="spring"] .kpi::before{animation:none}}

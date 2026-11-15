@@ -1,0 +1,45 @@
+/* theme: Miniature City; de: Miniaturstadt */
+/* Toy-town isometric street grid with flat white paper building cards and small house icons on headings. */
+html[data-theme="minicity"]{
+  --bg:#cfe6c8;--panel:#ffffff;--tx:#3a4a3d;--tx2:#4f5e53;--mut:#58645b;
+  --o1:#006d63;--o2:#c0124d;--pe:#8f5500;--li:#0963aa;--pw:#652eff;--sk:#bf1c19;--tan:#755b52;
+  --on:#ffffff;--on-warn:#2b1a12;
+  --good:#2e7d32;--warn:#f2c200;--crit:#c62828;--info:#1565c0;
+  --thr:#8d6e63;--s1:#009688;--s2:#f06292;--grid:#d4e3cf;--axis:#7a8a7e;
+  --font:'Fredoka','Comic Neue',sans-serif;--head:'Bungee','Fredoka',sans-serif;--big-fit:15cqi;
+  background:
+    repeating-linear-gradient(90deg,transparent 0 46px,rgba(255,255,255,.35) 46px 50px),
+    repeating-linear-gradient(0deg,transparent 0 46px,rgba(255,255,255,.35) 46px 50px),
+    linear-gradient(180deg,#d7ecce,#cfe6c8);
+  & body{background:transparent;letter-spacing:.01em}
+  & .elbow{background:var(--o1);color:var(--on);border-radius:12px;padding:14px;font-family:var(--head);text-transform:none;letter-spacing:.03em;justify-content:center}
+  & .pill{border-radius:10px;min-height:56px;text-transform:none;box-shadow:0 3px 0 rgba(0,0,0,.12)}
+  & .fill{background:repeating-linear-gradient(90deg,#7c4dff 0 10px,#9575cd 10px 20px);border-radius:8px;opacity:.3}
+  & .main>.bar i{background:#009688 !important;border-radius:4px}
+  & .inner::before,& .inner::after{display:none}
+  & h1{color:#3a4a3d;font-family:var(--head);font-weight:400;text-transform:none;letter-spacing:.02em;font-size:clamp(30px,4.4vw,54px)}
+  & .sub,& .themesel{text-transform:none;letter-spacing:.04em}
+  & .hb{color:var(--c);font-family:var(--head);text-transform:none;letter-spacing:.03em;font-size:24px;position:relative;padding-left:34px}
+  & .hb::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-58%);width:26px;height:24px;background:linear-gradient(135deg,#f06292 0 50%,#fff 50% 57%,transparent 57%),linear-gradient(0deg,#ff9800 0 100%);clip-path:polygon(50% 0,100% 40%,100% 100%,0 100%,0 40%)}
+  & .hb::after{content:"";position:absolute;left:0;bottom:-6px;width:34px;height:3px;background:var(--c);border-radius:2px}
+  & .kpi{background:var(--panel);border:none;border-radius:12px;box-shadow:0 6px 0 rgba(0,0,0,.08),0 12px 22px rgba(58,74,61,.14);position:relative}
+  & .kpi h3{color:var(--c);font-family:var(--head);text-transform:none;letter-spacing:.02em;font-size:16px;padding-left:26px;position:relative}
+  & .kpi h3::before{content:"";position:absolute;left:0;top:50%;transform:translateY(-55%);width:18px;height:17px;background:linear-gradient(135deg,var(--c) 0 50%,#fff 50% 56%,transparent 56%),linear-gradient(0deg,#ff9800 0 100%);clip-path:polygon(50% 0,100% 42%,100% 100%,0 100%,0 42%)}
+  & .big{font-family:var(--head);font-weight:400;color:#3a4a3d}
+  & .sm{color:var(--mut);text-transform:none}
+  & .alert{background:var(--panel);border-radius:10px;box-shadow:0 4px 0 rgba(0,0,0,.06),0 8px 16px rgba(58,74,61,.12)}
+  & .alert .tag{border-radius:10px 0 0 10px}
+  & .alert .end{display:none}
+  & .btn{background:var(--b);color:var(--on);border-radius:8px;text-transform:none;letter-spacing:.02em;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  & .panel h4{font-family:var(--head);text-transform:none;color:#3a4a3d}
+  & .legend{text-transform:none}
+  & .tip{background:var(--panel);border:2px solid #ff9800;border-radius:8px;box-shadow:0 6px 14px rgba(58,74,61,.2)}
+  & table th{color:#3a4a3d;text-transform:none;font-family:var(--head);letter-spacing:.02em}
+  & td{background:var(--panel);border-bottom:1px solid #e4efe0}
+  & td:first-child{border-radius:6px 0 0 6px}
+  & .st{text-transform:none;font-weight:700}
+  & .log .t{color:var(--mut);font-family:'Share Tech Mono',monospace}
+  & .info dt{color:#4f5e53;text-transform:none}
+  & details.muted summary{color:#6b7a6f;text-transform:none}
+  & .themesel select{background:var(--panel);border:2px solid #009688;border-radius:8px;color:#3a4a3d}
+}

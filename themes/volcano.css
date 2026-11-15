@@ -1,0 +1,40 @@
+/* theme: Volcano; de: Vulkan */
+/* Night volcano: black basalt with glowing lava cracks, dark stone cards with hot orange edge glow. */
+@keyframes volcano-pulse{0%,100%{box-shadow:inset 0 0 0 2px var(--panel),inset 0 0 0 3px #ff6a00,inset 0 0 22px rgba(255,90,0,.18)}50%{box-shadow:inset 0 0 0 2px var(--panel),inset 0 0 0 3px #ffb45e,inset 0 0 36px rgba(255,110,0,.4)}}
+html[data-theme="volcano"]{
+ --big-fit:15cqi;
+ --bg:#08080b;--on:#1a0e06;--on-warn:#241a00;--panel:#191920;
+ --o1:#ff7a1a;--o2:#ff3b1f;--pe:#ffb45e;--li:#d9d2c6;--pw:#8a847c;--sk:#c36e3b;--tan:#8a8176;
+ --tx:#ece7dd;--tx2:#c4bdb1;--mut:#9b9488;--grid:#2b2b33;--axis:#6d665c;
+ --s1:#ff7a1a;--s2:#ffb45e;--good:#3fd07f;--thr:#ffb45e;--warn:#f2c200;--crit:#ff3b3b;--info:#ffb45e;
+ --font:'Rajdhani','Segoe UI',sans-serif;--head:'Oswald','Arial Narrow',sans-serif;
+ background:
+  radial-gradient(120% 78% at 50% 116%,rgba(255,92,0,.30),rgba(255,40,0,.10) 42%,transparent 66%) fixed,
+  repeating-linear-gradient(112deg,transparent 0 74px,rgba(255,80,0,.05) 74px 77px,transparent 77px 150px) fixed,
+  repeating-linear-gradient(-64deg,transparent 0 92px,rgba(255,120,30,.04) 92px 95px,transparent 95px 184px) fixed,
+  linear-gradient(180deg,#0a0a0e,#070709) fixed;
+ & body{background:transparent;color:var(--tx);letter-spacing:.01em}
+ & .elbow{background:#121216;color:var(--pe);border-radius:6px;min-height:0;padding:16px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.14em;text-shadow:0 0 14px rgba(255,90,0,.35)}
+ & .pill{border-radius:6px;min-height:60px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);box-shadow:inset 0 0 0 1px rgba(0,0,0,.4)}
+ & .fill{background:linear-gradient(#ff3b1f,#ff7a1a);border-radius:6px;opacity:.5}
+ & .main>.bar{height:6px}& .main>.bar i{background:linear-gradient(90deg,#ff3b1f,#ff7a1a) !important;border-radius:3px}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#fff;font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:clamp(30px,4.6vw,54px);text-shadow:0 0 22px rgba(255,90,0,.35)}
+ & .sub,& .themesel{text-transform:uppercase;letter-spacing:.1em;color:var(--tx2)}
+ & .hb{color:#ffb45e;font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:26px}
+ & .hb::before{width:26px;height:12px;border-radius:2px;background:linear-gradient(90deg,#ff3b1f,#ff7a1a);box-shadow:0 0 12px rgba(255,90,0,.6)}
+ & .hb::after{height:3px;border-radius:2px;background:linear-gradient(90deg,#ff7a1a,transparent)}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #2c2c34;border-radius:8px;position:relative}
+ & .kpi{border-left:6px solid var(--c);animation:volcano-pulse 5s ease-in-out infinite}
+ & .kpi h3{color:#ffb45e;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);font-weight:700}
+ & .big{font-family:var(--head);font-weight:700;color:#fff;text-shadow:0 0 16px rgba(255,90,0,.3)}& .sm{color:var(--mut)}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:0 4px 4px 0;box-shadow:inset -2px 0 0 rgba(0,0,0,.3)}& .alert .end{display:none}
+ & .btn{border-radius:6px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head);font-weight:700;box-shadow:inset 0 0 0 1px rgba(0,0,0,.4)}
+ & th{color:#ffb45e;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head)}& td{background:var(--panel);border-bottom:1px solid #2c2c34}
+ & td:first-child{border-radius:4px 0 0 4px}& td:last-child{border-radius:0 4px 4px 0}& .st{color:#ece7dd;text-transform:uppercase;letter-spacing:.05em}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:uppercase;letter-spacing:.06em;font-family:var(--head)}
+ & .log .t,& .info dt{color:#ffb45e}
+ & .tip{border-radius:6px;border-color:#ff7a1a;background:var(--panel);box-shadow:0 0 16px rgba(255,90,0,.3)}
+ & .themesel select{background:var(--panel);border-color:#ff7a1a;color:var(--tx)}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="volcano"] .kpi{animation:none}}

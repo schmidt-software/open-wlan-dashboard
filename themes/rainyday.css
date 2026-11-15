@@ -1,0 +1,62 @@
+/* theme: Rainy Day; de: Regentag */
+/* Cool grey-blue rainy afternoon with streaking raindrops, frosted-glass cards and slate blue, umbrella yellow and muted teal accents. */
+@keyframes rainyday-drift{from{background-position:0 0}to{background-position:0 340px}}
+html[data-theme="rainyday"]{
+ --big-fit:15cqi; /* big numbers: max share of the card width for this font */
+ --bg:#d7e0eb;--panel:#e3ebf4;--tx:#1b2634;--tx2:#2d3d50;--mut:#4a5c72;
+ --o1:#2e4a78;--o2:#406487;--pe:#2c686b;--li:#355a8c;--pw:#376583;--sk:#2c4d70;--tan:#395a80;
+ --on:#eef4fb;--on-warn:#1b2634;
+ --good:#2f7d55;--warn:#f2c200;--crit:#c62828;--info:#4f7ba6;
+ --thr:#a57f1e;--s1:#2e4a78;--s2:#2f6f72;--grid:rgba(255,255,255,.4);--axis:#3c506a;
+ --font:'Quicksand',system-ui,sans-serif;--head:'Jost',system-ui,sans-serif;
+ background-color:#6f8296;
+ background-image:
+  repeating-linear-gradient(100deg,transparent 0 42px,rgba(255,255,255,.05) 42px 43px,transparent 43px 90px),
+  radial-gradient(circle at 8% 6%,rgba(255,255,255,.12) 0 2px,transparent 3px),
+  radial-gradient(circle at 72% 12%,rgba(255,255,255,.1) 0 2px,transparent 3px),
+  linear-gradient(180deg,#6f8296 0%,#64788c 55%,#5b6e82 100%);
+ background-size:90px 90px,120px 120px,160px 160px,100% 100%;
+ background-repeat:repeat,repeat,repeat,no-repeat;
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{position:relative;overflow:hidden;background:var(--o1);color:#eef4fb;border-radius:8px;min-height:0;padding:16px 12px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.06em}
+ & .elbow::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(96deg,transparent 0 26px,rgba(255,255,255,.07) 26px 27px,transparent 27px 58px);animation:rainyday-drift 1.4s linear infinite;pointer-events:none}
+ & .pill{position:relative;overflow:hidden;border-radius:8px;min-height:58px;text-transform:none;color:var(--on);font-family:var(--head)}
+ & .pill::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(96deg,transparent 0 22px,rgba(255,255,255,.1) 22px 23px,transparent 23px 52px);animation:rainyday-drift 1.1s linear infinite;pointer-events:none}
+ & .pill b{position:relative;z-index:1;color:#fff}
+ & .fill{background:linear-gradient(90deg,var(--o2),var(--li));border-radius:8px;opacity:.5}
+ & .main>.bar{height:6px}
+ & .main>.bar i{background:linear-gradient(90deg,var(--o1),var(--o2)) !important;border-radius:3px}
+ & .inner::before,& .inner::after{display:none}
+ & .inner{background:var(--bg);border-radius:12px;padding:18px 10px 14px 22px}
+ & h1{color:var(--tx);font-weight:600;text-transform:none;letter-spacing:.03em;font-size:clamp(30px,4.4vw,56px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em;color:var(--tx2)}
+ & .hb{position:relative;color:var(--c);font-weight:600;text-transform:none;letter-spacing:.05em;font-size:24px;font-family:var(--head)}
+ & .hb::before{content:"";width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.6),transparent 60%),var(--c);box-shadow:0 0 0 3px rgba(255,255,255,.2)}
+ & .hb::after{content:"";height:2px;background:linear-gradient(90deg,var(--c),transparent);border-radius:2px}
+ & .kpi,& .alert{position:relative;overflow:hidden;background:var(--panel);border:1px solid rgba(255,255,255,.55);border-radius:14px;box-shadow:0 6px 18px rgba(20,32,48,.25),inset 0 1px 0 rgba(255,255,255,.7)}
+ & .kpi::before{content:"";position:absolute;top:-40px;right:-30px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.7),transparent 65%);pointer-events:none}
+ & .kpi{border-left:1px solid rgba(255,255,255,.4);text-align:left}
+ & .kpi h3{position:relative;z-index:1;color:var(--c);text-transform:none;letter-spacing:.06em;font-family:var(--font);font-weight:700}
+ & .big{position:relative;z-index:1;font-family:var(--head);font-weight:500;color:var(--tx)}
+ & .sm{color:var(--mut);text-transform:none;letter-spacing:.02em}
+ & .alert{overflow:hidden;border-left:1px solid rgba(255,255,255,.4)}
+ & .alert .tag{border-radius:0;background:var(--c)}
+ & .alert .end{display:none}
+ & .btn{position:relative;overflow:hidden;border-radius:8px;text-transform:none;letter-spacing:.04em;color:var(--on);font-family:var(--head)}
+ & .btn::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(96deg,transparent 0 20px,rgba(255,255,255,.12) 20px 21px,transparent 21px 48px);animation:rainyday-drift 1s linear infinite;pointer-events:none}
+ & .btn span{position:relative;z-index:1}
+ & .panel h4{color:var(--tx2);text-transform:none;letter-spacing:.05em;font-family:var(--head)}
+ & .legend{color:var(--mut);text-transform:none;letter-spacing:.03em}
+ & .tip{border-radius:8px;border-color:var(--o1);background:#eef4fb;color:var(--tx)}
+ & table th{position:relative;z-index:1;background:rgba(255,255,255,.6);color:var(--o1);text-transform:none;letter-spacing:.06em;font-family:var(--head)}
+ & td{background:var(--panel);border-bottom:1px solid rgba(74,92,114,.18)}
+ & td:first-child{border-radius:6px 0 0 6px}
+ & td:last-child{border-radius:0 6px 6px 0}
+ & .st{color:var(--tx);text-transform:none;font-weight:700}
+ & .log .t,& .info dt{color:var(--mut)}
+ & details.muted summary{color:var(--mut);text-transform:none;letter-spacing:.03em}
+ & .info dt{text-transform:none;letter-spacing:.04em}
+ & .themesel select{background:#eef4fb;border-color:var(--o1);color:var(--tx)}
+ & .pill.warn,& .pill.warn *{color:var(--on-warn)}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="rainyday"] *,html[data-theme="rainyday"] *::after{animation:none !important}}

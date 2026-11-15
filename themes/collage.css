@@ -1,0 +1,42 @@
+/* theme: Collage; de: Collage */
+/* Paper collage: kraft background, torn magazine-scraps with tape strips and slight rotation, muted red/ochre/teal accents. */
+html[data-theme="collage"]{
+ --big-fit:16cqi;
+ --bg:#e9dcbf;--panel:#fbf7ee;--tx:#2b241a;--tx2:#4a3f2c;--mut:#5c5038;
+ --o1:#aa372a;--o2:#825514;--pe:#2b6863;--li:#7a4b9b;--pw:#3f5f8a;--sk:#8b5421;--tan:#6b5a3a;
+ --on:#fbf7ee;--on-warn:#2b241a;
+ --good:#3e7d3e;--warn:#f2c200;--crit:#c62828;--info:#3f5f8a;
+ --thr:#b23a2c;--s1:#2e6f6a;--s2:#c07d1e;--grid:#d9cbb0;--axis:#4a3f2c;
+ --font:'Zilla Slab',Georgia,serif;--head:'Oswald','Arial Narrow',sans-serif;
+ background:
+  radial-gradient(circle at 82% 12%,rgba(178,58,44,.06) 0 130px,transparent 131px),
+  radial-gradient(circle at 12% 88%,rgba(46,111,106,.06) 0 150px,transparent 151px),
+  repeating-linear-gradient(45deg,rgba(120,90,40,.035) 0 3px,transparent 3px 8px),
+  linear-gradient(#e9dcbf,#e1d2b0);
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:var(--o1);color:var(--on);border-radius:4px;min-height:0;padding:16px 12px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.03em;transform:rotate(-1deg);box-shadow:2px 3px 0 rgba(80,55,20,.25)}
+ & .pill{border-radius:4px;min-height:60px;text-transform:none;font-family:var(--head);letter-spacing:.02em;transform:rotate(-.6deg);box-shadow:1px 2px 0 rgba(80,55,20,.22)}
+ & .fill{background:linear-gradient(#b06a2a,#6b5a3a);border-radius:4px;opacity:.4}
+ & .main>.bar{height:6px}& .main>.bar i{background:#c07d1e !important;border-radius:3px;transform:rotate(-.4deg)}& .inner::before,& .inner::after{display:none}& .inner{padding:20px 8px 14px 22px}
+ & h1{color:#2b241a;font-family:var(--head);font-weight:600;text-transform:none;letter-spacing:.03em;font-size:clamp(32px,4.6vw,58px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em;font-style:italic}
+ & .hb{color:var(--c);font-family:var(--head);font-weight:600;text-transform:none;letter-spacing:.04em;font-size:26px;position:relative;padding-left:10px}
+ & .hb::before{content:"";width:14px;height:26px;background:rgba(192,125,30,.5);transform:rotate(-8deg);border-radius:2px;box-shadow:0 0 0 1px rgba(80,55,20,.15)}
+ & .hb::after{content:"";height:4px;background:repeating-linear-gradient(90deg,var(--c) 0 12px,transparent 12px 20px);opacity:.7}
+ & .kpi,& .alert{background:var(--panel);border:1px solid rgba(80,55,20,.35);border-radius:6px;position:relative;box-shadow:3px 4px 0 rgba(80,55,20,.2)}
+ & .kpi{border-left:none;text-align:center;transform:rotate(-.8deg)}
+ & .kpi::before{content:"";position:absolute;top:-12px;left:50%;width:74px;height:24px;background:rgba(192,125,30,.4);transform:translateX(-50%) rotate(-4deg);border-radius:2px;box-shadow:0 0 0 1px rgba(80,55,20,.12)}
+ & .kpi h3{color:var(--c);text-transform:none;letter-spacing:.06em;font-family:var(--head);font-weight:600}
+ & .big{font-family:var(--head);font-weight:700}& .sm{color:var(--mut)}
+ & .alert{transform:rotate(.5deg);overflow:hidden}& .alert .tag{border-radius:0 4px 4px 0}& .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border-radius:4px;text-transform:none;letter-spacing:.03em;font-family:var(--head);box-shadow:1px 2px 0 rgba(80,55,20,.25)}
+ & .panel h4{color:var(--tx);font-family:var(--head);text-transform:none;letter-spacing:.04em}
+ & .legend{text-transform:none;font-size:13px;color:var(--tx2)}
+ & .tip{background:var(--panel);border:1px solid rgba(80,55,20,.4);border-radius:4px;box-shadow:2px 3px 0 rgba(80,55,20,.2)}
+ & table th{color:#4a3f2c;text-transform:none;letter-spacing:.05em;font-family:var(--head);font-weight:600}
+ & td{background:var(--panel);border-bottom:1px dashed rgba(80,55,20,.3)}
+ & td:first-child{border-radius:4px 0 0 4px}& td:last-child{border-radius:0 4px 4px 0}
+ & .st{color:#2b241a;text-transform:none;font-family:var(--head);font-weight:600;letter-spacing:.03em}
+ & .log .t{color:#7a4b9b}& .info dt{color:#5c5038}& details.muted summary{color:#5c5038;font-style:italic}
+ & .themesel select{background:var(--panel);border-color:rgba(80,55,20,.4)}
+}

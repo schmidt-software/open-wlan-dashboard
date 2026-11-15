@@ -1,0 +1,35 @@
+/* theme: Tropical Jungle; de: Tropen */
+/* Rainforest deep green with monstera and palm leaf shapes, rounded organic cards in light leaf-green, bold Fredoka headings, hibiscus pink, sun yellow and parrot green accents. */
+html[data-theme="tropical"]{
+ --big-fit:16cqi;
+ --bg:#cae1bf;--panel:#dff3cf;--tx:#08291f;--tx2:#14452f;--mut:#2f6a4c;
+ --o1:#7a1f4e;--o2:#805300;--pe:#0b6b43;--li:#1d6582;--pw:#3d671e;--sk:#7a4a1f;--tan:#53631d;
+ --on:#ffffff;--on-warn:#2b1a12;--good:#0b6b43;--warn:#f2c200;--crit:#d32f2f;--info:#1f6b8a;
+ --thr:#8a5a00;--s1:#ff7ba9;--s2:#ffd23f;--grid:#bcdca8;--axis:#14452f;
+ --font:'Nunito',system-ui,sans-serif;--head:'Fredoka',system-ui,sans-serif;
+ background:
+  radial-gradient(circle at 12% 16%,rgba(20,90,60,.35) 0 46px,transparent 47px),
+  radial-gradient(circle at 88% 24%,rgba(18,80,55,.32) 0 60px,transparent 61px),
+  radial-gradient(circle at 78% 84%,rgba(22,95,62,.30) 0 52px,transparent 53px),
+  radial-gradient(circle at 22% 88%,rgba(16,75,50,.30) 0 40px,transparent 41px),
+  repeating-linear-gradient(115deg,transparent 0 42px,rgba(90,220,160,.05) 42px 48px,transparent 48px 96px),
+  linear-gradient(160deg,#0e4a37,#082f22);
+ background-attachment:fixed;
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#0b6b43;color:#fff;border-radius:16px 6px 16px 6px;min-height:0;padding:18px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.03em}
+ & .pill{border-radius:22px 8px 22px 8px;min-height:60px;text-transform:none;font-weight:700}& .fill{background:linear-gradient(#1f9e6b,#0b6b43);border-radius:14px;opacity:.45}
+ & .main>.bar{height:8px}& .main>.bar i{background:#0b6b43 !important;border-radius:6px}& .inner::before,& .inner::after{display:none}& .inner{background:var(--bg);border-radius:12px;padding:20px 10px 14px 24px}
+ & h1{color:var(--tx);font-weight:700;text-transform:none;letter-spacing:.01em;font-size:clamp(30px,4.4vw,56px);text-shadow:0 2px 0 rgba(0,0,0,.25)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em;color:var(--tx2)}
+ & .hb{color:var(--c);font-weight:700;text-transform:none;letter-spacing:.03em;font-size:26px}
+ & .hb::before{width:24px;height:24px;border-radius:50% 50% 50% 0;background:radial-gradient(circle at 30% 30%,#fff 0 3px,var(--c) 4px);transform:rotate(-12deg)}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:3px solid var(--c)}
+ & .kpi,& .alert{background:var(--panel);border:2px solid #0b6b43;border-radius:28px 10px 28px 10px;box-shadow:inset 0 0 0 4px rgba(255,255,255,.4)}
+ & .kpi{border-left:2px solid #0b6b43;text-align:left}& .kpi h3{color:var(--c);text-transform:none;letter-spacing:.04em;font-family:var(--head);font-weight:700}
+ & .big{font-family:var(--head);font-weight:700}& .alert{overflow:hidden}& .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{border-radius:20px 8px 20px 8px;text-transform:none;letter-spacing:.04em;font-weight:700}
+ & th{color:#14452f;text-transform:none;letter-spacing:.05em;font-family:var(--head);font-weight:700}& td{background:var(--panel);border-bottom:2px solid #bcdca8}
+ & td:first-child{border-radius:8px 0 0 8px}& td:last-child{border-radius:0 8px 8px 0}& .st{color:#14452f;text-transform:none;font-weight:700}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em;font-family:var(--head);font-weight:600}& .log .t,& .info dt{color:var(--mut)}
+ & .tip{border-radius:14px 6px 14px 6px;border-color:#0b6b43;background:var(--panel)}& .themesel select{background:var(--panel);border-color:#0b6b43;color:#14452f}
+}

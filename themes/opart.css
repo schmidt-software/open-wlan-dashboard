@@ -1,0 +1,35 @@
+/* theme: Op Art; de: Op-Art */
+/* High-contrast black and white concentric and wavy stripe optical art with a vivid blue accent. */
+html[data-theme="opart"]{
+ --bg:#ffffff;--panel:#ffffff;--tx:#0a0a0a;--tx2:#1c1c1c;--mut:#3d3d3d;
+ --o1:#0a0a0a;--o2:#c4002f;--pe:#1452ff;--li:#0a0a0a;--pw:#1452ff;--sk:#0a0a0a;--tan:#1452ff;
+ --on:#ffffff;--on-warn:#0a0a0a;
+ --good:#0f7a3d;--warn:#f2c200;--crit:#c62828;--info:#1452ff;
+ --thr:#0a0a0a;--s1:#0a0a0a;--s2:#1452ff;--grid:#e6e6e6;--axis:#0a0a0a;
+ --font:'Rajdhani',system-ui,sans-serif;--head:'Orbitron',system-ui,sans-serif;
+ --big-fit:15cqi;
+ background:repeating-radial-gradient(circle at 82% 30%,#ffffff 0 9px,#0a0a0a 9px 14px),repeating-conic-gradient(from 0deg at 16% 76%,#ffffff 0deg 5deg,#0a0a0a 5deg 10deg);
+ & body{background:transparent}& .inner{background:var(--bg);border-radius:4px}
+ & .elbow{background:#0a0a0a;color:#ffffff;border-radius:0;min-height:0;padding:14px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.1em}
+ & .pill{border-radius:0;min-height:56px;text-transform:uppercase;box-shadow:inset 0 0 0 2px #0a0a0a}& .fill{background:repeating-linear-gradient(45deg,#0a0a0a 0 6px,#ffffff 6px 12px);border-radius:0}
+ & .main>.bar i{background:#0a0a0a !important;border-radius:0}& .inner::before,& .inner::after{display:none}
+ & h1{color:#0a0a0a;font-weight:900;text-transform:uppercase;letter-spacing:.04em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:uppercase;letter-spacing:.08em}
+ & .hb{color:#1452ff;font-weight:900;text-transform:uppercase;letter-spacing:.06em;font-size:24px}
+ & .hb::before{width:20px;height:20px;border-radius:0;background:#0a0a0a;border:3px solid #1452ff}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:4px solid #0a0a0a}
+ & .kpi,& .alert{background:var(--panel);border:6px solid transparent;border-radius:0;box-shadow:inset 0 0 0 2px #0a0a0a}
+ & .kpi{position:relative;border-left:14px solid var(--c)}
+ & .kpi::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 10px,#0a0a0a 10px 12px);opacity:.08;pointer-events:none}
+ & .kpi h3{color:#1452ff;text-transform:uppercase;letter-spacing:.1em;font-family:var(--head);font-weight:700}
+ & .big{font-family:var(--head);font-weight:900}
+ & .alert{overflow:hidden}& .alert .tag{border-radius:0;border-right:2px solid #0a0a0a}& .alert .end{display:none}
+ & .btn{border-radius:0;text-transform:uppercase;letter-spacing:.08em;box-shadow:inset 0 0 0 2px #0a0a0a}
+ & th{color:#1452ff;text-transform:uppercase;letter-spacing:.06em;font-family:var(--head)}
+ & td{background:var(--panel);border-bottom:2px solid #0a0a0a}
+ & td:first-child{border-radius:0}& .st{color:#0a0a0a;text-transform:uppercase;font-weight:700}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:uppercase;letter-spacing:.06em}
+ & .log .t,& .info dt{color:#1452ff;font-family:var(--head)}
+ & .tip{border-radius:0;border-color:#0a0a0a;background:var(--panel);box-shadow:inset 0 0 0 2px #1452ff}
+ & .themesel select{background:var(--panel);border-color:#0a0a0a;box-shadow:inset 0 0 0 2px #0a0a0a}
+}

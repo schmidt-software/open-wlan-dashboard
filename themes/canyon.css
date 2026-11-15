@@ -1,0 +1,47 @@
+/* theme: Desert Canyon; de: Wüstenschlucht */
+/* Warm sand strata background, rough light-sandstone cards, earthy slab headings with terracotta, rust and sage accents. */
+html[data-theme="canyon"]{
+ --big-fit:16cqi;
+ --bg:#e7cba2;--panel:#f5e8cf;--tx:#3a2415;--tx2:#5a3a24;--mut:#6b4a30;
+ --o1:#8a3d24;--o2:#83482b;--pe:#455c40;--li:#8a4226;--pw:#71502a;--sk:#764d33;--tan:#714f2c;
+ --on:#fdf3e2;--on-warn:#3a2410;
+ --good:#4b6a34;--warn:#e6a817;--crit:#c62828;--info:#4f7089;--thr:#8a5a2a;
+ --s1:#8a3d24;--s2:#55714f;--grid:#d8b98e;--axis:#6b4a30;
+ --font:'Lora',Georgia,serif;--head:'Barlow Condensed','Arial Narrow',sans-serif;
+ background:
+  repeating-linear-gradient(0deg,rgba(122,74,42,.05) 0 2px,transparent 2px 34px),
+  linear-gradient(180deg,#d6a976 0 15%,#c68f5e 15% 29%,#b57a4a 29% 44%,#a56a40 44% 60%,#bd8350 60% 76%,#d2a06a 76% 100%) fixed;
+ & body{background:transparent;color:var(--tx);letter-spacing:.005em}
+ & .elbow{background:#6b3420;color:#fdf3e2;border-radius:6px;min-height:0;padding:18px 12px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.1em;line-height:1.05}
+ & .pill{border-radius:4px;min-height:56px;text-transform:none;box-shadow:inset 0 -3px 0 rgba(0,0,0,.28),inset 0 2px 0 rgba(255,255,255,.18)}
+ & .pill b{font-family:var(--head);letter-spacing:.04em}
+ & .fill{background:repeating-linear-gradient(90deg,#6b3420 0 10px,#7d3f28 10px 20px);border-radius:4px;opacity:.5}
+ & .main>.bar i{background:#8a3d24 !important;border-radius:2px;height:8px}
+ & .inner::before,& .inner::after{display:none}
+ & h1{color:#6b3420;font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.04em;color:var(--tx2)}
+ & .hb{color:var(--c);font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:24px}
+ & .hb::before{width:38px;height:16px;background:linear-gradient(90deg,var(--c) 0 55%,transparent 55%);clip-path:polygon(0 0,100% 0,92% 100%,0 100%)}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:3px solid var(--c);opacity:.5}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #c8a878;box-shadow:2px 3px 0 rgba(90,50,25,.22)}
+ & .kpi{position:relative;border-left:6px solid var(--c);border-radius:4px 14px 14px 4px}
+ & .kpi::before{content:"";position:absolute;top:8px;right:8px;width:9px;height:9px;background:var(--c);transform:rotate(45deg);opacity:.6}
+ & .kpi h3{color:var(--c);font-family:var(--head);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+ & .big{font-family:var(--head);font-weight:700;letter-spacing:.01em;color:var(--tx)}
+ & .sm{color:var(--tx2)}
+ & .alert{overflow:hidden;border-left:6px solid var(--c);border-radius:4px}
+ & .alert .tag{background:var(--c);border-radius:0}
+ & .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border-radius:3px;text-transform:uppercase;letter-spacing:.05em;font-family:var(--head);box-shadow:inset 0 -2px 0 rgba(0,0,0,.28)}
+ & .panel h4{font-family:var(--head);text-transform:uppercase;letter-spacing:.06em;color:var(--tx2)}
+ & .legend{color:var(--tx2);letter-spacing:.03em}
+ & .tip{background:var(--panel);border:1px solid #8a5a2a;border-radius:4px;color:var(--tx)}
+ & table th{font-family:var(--head);text-transform:uppercase;letter-spacing:.06em;color:#6b3420;background:#e9d3ab}
+ & td{background:var(--panel);border-bottom:1px solid #d8b98e;color:var(--tx)}
+ & td:first-child{border-left:12px solid var(--c);border-radius:3px 0 0 3px}
+ & .st{font-family:var(--head);text-transform:uppercase;letter-spacing:.04em}
+ & .log .t{color:var(--mut);font-family:var(--head);letter-spacing:.02em}
+ & .info dt{color:var(--tx2);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:13px}
+ & details.muted summary{color:var(--mut)}
+ & .themesel select{background:var(--panel);border:1px solid #8a5a2a;color:var(--tx);border-radius:4px}
+}

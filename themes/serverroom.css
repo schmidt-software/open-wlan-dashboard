@@ -1,0 +1,40 @@
+/* theme: Server Room; de: Serverraum */
+/* Data centre: deep navy with rack-unit lines, panels with vent slits and blinking LEDs, monospace headings, cyan/green accents. */
+@keyframes serverroom-blink{0%,49%{opacity:1}50%,100%{opacity:.2}}
+html[data-theme="serverroom"]{
+ --big-fit:16cqi;
+ --bg:#060b16;--panel:#0d1728;--tx:#dce7f5;--tx2:#9fb3cc;--mut:#6d84a6;
+ --o1:#3fd8ff;--o2:#3fe08a;--pe:#ffb84d;--li:#5aa2ff;--pw:#c084fc;--sk:#f27b9e;--tan:#4dd0e1;
+ --on:#06121f;--on-warn:#2b1a00;--good:#3fe08a;--warn:#f2c200;--crit:#ff3b3b;--info:#5aa2ff;
+ --thr:#f2c200;--s1:#3fd8ff;--s2:#3fe08a;--grid:#1a2740;--axis:#6d84a6;
+ --font:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;--head:'Share Tech Mono','IBM Plex Mono',ui-monospace,monospace;
+ background:repeating-linear-gradient(90deg,transparent 0 139px,rgba(63,216,255,.05) 139px 141px),repeating-linear-gradient(0deg,transparent 0 31px,rgba(255,255,255,.02) 31px 32px),radial-gradient(circle at 78% 12%,rgba(63,216,255,.10),transparent 42%),linear-gradient(180deg,#0a1424,#060b16);
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:#0d1728;color:var(--tx);border:1px solid #1c2c48;border-radius:4px;min-height:0;padding:14px 16px;font-family:var(--head);text-transform:uppercase;letter-spacing:.14em}
+ & .pill{position:relative;background:var(--c);color:var(--on);border:none;border-radius:3px;min-height:56px;text-transform:uppercase;letter-spacing:.08em;font-family:var(--head)}
+ & .pill::before{content:"";position:absolute;left:12px;top:50%;width:7px;height:7px;margin-top:-4px;border-radius:50%;background:#fff;box-shadow:0 0 6px #fff;animation:serverroom-blink 1.8s steps(1,end) infinite}
+ & .fill{background:repeating-linear-gradient(90deg,#13233f 0 8px,#0d1728 8px 14px);border-radius:3px;opacity:.6}
+ & .main>.bar{height:5px}& .main>.bar i{background:linear-gradient(90deg,var(--o1),var(--o2)) !important;border-radius:2px}
+ & .inner::before,& .inner::after{display:none}& .inner{padding:20px 10px 14px 24px}
+ & h1{color:var(--tx);font-family:var(--head);text-transform:uppercase;letter-spacing:.1em;font-size:clamp(30px,4.6vw,54px)}
+ & .sub,& .themesel{text-transform:uppercase;letter-spacing:.12em;color:var(--mut)}
+ & .hb{color:var(--c);font-family:var(--head);text-transform:uppercase;letter-spacing:.12em;font-size:24px}
+ & .hb::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+ & .hb::after{height:0;background:none;border-bottom:1px dashed var(--grid)}
+ & .kpi,& .alert{position:relative;background:var(--panel);border:1px solid #1c2c48;border-radius:6px;box-shadow:inset 0 0 0 1px rgba(63,216,255,.05)}
+ & .kpi::before{content:"";position:absolute;top:12px;right:12px;width:9px;height:9px;border-radius:50%;background:var(--good);box-shadow:0 0 8px var(--good);animation:serverroom-blink 2.4s steps(1,end) infinite}
+ & .kpi::after{content:"";position:absolute;left:12px;right:12px;bottom:9px;height:7px;background:repeating-linear-gradient(90deg,rgba(63,216,255,.18) 0 3px,transparent 3px 7px);border-radius:2px}
+ & .kpi{border-left:4px solid var(--c);text-align:left;padding-right:26px}
+ & .kpi h3{color:var(--c);font-family:var(--head);text-transform:uppercase;letter-spacing:.1em;font-weight:400}
+ & .big{font-family:var(--head);font-weight:400;color:var(--tx)}& .sm{color:var(--mut)}
+ & .alert{overflow:hidden}& .alert .tag{background:var(--c);border-radius:0 3px 3px 0}& .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border:none;border-radius:3px;text-transform:uppercase;letter-spacing:.1em;font-family:var(--head)}
+ & .panel h4,& details.muted summary,& .info dt{font-family:var(--head);text-transform:uppercase;letter-spacing:.08em}
+ & th{color:var(--tx2);font-family:var(--head);text-transform:uppercase;letter-spacing:.08em}
+ & td{background:var(--panel);border-bottom:1px solid #16233c}
+ & td:first-child{border-left:4px solid var(--c)}& .st{color:var(--tx);font-family:var(--head)}
+ & .log .t,& .info dt{color:var(--mut)}
+ & .tip{background:#0d1728;border:1px solid #1c2c48;border-radius:4px;color:var(--tx)}
+ & .themesel select{background:var(--panel);border:1px solid #1c2c48;color:var(--tx)}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="serverroom"] .pill::before,html[data-theme="serverroom"] .kpi::before{animation:none}}

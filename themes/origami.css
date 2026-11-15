@@ -1,0 +1,38 @@
+/* theme: Origami; de: Origami */
+/* Folded paper: warm white background, cards with a folded corner and diagonal fold shading, small paper-crane marks before headings, soft coral, teal and indigo accents. */
+html[data-theme="origami"]{
+ --big-fit:16cqi;
+ --bg:#f7f2ea;--panel:#fffdf8;--tx:#34302a;--tx2:#5d564b;--mut:#746d61;
+ --o1:#a83e32;--o2:#1f6e68;--pe:#39498c;--li:#7a4a9c;--pw:#8f6322;--sk:#5c5346;--tan:#7b6c52;
+ --on:#fffdf8;--on-warn:#3a2e12;
+ --good:#2f7d4f;--warn:#f2c200;--crit:#c62828;--info:#39498c;
+ --thr:#b07a2a;--s1:#a83e32;--s2:#1f6e68;--grid:#e6ddcc;--axis:#7a7266;
+ --font:'Jost',system-ui,sans-serif;--head:'Barlow Condensed','Jost',sans-serif;
+ background:linear-gradient(135deg,rgba(168,62,50,.04) 0 25%,transparent 25% 50%,rgba(31,110,104,.04) 50% 75%,transparent 75%) 0 0/90px 90px fixed,#f7f2ea;
+ & body{background:transparent;letter-spacing:.01em;color:var(--tx)}
+ & .elbow{background:linear-gradient(135deg,#fffdf8,#efe6d6);color:var(--tx);border-radius:4px;border:1px solid #e2d7c3;min-height:0;padding:16px 12px;justify-content:center;font-family:var(--head);text-transform:none;letter-spacing:.05em}
+ & .pill{border-radius:4px;min-height:58px;text-transform:none;font-family:var(--head);box-shadow:inset -3px -3px 0 rgba(0,0,0,.06)}& .fill{background:linear-gradient(135deg,#efe6d6,#e2d7c3);border-radius:4px;opacity:.5}
+ & .main>.bar{height:8px}& .main>.bar i{background:linear-gradient(90deg,var(--o1),var(--pe)) !important;border-radius:2px 0 0 2px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 10px 14px 22px}
+ & h1{color:var(--tx);font-family:var(--head);font-weight:600;text-transform:none;letter-spacing:.03em;font-size:clamp(30px,4.4vw,54px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.05em;color:var(--tx2)}
+ & .hb{position:relative;color:var(--c);font-family:var(--head);font-weight:600;text-transform:none;letter-spacing:.05em;font-size:24px;padding-left:30px}
+ & .hb::before{content:"";position:absolute;left:0;top:50%;width:22px;height:18px;transform:translateY(-50%);background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 20'%3E%3Cpolygon points='2,14 12,2 22,14 12,18' fill='%23a83e32'/%3E%3Cpolygon points='12,2 12,18 2,14' fill='%23c96b5f'/%3E%3C/svg%3E") center/contain no-repeat}
+ & .hb::after{content:"";position:absolute;left:0;right:0;bottom:-8px;height:2px;background:linear-gradient(90deg,var(--c),transparent)}
+ & .kpi{position:relative;background:var(--panel);border:none;border-radius:0 14px 0 0;box-shadow:6px 6px 0 rgba(52,48,42,.07);padding:18px 20px 18px 22px}
+ & .kpi::before{content:"";position:absolute;top:0;right:0;width:28px;height:28px;background:linear-gradient(135deg,transparent 49%,#e7ddca 50%);border-bottom-left-radius:6px;box-shadow:-2px 2px 0 rgba(0,0,0,.04)}
+ & .kpi h3{color:var(--c);font-family:var(--head);text-transform:none;letter-spacing:.08em;font-weight:600}
+ & .big{font-family:var(--head);font-weight:600;color:var(--tx)}& .sm{color:var(--tx2)}
+ & .alert{position:relative;background:var(--panel);border-radius:0 10px 10px 0;box-shadow:5px 5px 0 rgba(52,48,42,.06);overflow:hidden}
+ & .alert::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c)}
+ & .alert .tag{border-radius:0}& .alert .end{display:none}
+ & .btn{background:var(--b);color:var(--on);border-radius:4px;text-transform:none;letter-spacing:.05em;font-family:var(--head);box-shadow:inset -2px -2px 0 rgba(0,0,0,.08)}
+ & .panel h4{color:var(--tx);font-family:var(--head);text-transform:none;letter-spacing:.06em}
+ & .legend{color:var(--tx2);letter-spacing:.04em}
+ & .tip{background:var(--panel);border:1px solid #e2d7c3;border-radius:4px;color:var(--tx)}
+ & th{color:var(--tx);font-family:var(--head);text-transform:none;letter-spacing:.06em}
+ & td{background:var(--panel);border-bottom:1px solid var(--grid);color:var(--tx2)}
+ & td:first-child{border-radius:0}& .st{color:var(--tx);font-family:var(--head);letter-spacing:.04em}
+ & .log .t,& .info dt{color:var(--mut);letter-spacing:.03em}
+ & details.muted summary{color:var(--tx2);text-transform:none;letter-spacing:.04em}
+ & .themesel select{background:var(--panel);border:1px solid #e2d7c3;border-radius:4px;color:var(--tx)}
+}

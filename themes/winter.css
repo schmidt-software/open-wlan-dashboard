@@ -1,0 +1,40 @@
+/* theme: Winter; de: Winter */
+/* Pale ice-blue sky with drifting snowflakes, frosted white cards, icy borders and navy/silver accents. */
+@keyframes winter-fall{0%{background-position:0 0,0 0}100%{background-position:24px 360px,48px 720px}}
+html[data-theme="winter"]{
+ --big-fit:15cqi;
+ --bg:#dce9f4;--panel:#f4f9fd;--tx:#0e2440;--tx2:#33567a;--mut:#4f6880;
+ --o1:#123a6b;--o2:#2d6aa8;--pe:#316b9c;--li:#1f5fa8;--pw:#4b6889;--sk:#4f6984;--tan:#3a5a78;
+ --on:#ffffff;--on-warn:#2b2410;--good:#2f7d52;--warn:#f2c200;--crit:#c62828;--info:#2f6fb0;
+ --thr:#7f91a3;--s1:#123a6b;--s2:#4d8fc7;--grid:#cfe0ee;--axis:#557089;
+ --font:'Jost','Segoe UI',system-ui,sans-serif;--head:'Oxanium','Segoe UI',system-ui,sans-serif;
+ background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='96'%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='12' cy='14' r='2.4'/%3E%3Ccircle cx='36' cy='58' r='1.7' opacity='.85'/%3E%3C/g%3E%3C/svg%3E"),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='96'%3E%3Cg fill='%23eef5fb'%3E%3Ccircle cx='24' cy='78' r='2.1'/%3E%3Ccircle cx='6' cy='40' r='1.5' opacity='.7'/%3E%3C/g%3E%3C/svg%3E"),
+  radial-gradient(circle at 12% -8%,rgba(255,255,255,.9),transparent 46%),
+  radial-gradient(circle at 88% 108%,rgba(180,214,242,.7),transparent 42%),
+  linear-gradient(180deg,#eaf3fb 0%,#dce9f4 55%,#cfe0ee 100%) fixed;
+ animation:winter-fall 26s linear infinite;
+ & body{background:transparent;letter-spacing:.01em}
+ & .elbow{background:linear-gradient(180deg,#123a6b,#1f5fa8);color:#eaf4fc;border-radius:12px;min-height:0;padding:16px 12px;justify-content:center;font-family:var(--head);text-transform:uppercase;letter-spacing:.14em}
+ & .pill{border-radius:10px;min-height:58px;text-transform:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}& .fill{background:linear-gradient(90deg,#6e8aa8,#4d8fc7);border-radius:8px;opacity:.4}
+ & .main>.bar{height:6px}& .main>.bar i{background:linear-gradient(90deg,#123a6b,#4d8fc7) !important;border-radius:3px}& .inner::before,& .inner::after{display:none}& .inner{padding:18px 8px 12px 22px}
+ & h1{color:#0e2440;font-weight:600;text-transform:none;letter-spacing:.02em;font-size:clamp(32px,4.6vw,58px)}
+ & .sub,& .themesel{text-transform:none;letter-spacing:.06em;color:#33567a}
+ & .hb{color:var(--c);font-weight:600;text-transform:none;letter-spacing:.05em;font-size:24px}
+ & .hb::before{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle,#ffffff 0 3px,rgba(77,143,199,.6) 4px 6px,transparent 7px);border:2px solid var(--c)}
+ & .hb::after{height:0;border-radius:0;background:none;border-bottom:2px solid #b9d4ec}
+ & .kpi,& .alert{background:var(--panel);border:1px solid #bcd6ee;border-radius:14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 3px 12px rgba(18,58,107,.10)}
+ & .kpi{border-left:1px solid #bcd6ee;text-align:center}& .kpi h3{color:var(--c);text-transform:none;letter-spacing:.08em;font-family:var(--head);font-weight:600}
+ & .big{font-family:var(--head);font-weight:500;color:#0e2440}& .sm{color:#557089}
+ & .alert{overflow:hidden;position:relative}& .alert .tag{border-radius:13px 0 0 13px}& .alert .end{display:none}
+ & .btn{border-radius:9px;text-transform:none;letter-spacing:.04em;box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+ & th{color:#0e2440;text-transform:none;letter-spacing:.06em;background:#e7f1fa}
+ & td{background:var(--panel);border-bottom:1px solid #d6e6f3}
+ & td:first-child{border-radius:8px 0 0 8px}& td:last-child{border-radius:0 8px 8px 0}& .st{color:#0e2440;text-transform:none;font-weight:600}
+ & .panel h4,& details.muted summary,& .info dt{text-transform:none;letter-spacing:.04em;color:#33567a}
+ & .log .t,& .info dt{color:#1f5fa8}
+ & .tip{border-radius:9px;border-color:#bcd6ee;background:var(--panel);box-shadow:0 4px 14px rgba(18,58,107,.18)}
+ & .legend{color:#33567a}& .themesel select{background:var(--panel);border-color:#bcd6ee;color:#0e2440;border-radius:9px}
+}
+@media (prefers-reduced-motion:reduce){html[data-theme="winter"]{animation:none}}
