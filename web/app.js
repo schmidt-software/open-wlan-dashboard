@@ -47,7 +47,7 @@ function render(d){
  pill('r-dev',d.devices.filter(x=>x.online).length);pill('r-log',d.events.length?hm(d.events[0].ts):'–');
  renderAlerts(d.alerts);
  const kpi=(c,h,big,sm)=>'<div class="kpi" style="--c:'+c+'"><h3>'+h+'</h3><div class="big">'+big+'</div><div class="sm">'+sm+'</div></div>';
- const bandK=(b,c)=>{const f=ap(b,'FRITZ!Box'),r=ap(b,'Repeater');return kpi(c,T('k.util',{band:bl(b.band)}),num(f.util)+' % <small>/ '+num(r.util)+' %</small>',T('k.util.sm',{n:(f.clients||0)+(r.clients||0),ch:f.channel??'–'}))};
+ const bandK=(b,c)=>{const f=ap(b,'FRITZ!Box'),r=ap(b,'Repeater');return kpi(c,T('k.util',{band:bl(b.band)}),num(f.util)+'&nbsp;% <small>/&nbsp;'+num(r.util)+'&nbsp;%</small>',T('k.util.sm',{n:(f.clients||0)+(r.clients||0),ch:f.channel??'–'}))};
  $('kpis').innerHTML=kpi('var(--pe)',T('k.inet'),T(i.connected&&i.dsl_up?'connected':'disconnected'),T('k.inet.sm',{dur:dur(i.uptime_s),down:num(i.sync_down,1),up:num(i.sync_up,1),snr:num(i.snr,1)}))
   +kpi('var(--o2)',T('k.traffic'),'↓ '+rate(i.traffic.down),T('k.traffic.sm',{up:rate(i.traffic.up)}))
   +bandK(d.bands[0],'var(--li)')+bandK(d.bands[1],'var(--pw)')
@@ -158,4 +158,5 @@ function applyLang(){document.documentElement.lang=LANG;document.title=T('title'
  const sel=$('theme'),opts=[...sel.options];opts.forEach(o=>o.textContent=o.dataset[LANG]||o.dataset.en);
  opts.sort((a,b)=>(a.value!='lcars')-(b.value!='lcars')||a.textContent.localeCompare(b.textContent,loc())).forEach(o=>sel.append(o))}  // LCARS (the base design) first
 $('lang').value=LANG;applyLang();
-$('lang').addEventListener('change',e=>{LANG=e.target.value;try{localStorage.setItem('wlan-lang',LANG)}catch(_){}applyLang();lastAlerts='';rerender();tick()});  // tick also redraws a device error messagedispatchEvent(new HashChangeEvent('hashchange'));setInterval(tick,__POLL_S__*1000);
+$('lang').addEventListener('change',e=>{LANG=e.target.value;try{localStorage.setItem('wlan-lang',LANG)}catch(_){}applyLang();lastAlerts='';rerender();tick()});  // tick also redraws a device error message
+dispatchEvent(new HashChangeEvent('hashchange'));setInterval(tick,__POLL_S__*1000);

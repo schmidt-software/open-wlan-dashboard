@@ -8,6 +8,7 @@ html[data-theme="bahnhof"]{
  --font:'Barlow Condensed','Arial Narrow',sans-serif;--head:'Barlow Condensed','Arial Narrow',sans-serif;
  --flap:linear-gradient(#2a2c30 0 49%,#000 49% 51%,#1f2124 51%);  /* tile with the split in the middle */
  --sign:#0a3d91;  /* station sign blue */
+ --big-fit:20cqi;  /* the flap tile's padding and letter spacing need room */
  & body{letter-spacing:.03em}
  & .elbow{background:var(--sign);color:#fff;border-radius:6px;box-shadow:inset 0 0 0 3px #fff;min-height:0;padding:14px;justify-content:center;align-items:center;font-size:18px}
  & .pill{background:var(--flap);color:var(--tx);border-left:8px solid var(--c);border-radius:4px;min-height:64px}

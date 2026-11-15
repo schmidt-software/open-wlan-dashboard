@@ -667,6 +667,8 @@ def selftest():
     assert list_themes()[0] == ("lcars", "LCARS", "LCARS", True)
     for f in os.listdir(THEME_DIR):   # every shipped theme names itself in line 1
         assert THEME_HEAD.match(open(os.path.join(THEME_DIR, f), encoding="utf-8").readline()), f
+    # the page start must be a real line of its own, not swallowed by a // comment (happened in b432062)
+    assert re.search(r"^dispatchEvent\(.*setInterval\(tick", read_web("app.js"), re.M), "app.js: page start missing"
     print("selftest ok")
 
 
