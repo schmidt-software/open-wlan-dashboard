@@ -151,7 +151,7 @@ addEventListener('hashchange',()=>{lastDev=null;const mac=devMac();$('s-detail')
  if(mac){$('s-detail').innerHTML='<div class="dhead sub">'+T('loading.device')+'</div>';scrollTo(0,0)}else if(location.hash.length>1)document.getElementById(location.hash.slice(1))?.scrollIntoView();tick()});
 const rerender=()=>{last&&render(last);devMac()&&lastDev&&renderDetail(lastDev)};
 addEventListener('resize',rerender);
-$('theme').value=document.documentElement.dataset.theme;if(!$('theme').value)$('theme').value=document.documentElement.dataset.theme='starship';  // unknown or removed theme
+$('theme').value=document.documentElement.dataset.theme;if(!$('theme').value)$('theme').value=document.documentElement.dataset.theme='desktop';  // unknown or removed theme: the default
 $('theme').addEventListener('change',e=>{document.documentElement.dataset.theme=e.target.value;try{localStorage.setItem('wlan-theme',e.target.value)}catch(_){}rerender()});
 function applyLang(){document.documentElement.lang=LANG;document.title=T('title');
  document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=T(e.dataset.i18n));

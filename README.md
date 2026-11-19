@@ -16,6 +16,8 @@ and recent WLAN events, and raises alerts early:
 - FRITZ!Box restarts in the last 24 h (flagged as a likely crash when the box sent an error report)
 - stopped history collection, available FRITZ!OS updates
 
+![Overview: alerts, internet line, channel load and traffic per band (demo data)](assets/screenshots/overview.jpg)
+
 Clicking a device opens its detail page: connection, signal and noise margin, negotiated and
 maximum rates, Wi-Fi standard, streams, latency, addresses, 24 h signal and rate history and
 all WLAN events of the device.
@@ -23,8 +25,14 @@ all WLAN events of the device.
 Devices the FRITZ!Box prioritizes on its own because of real-time traffic such as calls or games
 (automatic prioritization, FRITZ!OS 8) are marked in the device list, with the count of the last 24 h.
 
+![Device list with connection, signal, rate, traffic and disconnects (demo data)](assets/screenshots/devices.jpg)
+
+![Device detail page with 24 h signal and rate history (demo data)](assets/screenshots/detail.jpg)
+
+The screenshots show demo data, no real devices.
+
 WLAN Dashboard includes 100 themes ranging from sci-fi and retro computers to art, places, and
-seasons. Starship Console is the default selection, and your choice is remembered per browser. Browse the
+seasons. Modern Desktop is the default selection, and your choice is remembered per browser. Browse the
 [THEMES.md](THEMES.md) gallery or see [Themes](#themes) for editing instructions.
 
 The page is available in English and German, with English as the default. A language menu next

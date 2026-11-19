@@ -1,7 +1,7 @@
 # Themes
 
 The dashboard ships with 100 themes. Pick one in the header of the page; the choice is remembered
-per browser. Starship Console is the default. How to edit a theme or add your own is described in the
+per browser. Modern Desktop is the default. How to edit a theme or add your own is described in the
 [README](README.md#themes).
 
 The screenshots show demo data (no real devices). Animated themes (Alien Biotech, Art Nouveau, CMYK Print, Candy Shop, Chart Recorder, Christmas, Cinema Marquee, Circus, Crystal Glass, Departure Board, Digital Rain, Film Negative, Floppy Disk, Harbour at Night, Jazz Record, Jigsaw Puzzle, Kite Day, Library, Mechanical Keyboard, Moss and Stone, Nebula, Neon Rain, Northern Lights, Ocean, Pinball, Punch Card, Radar, Rainy Day, Sci-Fi Holo, Server Room, Spring, Steampunk, Terminal, Video Recorder, Volcano, Winter)
@@ -419,7 +419,7 @@ File: [`themes/minicity.css`](themes/minicity.css)
 
 ## Modern Desktop
 
-Resembles a light, modern desktop window with three coloured dots. Features a side bar with coloured dots, white rounded cards, system fonts, and standard system colours.
+Resembles a light, modern desktop window with three coloured dots. Features a side bar with coloured dots, white rounded cards, system fonts, and standard system colours. It is the default theme.
 
 ![Modern Desktop](assets/themes/desktop.jpg)
 
@@ -651,7 +651,7 @@ File: [`themes/spring.css`](themes/spring.css)
 
 ## Starship Console
 
-Mimics a starship computer console with orange and lilac rounded bars. Uses condensed capitals, alarm words and the stardate in the header; it is the default theme.
+Mimics a starship computer console with orange and lilac rounded bars. Uses condensed capitals, alarm words and the stardate in the header; it is the base design all themes build on.
 
 ![Starship Console](assets/themes/starship.jpg)
 
