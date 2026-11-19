@@ -35,6 +35,13 @@ WLAN Dashboard includes 100 themes ranging from sci-fi and retro computers to ar
 seasons. Modern Desktop is the default selection, and your choice is remembered per browser. Browse the
 [THEMES.md](THEMES.md) gallery or see [Themes](#themes) for editing instructions.
 
+Independently of the theme, 20 layouts change the arrangement: tabs, a floating dock, a phone app,
+a big status banner, a control room with three columns, a bento grid, a magazine front page, a report,
+status rings, a wall display and more. Any theme works with any layout. Except for Classic, a layout
+replaces the theme's side bar ornaments with its own form for the status values; colours and fonts
+stay with the theme. A layout file starts with `/* layout: Name; de: German name */` and puts its rules
+under `html[data-layout="<id>"]:not(#_)`; the `:not(#_)` lifts them above the theme rules.
+
 The page is available in English and German, with English as the default. A language menu next
 to the theme menu lets you switch, and your choice is remembered per browser.
 
@@ -54,6 +61,7 @@ reads from the FRITZ!Box.
 | `web/app.js` | Page logic: rendering, charts, detail page, acknowledge/mute, theme and language menus |
 | `web/i18n.js` | All page texts in English and German, see [Translations](#translations) |
 | `themes/*.css` | One file per theme; the theme menu is built from this folder |
+| `layouts/*.css` | One file per layout (arrangement only); the layout menu is built from this folder |
 | `collect.py` | Collector for the 24 h history: WLAN log, link quality per device, channel load. Run every 15 min |
 | `live.py` | FRITZ!Box access helpers used by the dashboard (also a minimal standalone traffic view) |
 | `launchd/local.wlan-test.collect.plist` | macOS LaunchAgent template that runs `collect.py` every 15 min |

@@ -1,9 +1,9 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WLAN Monitor</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="/base.css"><link rel="stylesheet" href="/themes.css">
+<link rel="stylesheet" href="/base.css"><link rel="stylesheet" href="/themes.css"><link rel="stylesheet" href="/layouts.css">
 <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;600;700&family=Black+Ops+One&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@500;700;900&family=Playfair+Display:wght@700;900&family=Press+Start+2P&family=Rajdhani:wght@500;700&family=UnifrakturMaguntia&family=Zilla+Slab:wght@700&family=Bitter:wght@400;700&family=Fredoka:wght@500;700&family=Pacifico&family=Nunito:wght@400;700;800&family=Lobster&family=Oswald:wght@400;600&family=Caveat+Brush&family=VT323&family=Barlow+Condensed:wght@500;700&family=Jost:wght@400;600;800&family=Share+Tech+Mono&family=Audiowide&family=IBM+Plex+Mono:wght@400;600&family=Architects+Daughter&family=Oxanium:wght@500;700&family=Rye&family=Special+Elite&family=MedievalSharp&family=Poiret+One&family=Bangers&family=Comic+Neue:wght@400;700&family=Shippori+Mincho:wght@500;700&family=Comfortaa:wght@500;700&family=Quicksand:wght@500;700&family=Mountains+of+Christmas:wght@700&family=Cabin+Sketch:wght@700&family=Patrick+Hand&family=Kalam:wght@400;700&family=Abril+Fatface&family=Lora:wght@400;600&family=B612:wght@400;700&family=B612+Mono&family=Silkscreen&family=Righteous&family=Bungee&family=Exo+2:wght@500;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'"><!-- non-blocking: the page must load without internet -->
-<script>try{document.documentElement.dataset.theme=localStorage.getItem('wlan-theme')||'desktop';document.documentElement.lang=localStorage.getItem('wlan-lang')||'en'}catch(e){document.documentElement.dataset.theme='desktop'}</script><!-- before first paint: no flash of the default theme -->
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('wlan-theme')||'desktop';document.documentElement.dataset.layout=localStorage.getItem('wlan-layout')||'classic';document.documentElement.lang=localStorage.getItem('wlan-lang')||'en'}catch(e){document.documentElement.dataset.theme='desktop';document.documentElement.dataset.layout='classic'}</script><!-- before first paint: no flash of the default theme -->
 </head><body>
 <div class="frame">
  <nav class="rail" data-i18n-aria="nav">
@@ -23,6 +23,7 @@
    <header><div><span class="alarm" id="alarm" style="--c:var(--good)" data-i18n="loading">Loading …</span><div class="sub" id="upd" data-i18n="connecting">Connecting to the FRITZ!Box …</div></div>
     <div><h1 data-i18n="title">WLAN Monitor</h1><div class="sub sd" id="sd"></div>
      <div class="prefs"><label class="themesel"><span data-i18n="theme">Theme</span> <select id="theme"><!--THEME_OPTIONS--></select></label>
+     <label class="themesel"><span data-i18n="layout">Layout</span> <select id="layout"><!--LAYOUT_OPTIONS--></select></label>
      <label class="themesel"><span data-i18n="language">Language</span> <select id="lang"><option value="en">EN</option><option value="de">DE</option></select></label></div></div></header>
    <section id="s-detail" hidden></section>
    <div id="overview">

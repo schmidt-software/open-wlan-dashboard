@@ -1,0 +1,23 @@
+/* layout: Big Status; de: Großer Status */
+/* The overall status as a large coloured banner, the other values as tiles below. */
+html[data-layout="hero"]:not(#_){
+ & .main>.bar,& .inner::before,& .inner::after,& .fill,& .elbow{display:none!important}
+ & .rail::before,& .rail::after,& .pill::before,& .pill::after{display:none!important}
+ & .rail{background:none!important;background-image:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;clip-path:none!important;padding:0;gap:8px;transform:none;filter:none;flex-direction:row}
+ & .pill{background:var(--panel)!important;background-image:none!important;color:var(--tx)!important;border:1px solid var(--axis)!important;border-left:4px solid var(--c)!important;border-radius:12px!important;clip-path:none!important;transform:none!important;box-shadow:none!important;filter:none!important;text-shadow:none!important;min-height:0;padding:8px 14px;text-transform:none;letter-spacing:0;font:inherit;font-size:13px;line-height:1.2;justify-content:center;align-items:flex-start;flex-direction:column;gap:2px}
+ & .pill span{color:var(--tx2)!important;font:inherit;text-transform:none;letter-spacing:0}
+ & .pill b{font:inherit;font-size:20px;font-weight:700;color:var(--tx)!important;letter-spacing:0}
+ & .pill:hover,& .pill:focus-visible{filter:brightness(1.08)!important}
+ & .inner{padding:16px 10px}
+ & .main,& .inner{display:contents}
+ & #overview:not([hidden]){display:contents}
+ & .frame{display:grid;grid-template-columns:minmax(0,1fr);column-gap:22px;align-items:start;align-content:start;overflow:clip;padding:16px 18px}
+ & header{order:-2}& .rail{order:-1}
+ & .frame>*,& header,& #s-detail,& #overview>*{grid-column:1/-1;min-width:0}
+ & .rail{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:14px 0 4px}
+ & #r-status{grid-column:1/-1;flex-direction:row;align-items:center;justify-content:space-between;padding:22px 28px;background:var(--c)!important;border:0!important;border-radius:22px!important;min-height:120px}
+ & #r-status span,& #r-status b{color:var(--on)!important}& #r-status.warn span,& #r-status.warn b{color:var(--on-warn,var(--on))!important}
+ & #r-status span{font-size:20px;font-weight:600}& #r-status b{font-size:64px;line-height:1}
+ & .pill{padding:12px 16px}& .pill b{font-size:26px}
+ @media(max-width:700px){& .rail{grid-template-columns:repeat(2,minmax(0,1fr))}& #r-status b{font-size:40px}}
+}

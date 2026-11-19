@@ -153,12 +153,14 @@ const rerender=()=>{last&&render(last);devMac()&&lastDev&&renderDetail(lastDev)}
 addEventListener('resize',rerender);
 $('theme').value=document.documentElement.dataset.theme;if(!$('theme').value)$('theme').value=document.documentElement.dataset.theme='desktop';  // unknown or removed theme: the default
 $('theme').addEventListener('change',e=>{document.documentElement.dataset.theme=e.target.value;try{localStorage.setItem('wlan-theme',e.target.value)}catch(_){}rerender()});
+$('layout').value=document.documentElement.dataset.layout;if(!$('layout').value)$('layout').value=document.documentElement.dataset.layout='classic';  // unknown or removed layout
+$('layout').addEventListener('change',e=>{document.documentElement.dataset.layout=e.target.value;try{localStorage.setItem('wlan-layout',e.target.value)}catch(_){}rerender()});
 function applyLang(){document.documentElement.lang=LANG;document.title=T('title');
  document.querySelectorAll('[data-i18n]').forEach(e=>e.textContent=T(e.dataset.i18n));
  document.querySelectorAll('[data-i18n-aria]').forEach(e=>e.setAttribute('aria-label',T(e.dataset.i18nAria)));
  $('r-24').querySelector('span').textContent=bl('2.4');
- const sel=$('theme'),opts=[...sel.options];opts.forEach(o=>o.textContent=o.dataset[LANG]||o.dataset.en);
- opts.sort((a,b)=>(a.value!='starship')-(b.value!='starship')||a.textContent.localeCompare(b.textContent,loc())).forEach(o=>sel.append(o))}  // starship (the base design) first
+ for(const [id,first] of [['theme','starship'],['layout','classic']]){const sel=$(id),opts=[...sel.options];opts.forEach(o=>o.textContent=o.dataset[LANG]||o.dataset.en);
+  opts.sort((a,b)=>(a.value!=first)-(b.value!=first)||a.textContent.localeCompare(b.textContent,loc())).forEach(o=>sel.append(o))}}  // the base design / classic layout first
 $('lang').value=LANG;applyLang();
 $('lang').addEventListener('change',e=>{LANG=e.target.value;try{localStorage.setItem('wlan-lang',LANG)}catch(_){}applyLang();lastAlerts='';rerender();tick()});  // tick also redraws a device error message
 dispatchEvent(new HashChangeEvent('hashchange'));setInterval(tick,__POLL_S__*1000);

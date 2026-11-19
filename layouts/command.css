@@ -1,0 +1,30 @@
+/* layout: Control Room; de: Leitstand */
+/* Three columns on wide screens: status and key figures, charts, alerts and log; devices below. */
+html[data-layout="command"]:not(#_){
+ & .main>.bar,& .inner::before,& .inner::after,& .fill,& .elbow{display:none!important}
+ & .rail::before,& .rail::after,& .pill::before,& .pill::after{display:none!important}
+ & .rail{background:none!important;background-image:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;clip-path:none!important;padding:0;gap:8px;transform:none;filter:none;flex-direction:row}
+ & .pill{background:var(--panel)!important;background-image:none!important;color:var(--tx)!important;border:1px solid var(--axis)!important;border-left:4px solid var(--c)!important;border-radius:12px!important;clip-path:none!important;transform:none!important;box-shadow:none!important;filter:none!important;text-shadow:none!important;min-height:0;padding:8px 14px;text-transform:none;letter-spacing:0;font:inherit;font-size:13px;line-height:1.2;justify-content:center;align-items:flex-start;flex-direction:column;gap:2px}
+ & .pill span{color:var(--tx2)!important;font:inherit;text-transform:none;letter-spacing:0}
+ & .pill b{font:inherit;font-size:20px;font-weight:700;color:var(--tx)!important;letter-spacing:0}
+ & .pill:hover,& .pill:focus-visible{filter:brightness(1.08)!important}
+ & .inner{padding:16px 10px}
+ & .main,& .inner{display:contents}
+ & #overview:not([hidden]){display:contents}
+ & .frame{display:grid;grid-template-columns:minmax(0,1fr);column-gap:22px;align-items:start;align-content:start;overflow:clip;padding:16px 18px}
+ & header{order:-2}& .rail{order:-1}
+ & .frame>*,& header,& #s-detail,& #overview>*{grid-column:1/-1;min-width:0}
+ & .rail{display:flex!important;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+ & .pill{flex:1 1 130px}
+ @media(min-width:1300px){
+  & .frame{grid-template-columns:250px minmax(0,1fr) 340px}
+  & header{grid-column:1/-1;grid-row:1}
+  & .rail{grid-column:1;grid-row:2;flex-direction:column;flex-wrap:nowrap;margin-top:22px}& .pill{flex:none}
+  & #s-kpi{grid-column:1;grid-row:3}& #s-kpi .kpis{grid-template-columns:minmax(0,1fr)}
+  & #overview>.cols{grid-column:2;grid-row:2 / span 2;grid-template-columns:minmax(0,1fr)}
+  & #s-alerts{grid-column:3;grid-row:2}& #s-alerts .alert{flex-wrap:wrap}
+  & #s-log{grid-column:3;grid-row:3;max-height:640px;overflow:auto}& #s-log .log{grid-template-columns:48px minmax(0,1fr)}& #s-log .log .mut{display:none}
+  & #s-dev{grid-column:1/-1;grid-row:4}
+  & #s-detail{grid-column:2/-1;grid-row:2 / span 3}
+ }
+}

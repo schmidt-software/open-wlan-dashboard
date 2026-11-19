@@ -18,6 +18,7 @@ from collect import merge_new  # same duplicate rule as the collector
 DIR = os.path.dirname(os.path.abspath(__file__))
 WEB_DIR = os.path.join(DIR, "web")        # page, base design (starship console), script
 THEME_DIR = os.path.join(DIR, "themes")   # one CSS file per theme, see README
+LAYOUT_DIR = os.path.join(DIR, "layouts") # one CSS file per layout (arrangement only, colours come from the theme)
 PORT = 8765
 POLL_S = 15            # page refresh interval; the box is queried at most this often
 
@@ -432,7 +433,7 @@ def build_state():
 
 # ---------------------------------------------------------------- web page
 
-THEME_HEAD = re.compile(r"/\*\s*theme:\s*([^*]+?)\s*\*/")  # first line: /* theme: Ocean; de: Ozean; starship */
+THEME_HEAD = re.compile(r"/\*\s*(?:theme|layout):\s*([^*]+?)\s*\*/")  # first line: /* theme: Ocean; de: Ozean; starship */ or /* layout: … */
 
 
 def parse_theme_head(line):
@@ -445,8 +446,8 @@ def parse_theme_head(line):
     return name, de, "starship" in opts
 
 
-def list_themes(folder=THEME_DIR):
-    """[(id, name, German name, starship)] for every <id>.css in the theme folder, the base design (starship) first."""
+def list_themes(folder=THEME_DIR, first="starship"):
+    """[(id, name, German name, starship)] for every <id>.css in the folder (themes or layouts), `first` first."""
     out = []
     for f in os.listdir(folder):
         m = re.fullmatch(r"([a-z0-9-]+)\.css", f)
@@ -455,7 +456,7 @@ def list_themes(folder=THEME_DIR):
         with open(os.path.join(folder, f), encoding="utf-8", errors="replace") as fh:  # one badly saved file must not break the page
             h = parse_theme_head(fh.readline())
         out.append((m[1], *(h or (m[1], m[1], False))))
-    return sorted(out, key=lambda t: (t[0] != "starship", t[1].lower()))
+    return sorted(out, key=lambda t: (t[0] != first, t[1].lower()))
 
 
 def read_web(name):
@@ -469,17 +470,20 @@ def static_file(path):
     if path == "/":
         opts = "".join(f'<option value="{t}" data-en="{html.escape(n)}" data-de="{html.escape(de)}"{" data-starship" if trek else ""}>{html.escape(n)}</option>'
                        for t, n, de, trek in list_themes())
-        return read_web("index.html").replace("<!--THEME_OPTIONS-->", opts), "text/html; charset=utf-8"
+        lays = "".join(f'<option value="{t}" data-en="{html.escape(n)}" data-de="{html.escape(de)}">{html.escape(n)}</option>'
+                       for t, n, de, _ in list_themes(LAYOUT_DIR, "classic"))
+        return read_web("index.html").replace("<!--THEME_OPTIONS-->", opts).replace("<!--LAYOUT_OPTIONS-->", lays), "text/html; charset=utf-8"
     if path == "/app.js":
         return read_web("app.js").replace("__POLL_S__", str(POLL_S)), "text/javascript; charset=utf-8"
     if path == "/i18n.js":
         return read_web("i18n.js"), "text/javascript; charset=utf-8"
     if path == "/base.css":
         return read_web("base.css"), "text/css; charset=utf-8"
-    if path == "/themes.css":
+    if path in ("/themes.css", "/layouts.css"):
+        folder = THEME_DIR if path == "/themes.css" else LAYOUT_DIR
         parts = []
-        for t, *_ in list_themes():
-            with open(os.path.join(THEME_DIR, t + ".css"), encoding="utf-8", errors="replace") as f:
+        for t, *_ in list_themes(folder):
+            with open(os.path.join(folder, t + ".css"), encoding="utf-8", errors="replace") as f:
                 parts.append(f.read())
         return "\n".join(parts), "text/css; charset=utf-8"
     return None
@@ -690,8 +694,10 @@ def selftest():
     assert parse_theme_head("/* theme: Ocean; de: Ozean */") == ("Ocean", "Ozean", False)
     assert parse_theme_head("/* theme: Bridge; starship */") == ("Bridge", "Bridge", True)
     assert list_themes()[0] == ("starship", "Starship Console", "Raumschiff-Konsole", True)
-    for f in os.listdir(THEME_DIR):   # every shipped theme names itself in line 1
-        assert THEME_HEAD.match(open(os.path.join(THEME_DIR, f), encoding="utf-8").readline()), f
+    for folder in (THEME_DIR, LAYOUT_DIR):   # every shipped theme and layout names itself in line 1
+        for f in os.listdir(folder):
+            assert THEME_HEAD.match(open(os.path.join(folder, f), encoding="utf-8").readline()), f
+    assert list_themes(LAYOUT_DIR, "classic")[0][0] == "classic"
     # the page start must be a real line of its own, not swallowed by a // comment (happened in b432062)
     assert re.search(r"^dispatchEvent\(.*setInterval\(tick", read_web("app.js"), re.M), "app.js: page start missing"
     print("selftest ok")

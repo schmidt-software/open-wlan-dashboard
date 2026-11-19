@@ -1,0 +1,27 @@
+/* layout: Phone App; de: Smartphone-App */
+/* The page as a phone app: a narrow screen with a tab bar at the bottom. */
+html[data-layout="phone"]:not(#_){
+ & .main>.bar,& .inner::before,& .inner::after,& .fill,& .elbow{display:none!important}
+ & .rail::before,& .rail::after,& .pill::before,& .pill::after{display:none!important}
+ & .rail{background:none!important;background-image:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;clip-path:none!important;padding:0;gap:8px;transform:none;filter:none;flex-direction:row}
+ & .pill{background:var(--panel)!important;background-image:none!important;color:var(--tx)!important;border:1px solid var(--axis)!important;border-left:4px solid var(--c)!important;border-radius:12px!important;clip-path:none!important;transform:none!important;box-shadow:none!important;filter:none!important;text-shadow:none!important;min-height:0;padding:8px 14px;text-transform:none;letter-spacing:0;font:inherit;font-size:13px;line-height:1.2;justify-content:center;align-items:flex-start;flex-direction:column;gap:2px}
+ & .pill span{color:var(--tx2)!important;font:inherit;text-transform:none;letter-spacing:0}
+ & .pill b{font:inherit;font-size:20px;font-weight:700;color:var(--tx)!important;letter-spacing:0}
+ & .pill:hover,& .pill:focus-visible{filter:brightness(1.08)!important}
+ & .inner{padding:16px 10px}
+ & .main,& .inner{display:contents}
+ & #overview:not([hidden]){display:contents}
+ & .frame{display:grid;grid-template-columns:minmax(0,1fr);column-gap:22px;align-items:start;align-content:start;overflow:clip;padding:16px 18px}
+ & header{order:-2}& .rail{order:-1}
+ & .frame>*,& header,& #s-detail,& #overview>*{grid-column:1/-1;min-width:0}
+ & .frame{backdrop-filter:none;transform:none;filter:none}  /* these would pin a fixed bar to the frame instead of the window */
+ & body{padding:24px 10px}
+ & .frame{max-width:440px;margin:0 auto;border-radius:34px!important;background:var(--bg)!important;box-shadow:0 0 0 12px #1b1b1f,0 0 0 13px #555,0 40px 80px -20px rgba(0,0,0,.5)!important;padding:22px 14px 100px}
+ & .rail{display:flex!important;position:fixed;bottom:22px;left:50%;transform:translateX(-50%);width:min(420px,calc(100vw - 28px));flex-direction:row;gap:2px;background:var(--panel)!important;border-radius:20px!important;padding:6px;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,.3),0 0 0 1px var(--axis)!important}
+ & .pill{flex:1;min-width:0;border:0!important;border-top:3px solid var(--c)!important;border-radius:10px!important;background:none!important;padding:4px 2px;align-items:center;font-size:10px}
+ & .pill span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+ & .pill b{font-size:14px}
+ & header{flex-direction:column;align-items:stretch}& h1{font-size:28px;text-align:left}
+ & .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}& .cols{grid-template-columns:minmax(0,1fr)}
+ & .alert{flex-wrap:wrap}
+}

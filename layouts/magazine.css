@@ -1,0 +1,29 @@
+/* layout: Magazine; de: Zeitung */
+/* A newspaper front page: centred masthead, a one-line index and the log as a side column. */
+html[data-layout="magazine"]:not(#_){
+ & .main>.bar,& .inner::before,& .inner::after,& .fill,& .elbow{display:none!important}
+ & .rail::before,& .rail::after,& .pill::before,& .pill::after{display:none!important}
+ & .rail{background:none!important;background-image:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;clip-path:none!important;padding:0;gap:8px;transform:none;filter:none;flex-direction:row}
+ & .pill{background:var(--panel)!important;background-image:none!important;color:var(--tx)!important;border:1px solid var(--axis)!important;border-left:4px solid var(--c)!important;border-radius:12px!important;clip-path:none!important;transform:none!important;box-shadow:none!important;filter:none!important;text-shadow:none!important;min-height:0;padding:8px 14px;text-transform:none;letter-spacing:0;font:inherit;font-size:13px;line-height:1.2;justify-content:center;align-items:flex-start;flex-direction:column;gap:2px}
+ & .pill span{color:var(--tx2)!important;font:inherit;text-transform:none;letter-spacing:0}
+ & .pill b{font:inherit;font-size:20px;font-weight:700;color:var(--tx)!important;letter-spacing:0}
+ & .pill:hover,& .pill:focus-visible{filter:brightness(1.08)!important}
+ & .inner{padding:16px 10px}
+ & .main,& .inner{display:contents}
+ & #overview:not([hidden]){display:contents}
+ & .frame{display:grid;grid-template-columns:minmax(0,1fr);column-gap:22px;align-items:start;align-content:start;overflow:clip;padding:16px 18px}
+ & header{order:-2}& .rail{order:-1}
+ & .frame>*,& header,& #s-detail,& #overview>*{grid-column:1/-1;min-width:0}
+ & .frame{max-width:1220px;margin:0 auto}
+ & header{flex-direction:column-reverse;align-items:center;text-align:center;border-bottom:3px double var(--tx);padding-bottom:14px}
+ & header>div{display:flex;flex-direction:column;align-items:center}& .prefs{justify-content:center}
+ & h1{font-size:clamp(40px,6vw,76px);text-align:center}
+ & .rail{display:flex!important;flex-wrap:wrap;justify-content:center;gap:0;border-bottom:1px solid var(--tx)!important;padding:8px 0;margin-bottom:6px}
+ & .pill{flex-direction:row;align-items:baseline;gap:6px;border:0!important;border-right:1px solid var(--axis)!important;border-radius:0!important;background:none!important;padding:2px 16px}
+ & .pill:last-of-type{border-right:0!important}& .pill b{font-size:15px}
+ & .hb{border-top:2px solid var(--tx);padding-top:6px}
+ @media(min-width:1100px){
+  & .frame{grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-auto-flow:dense}
+  & #s-alerts,& #s-kpi{grid-column:1}& #s-log{grid-column:2;grid-row:span 2;max-height:560px;overflow:auto}& #s-log .log{grid-template-columns:48px minmax(0,1fr)}& #s-log .log .mut{display:none}
+ }
+}
