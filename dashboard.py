@@ -8,7 +8,7 @@ the files collect.py writes into this directory. Serves http://127.0.0.1:8765 (l
 
 Run: python3 dashboard.py        Self-test: python3 dashboard.py --selftest
 """
-import csv, datetime as dt, html, json, os, re, sys, threading, time, urllib.parse, urllib.request
+import csv, datetime as dt, html, json, os, re, sys, threading, time, urllib.error, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
@@ -106,6 +106,15 @@ def device_alerts(d):
     if d["always_on"] and d["online"] and d["rssi"] is not None and d["rssi"] <= RSSI_WARN:
         out.append(alert(f"rssi:{d['mac']}", "crit" if d["rssi"] <= RSSI_CRIT else "warn", "rssi", name=d["name"], rssi=d["rssi"], ap=d["ap"], band=d["band"]))
     return out
+
+
+def prio_state(history, now):
+    """(prioritized right now, number of automatic prioritizations in the last 24 h) from the box's history;
+    history None = the box did not report it, count None."""
+    if history is None:
+        return False, None
+    active = any(h.get("start", 0) <= now and (not h.get("end") or h["end"] >= now - POLL_S) for h in history)
+    return active, sum(1 for h in history if h.get("start", 0) >= now - 86400)
 
 
 def stable_boot(prev, uptime_s, fetched_at):
@@ -288,6 +297,13 @@ def build_state():
     by_mac = {x["mac"]: x for x in devs.values()}
     mine = next((x["UID"] for x in devs.values() if x.get("ip") == live.own_ip()), None)
     traffic = {}
+    prio = None
+    if _prio["ok"]:
+        try:  # FRITZ!OS 8 beta API: real-time traffic (calls, games) the box prioritizes on its own
+            prio = {x["networkDeviceUid"]: x["history"] for x in live.api("beta/trafficprioritization/automatic/networkDevices")}
+        except (OSError, ValueError, KeyError, TypeError) as e:
+            # missing or changed endpoint: stop asking (each try costs a re-login); retry only after network hiccups
+            _prio["ok"] = isinstance(e, OSError) and not isinstance(e, urllib.error.HTTPError)
     for d in mon["devices"]:
         uid = d.get("landeviceUid") or (mine if d.get("type") == "own" else None)
         if uid:
@@ -358,6 +374,7 @@ def build_state():
         d["drops_1h"] = sum(1 for e in evs if e["kind"] == "drop" and e["ts"] >= now - 3600)
         d["drops_24h"] = sum(1 for e in evs if e["kind"] == "drop")
         d["roams_24h"] = sum(1 for e in evs if e["kind"] == "roam")
+        d["prio_now"], d["prio_24h"] = prio_state(None if prio is None else prio.get(by_mac.get(d["mac"], {}).get("UID"), []), now)
         d["alerts"] = device_alerts(d)
         d["level"] = max((LEVEL[a["level"]] for a in d["alerts"]), default=-1)
     devices = [d for d in devices.values() if d["online"] or d["always_on"]]  # skip offline phones etc.
@@ -469,6 +486,7 @@ def static_file(path):
 
 
 _cache = {"t": 0.0, "data": None}
+_prio = {"ok": True}  # False once the box lacks the automatic prioritization endpoint
 _lock = threading.Lock()
 
 
@@ -654,6 +672,9 @@ def selftest():
     assert merge_new([L("22:24:29")], [L("22:24:30"), L("22:24:39"), L("22:24:43", "other")]) == [L("22:24:39"), L("22:24:43", "other")]  # ±1 s shift
     assert merge_new([], [L("22:01:30"), L("22:01:32")]) == [L("22:01:30"), L("22:01:32")]  # same read: real back-and-forth
     assert merge_new([L("22:01:30")], [L("22:01:30"), L("22:01:32")]) == [L("22:01:32")]   # one known line absorbs one entry
+    h = [{"start": 9000, "end": 9100}, {"start": 1000, "end": 1100}]
+    assert prio_state(h, 9105) == (True, 2) and prio_state(h, 9200) == (False, 2) and prio_state(h, 90000) == (False, 1)
+    assert prio_state([{"start": 9000}], 9500) == (True, 1) and prio_state([], 9500) == (False, 0) and prio_state(None, 9500) == (False, None)
     assert net_issue_kind("Internetverbindung wurde getrennt.") == "disconnected"
     assert net_issue_kind("DSL-Synchronisierung beginnt (Training).") == "dsl_resync"
     assert net_issue_kind("Internetverbindung IPv6 wurde getrennt, Präfix nicht mehr gültig.") is None

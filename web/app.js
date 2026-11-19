@@ -64,7 +64,8 @@ function render(d){
    {t0:ta[0],t1:ta[ta.length-1],ticks:[ta[0],ta[Math.floor(ta.length/2)],ta[ta.length-1]],minMax:0.1,fmt:rate,fmtAxis:v=>v&&v<1?num(v*1000)+' k':num(v),aria:T('aria.traffic',{band:bl(b.band)})})}
  $('devs').innerHTML='<table><thead><tr>'+['status','device','conn'].map(k=>'<th class="l">'+T('th.'+k)+'</th>').join('')+['signal','rate','traffic','drops1','drops24','roams'].map(k=>'<th>'+T('th.'+k)+'</th>').join('')+'</tr></thead><tbody>'
   +d.devices.map(x=>{const s=sb(x);return '<tr class="click'+(x.quiet?' quiet" title="'+T(x.quiet=='muted'?'tip.muted':'tip.acked'):'')+'" data-mac="'+esc(x.mac)+'" tabindex="0" style="--c:'+s[2]+'"><td class="l"><span class="st">'+s[1]+'</span></td>'
-   +'<td class="l"><a href="#dev='+esc(x.mac)+'">'+esc(x.name)+'</a>'+(x.always_on?' <span class="mut" title="'+T('always.tip')+'">· '+T('always')+'</span>':'')+'</td>'
+   +'<td class="l"><a href="#dev='+esc(x.mac)+'">'+esc(x.name)+'</a>'+(x.always_on?' <span class="mut" title="'+T('always.tip')+'">· '+T('always')+'</span>':'')
+   +(x.prio_now?' <b title="'+T('prio.tip')+'">· '+T('prio')+'</b>':x.prio_24h?' <span class="mut" title="'+T('prio.tip')+'">· '+T('prio.24',{n:x.prio_24h})+'</span>':'')+'</td>'
    +'<td class="l">'+(x.online?bl(x.band)+' · '+x.ap:T('last.seen',{t:x.last_seen?hm(x.last_seen):'–'}))+'</td>'
    +'<td>'+(x.rssi==null?'–':x.rssi+' dBm')+'</td><td>'+num(x.rate_down)+' / '+num(x.rate_up)+'</td>'
    +'<td>'+(x.recorded?rate(x.traffic_down)+' / '+rate(x.traffic_up):'<span class="mut">'+T('not.recorded')+'</span>')+'</td>'
@@ -108,6 +109,7 @@ function renderDetail(x){const D=x.detail||{},s=sb(x);
   [T('i.since'),date(D.connected_since)],[T('i.first'),date(D.first_seen)],[T('i.last'),date(D.last_used)],
   [T('i.latency'),D.latency_ms!=null?num(D.latency_ms,1)+' ms'+mut(T('i.measured',{t:date(D.latency_at)})):'–'],
   [T('i.wan'),D.wan_rx!=null?T('i.wan.v',{rx:bytes(D.wan_rx),tx:bytes(D.wan_tx)}):'–'],
+  [T('i.prio'),x.prio_24h==null?'–':(x.prio_now?T('prio')+' · ':'')+T('prio.24',{n:x.prio_24h})+mut(T('prio.tip'))],
   [T('i.always'),yes(x.always_on)],[T('i.share'),num(100*x.share)+' %'],[T('i.places'),where]];
  let h='<div class="dhead"><a class="btn" href="#s-dev" style="--b:var(--sk)">← '+T('back')+'</a><span class="alarm'+(s[2]=='var(--warn)'?' warn':'')+'" style="--c:'+s[2]+'">'+esc(s[1])+'</span></div>'
   +'<h2 class="hb" style="--c:var(--sk)">'+esc(x.name)+'</h2>';

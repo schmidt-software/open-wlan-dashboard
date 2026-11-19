@@ -20,6 +20,9 @@ Clicking a device opens its detail page: connection, signal and noise margin, ne
 maximum rates, Wi-Fi standard, streams, latency, addresses, 24 h signal and rate history and
 all WLAN events of the device.
 
+Devices the FRITZ!Box prioritizes on its own because of real-time traffic such as calls or games
+(automatic prioritization, FRITZ!OS 8) are marked in the device list, with the count of the last 24 h.
+
 WLAN Dashboard includes 100 themes ranging from sci-fi and retro computers to art, places, and
 seasons. Starship Console is the default selection, and your choice is remembered per browser. Browse the
 [THEMES.md](THEMES.md) gallery or see [Themes](#themes) for editing instructions.
