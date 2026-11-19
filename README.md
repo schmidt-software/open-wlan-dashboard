@@ -50,6 +50,17 @@ reads from the FRITZ!Box.
 | `live.py` | FRITZ!Box access helpers used by the dashboard (also a minimal standalone traffic view) |
 | `launchd/local.wlan-test.collect.plist` | macOS LaunchAgent template that runs `collect.py` every 15 min |
 
+## Requirements
+
+- Python 3.9 or newer, standard library only (the `python3` that ships with macOS is enough)
+- macOS for the bundled LaunchAgent; on other systems run `collect.py` every 15 min with cron or similar
+- FRITZ!Box with FRITZ!Repeater mesh; tested with a FRITZ!Box 7530 AX and a FRITZ!Repeater 2700 on FRITZ!OS 8.50
+- A current browser (the themes use CSS nesting)
+
+Known limitation: the traffic figures come from the FRITZ!Box online monitor. During large
+downloads it can report much more traffic for the computer that runs the dashboard than
+actually arrives there (observed up to about three times).
+
 ## Setup
 
 1. Create a FRITZ!Box user for the dashboard (System → FRITZ!Box-Benutzer) with
