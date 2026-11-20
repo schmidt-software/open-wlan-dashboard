@@ -384,7 +384,7 @@ def build_state():
     for b in bands.values():
         for a in b["aps"]:
             if a["util_avg30"] is not None and a["util_avg30"] >= UTIL_WARN:
-                alerts.append(alert(f"util:{b['band']}:{a['ap']}", "crit" if a["util_avg30"] >= UTIL_CRIT else "warn", "util",
+                alerts.append(alert(f"util:{b['band']}:{a['ap']}", "crit" if a["util_avg30"] >= UTIL_CRIT else "warn", "util" if b["band"] == "2.4" else "util5",
                                     band=b["band"], ap=a["ap"], channel=a["channel"], pct=a["util_avg30"]))
             if a["noise"] is not None and a["noise"] > NOISE_WARN:
                 alerts.append(alert(f"noise:{b['band']}:{a['ap']}", "warn", "noise", band=b["band"], ap=a["ap"], noise=a["noise"], channel=a["channel"]))
