@@ -2,7 +2,7 @@
 
 The dashboard ships with 100 themes. Pick one in the header of the page; the choice is remembered
 per browser. Modern Desktop is the default. How to edit a theme or add your own is described in the
-[README](README.md#themes).
+[README](README.md#themes). Any theme can be combined with any of the 20 [layouts](README.md#layouts).
 
 The screenshots show demo data (no real devices). Animated themes (Alien Biotech, Art Nouveau, CMYK Print, Candy Shop, Chart Recorder, Christmas, Cinema Marquee, Circus, Crystal Glass, Departure Board, Digital Rain, Film Negative, Floppy Disk, Harbour at Night, Jazz Record, Jigsaw Puzzle, Kite Day, Library, Mechanical Keyboard, Moss and Stone, Nebula, Neon Rain, Northern Lights, Ocean, Pinball, Punch Card, Radar, Rainy Day, Sci-Fi Holo, Server Room, Spring, Steampunk, Terminal, Video Recorder, Volcano, Winter)
 stop moving when the system setting "reduce motion" is on.

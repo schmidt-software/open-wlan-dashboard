@@ -1,0 +1,6 @@
+# Allow-list: only the code goes into the image, never .env, history, alert states or passwords.
+*
+!*.py
+!web/
+!themes/
+!layouts/

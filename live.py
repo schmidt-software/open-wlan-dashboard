@@ -11,21 +11,29 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import settings
 
-BOX, USER, PW = settings.BOX, settings.USER, settings.password()
+BOX, USER = settings.BOX, settings.USER
 PORT = settings.get("DASHBOARD_PORT", 8765)
 
-_mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
-_mgr.add_password(None, f"http://{BOX}:49000", USER, PW)
-_opener = urllib.request.build_opener(urllib.request.HTTPDigestAuthHandler(_mgr))
+_opener = None
 _sid = None
 _devs = {"t": 0.0, "data": {}}
+
+
+def opener():
+    """urllib opener with the TR-064 digest login, built on first use (the password is read then)."""
+    global _opener
+    if _opener is None:
+        mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
+        mgr.add_password(None, f"http://{BOX}:49000", USER, settings.password())
+        _opener = urllib.request.build_opener(urllib.request.HTTPDigestAuthHandler(mgr))
+    return _opener
 
 
 def login():
     global _sid
     x = urllib.request.urlopen(f"http://{BOX}/login_sid.lua?version=2", timeout=10).read().decode()
     _, i1, s1, i2, s2 = re.search(r"<Challenge>(.*?)</Challenge>", x).group(1).split("$")
-    h1 = hashlib.pbkdf2_hmac("sha256", PW.encode(), bytes.fromhex(s1), int(i1))
+    h1 = hashlib.pbkdf2_hmac("sha256", settings.password().encode(), bytes.fromhex(s1), int(i1))
     h2 = hashlib.pbkdf2_hmac("sha256", h1, bytes.fromhex(s2), int(i2))
     body = urllib.parse.urlencode({"username": USER, "response": f"{s2}${h2.hex()}"}).encode()
     x = urllib.request.urlopen(f"http://{BOX}/login_sid.lua?version=2", body, timeout=10).read().decode()
@@ -61,7 +69,7 @@ def mesh():
            f's:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:{act} xmlns:u="{svc}"/></s:Body></s:Envelope>')
     req = urllib.request.Request(f"http://{BOX}:49000/upnp/control/hosts", env.encode(),
                                  {"Content-Type": 'text/xml; charset="utf-8"', "SOAPAction": f"{svc}#{act}"})
-    path = next(el.text for el in ET.fromstring(_opener.open(req, timeout=10).read()).iter() if el.tag.endswith("MeshListPath"))
+    path = next(el.text for el in ET.fromstring(opener().open(req, timeout=10).read()).iter() if el.tag.endswith("MeshListPath"))
     return json.loads(urllib.request.urlopen(f"http://{BOX}:49000{path}", timeout=10).read())
 
 
@@ -75,7 +83,7 @@ def own_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         s.connect((BOX, 80))
-        return s.getsockname()[0]
+        return settings.get("OWN_IP", "") or s.getsockname()[0]  # OWN_IP: the host's address when run in a container
     finally:
         s.close()
 
@@ -221,6 +229,6 @@ if __name__ == "__main__":
     assert sample()["bands"], "no data from FRITZ!Box"
     print(f"http://127.0.0.1:{PORT}", flush=True)
     try:
-        ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
+        ThreadingHTTPServer((settings.BIND, PORT), Handler).serve_forever()
     except KeyboardInterrupt:
         pass

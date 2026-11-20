@@ -10,15 +10,14 @@ import xml.etree.ElementTree as ET
 
 import settings
 
-BOX, USER, PW = settings.BOX, settings.USER, settings.password()
-DIR = os.path.dirname(os.path.abspath(__file__))
+BOX, USER = settings.BOX, settings.USER
 JITTER_S = 2  # the box shows the same log line with a time ±1 s off between reads (seen after a restart)
 
 
 def login():
     x = urllib.request.urlopen(f"http://{BOX}/login_sid.lua?version=2", timeout=20).read().decode()
     _, i1, s1, i2, s2 = re.search(r"<Challenge>(.*?)</Challenge>", x).group(1).split("$")
-    h1 = hashlib.pbkdf2_hmac("sha256", PW.encode(), bytes.fromhex(s1), int(i1))
+    h1 = hashlib.pbkdf2_hmac("sha256", settings.password().encode(), bytes.fromhex(s1), int(i1))
     h2 = hashlib.pbkdf2_hmac("sha256", h1, bytes.fromhex(s2), int(i2))
     body = urllib.parse.urlencode({"username": USER, "response": f"{s2}${h2.hex()}"}).encode()
     x = urllib.request.urlopen(f"http://{BOX}/login_sid.lua?version=2", body, timeout=20).read().decode()
@@ -57,7 +56,7 @@ def wlan_log(sid):
 
 def mesh_links():
     mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
-    mgr.add_password(None, f"http://{BOX}:49000", USER, PW)
+    mgr.add_password(None, f"http://{BOX}:49000", USER, settings.password())
     opener = urllib.request.build_opener(urllib.request.HTTPDigestAuthHandler(mgr))
     svc, act = "urn:dslforum-org:service:Hosts:1", "X_AVM-DE_GetMeshListPath"
     env = (f'<?xml version="1.0"?><s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" '
@@ -89,7 +88,8 @@ def main():
     finally:
         urllib.request.urlopen(f"http://{BOX}/login_sid.lua?version=2&logout=1&sid={sid}", timeout=10)
 
-    ev_path = os.path.join(DIR, "events.jsonl")
+    os.makedirs(settings.DATA_DIR, exist_ok=True)
+    ev_path = os.path.join(settings.DATA_DIR, "events.jsonl")
     known = []
     if os.path.exists(ev_path):
         with open(ev_path) as f:
@@ -104,7 +104,7 @@ def main():
     links, aps = mesh_links()
     for fname, header, rows in (("links.csv", ["time", "device", "mac", "ap", "band", "rssi_dbm", "snr_db", "rate_rx_kbit", "rate_tx_kbit"], links),
                                 ("aps.csv", ["time", "ap", "band", "channel", "utilization_pct", "noise_dbm"], aps)):
-        path = os.path.join(DIR, fname)
+        path = os.path.join(settings.DATA_DIR, fname)
         fresh = not os.path.exists(path)
         with open(path, "a", newline="") as f:
             w = csv.writer(f)

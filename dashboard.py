@@ -38,8 +38,8 @@ ACK_FORGET_S = S("ACK_FORGET_S", 600)          # a confirmation is dropped once 
 # devices never treated as always-on (no offline or weak-signal alerts), e.g. a game console that is often off
 NEVER_ALWAYS_ON = {m.upper() for m in S("NEVER_ALWAYS_ON", [])}
 MESH_NAMES = settings.mesh_names()             # display names for mesh nodes, see .env.example
-ACK_FILE = os.path.join(DIR, "acks.json")
-RAISED_FILE = os.path.join(DIR, "alerts.json")  # when each current alert first appeared
+ACK_FILE = os.path.join(settings.DATA_DIR, "acks.json")
+RAISED_FILE = os.path.join(settings.DATA_DIR, "alerts.json")  # when each current alert first appeared
 
 LEVEL = {"info": 0, "warn": 1, "crit": 2}
 # box "net" log lines (German box UI) that mean the internet was down, with a language-neutral kind for the page;
@@ -279,7 +279,7 @@ def soap(ctl, svc, act):
            f's:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body><u:{act} xmlns:u="{svc}"/></s:Body></s:Envelope>')
     req = urllib.request.Request(f"http://{live.BOX}:49000{ctl}", env.encode(),
                                  {"Content-Type": 'text/xml; charset="utf-8"', "SOAPAction": f"{svc}#{act}"})
-    return {el.tag: el.text for el in ET.fromstring(live._opener.open(req, timeout=10).read()).iter() if el.tag.startswith("New")}
+    return {el.tag: el.text for el in ET.fromstring(live.opener().open(req, timeout=10).read()).iter() if el.tag.startswith("New")}
 
 
 def box_log(flt):
@@ -299,11 +299,11 @@ def read_history(since):
         return dt.datetime.fromisoformat(s).timestamp()
     aps, links, events = [], [], []
     try:
-        with open(os.path.join(DIR, "aps.csv")) as f:
+        with open(os.path.join(settings.DATA_DIR, "aps.csv")) as f:
             aps = [dict(r, ts=ts(r["time"])) for r in csv.DictReader(f) if ts(r["time"]) >= since]
-        with open(os.path.join(DIR, "links.csv")) as f:
+        with open(os.path.join(settings.DATA_DIR, "links.csv")) as f:
             links = [dict(r, ts=ts(r["time"])) for r in csv.DictReader(f) if r.get("mac") and ts(r["time"]) >= since]
-        with open(os.path.join(DIR, "events.jsonl")) as f:
+        with open(os.path.join(settings.DATA_DIR, "events.jsonl")) as f:
             events = [json.loads(line) for line in f]
     except FileNotFoundError:
         pass
@@ -792,6 +792,6 @@ if __name__ == "__main__":
     cached_state()  # fail early if the box is unreachable
     print(f"http://127.0.0.1:{PORT}", flush=True)
     try:
-        ThreadingHTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
+        ThreadingHTTPServer((settings.BIND, PORT), Handler).serve_forever()
     except KeyboardInterrupt:
         pass
