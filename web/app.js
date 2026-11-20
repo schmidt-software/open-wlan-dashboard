@@ -42,12 +42,12 @@ function render(d){
  $('upd').textContent=T('upd',{time:hms(d.time),poll:__POLL_S__})+(d.collector_age_min!=null?T('upd.hist',{min:d.collector_age_min}):'');
  $('sd').textContent=(trek?T('stardate')+' '+stardate(d.time):new Date(d.time).toLocaleDateString(loc(),{weekday:'long',day:'numeric',month:'long',year:'numeric'}))+' · '+T('mesh');
  $('r-status').style.setProperty('--c',st[2]);$('r-status').classList.toggle('warn',d.status=='warn');pill('r-status',st[1]);
- const i=d.internet,u=d.uplink,ap=(b,n)=>b.aps.find(a=>a.ap==n)||{},maxU=b=>Math.max(...b.aps.map(a=>a.util??0));
- pill('r-inet',num(i.sync_down,1));pill('r-24',num(maxU(d.bands[0]))+' %');pill('r-5',num(maxU(d.bands[1]))+' %');
+ const i=d.internet,u=d.uplink,ap=(b,n)=>b.aps.find(a=>a.ap==n)||{},maxU=b=>{const u=b.aps.map(a=>a.util).filter(v=>v!=null);return u.length?Math.max(...u):null},pct=v=>v==null?'–':num(v)+' %';
+ pill('r-inet',num(i.sync_down,1));pill('r-24',pct(maxU(d.bands[0])));pill('r-5',pct(maxU(d.bands[1])));
  pill('r-dev',d.devices.filter(x=>x.online).length);pill('r-log',d.events.length?hm(d.events[0].ts):'–');
  renderAlerts(d.alerts);
  const kpi=(c,h,big,sm)=>'<div class="kpi" style="--c:'+c+'"><h3>'+h+'</h3><div class="big">'+big+'</div><div class="sm">'+sm+'</div></div>';
- const bandK=(b,c)=>{const f=ap(b,'FRITZ!Box'),r=ap(b,'Repeater');return kpi(c,T('k.util',{band:bl(b.band)}),num(f.util)+'&nbsp;% <small>/&nbsp;'+num(r.util)+'&nbsp;%</small>',T('k.util.sm',{n:(f.clients||0)+(r.clients||0),ch:f.channel??'–'}))};
+ const bandK=(b,c)=>{const f=ap(b,'FRITZ!Box'),r=ap(b,'Repeater');return kpi(c,T('k.util',{band:bl(b.band)}),pct(f.util).replace(' ','&nbsp;')+' <small>/&nbsp;'+pct(r.util).replace(' ','&nbsp;')+'</small>',T('k.util.sm',{n:(f.clients||0)+(r.clients||0),ch:f.channel??'–'}))};
  $('kpis').innerHTML=kpi('var(--pe)',T('k.inet'),T(i.connected&&i.dsl_up?'connected':'disconnected'),T('k.inet.sm',{dur:dur(i.uptime_s),down:num(i.sync_down,1),up:num(i.sync_up,1),snr:num(i.snr,1)}))
   +kpi('var(--o2)',T('k.traffic'),'↓ '+rate(i.traffic.down),T('k.traffic.sm',{up:rate(i.traffic.up)}))
   +bandK(d.bands[0],'var(--li)')+bandK(d.bands[1],'var(--pw)')

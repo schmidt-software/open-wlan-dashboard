@@ -79,6 +79,11 @@ def classify(events):
     return events
 
 
+def load_pct(v):
+    """Channel load in % as int, or None: the box reports 0 when it has no reading (an active radio is never at 0)."""
+    return int(v) if v not in (None, "") and int(v) > 0 else None
+
+
 def is_random_mac(mac):
     return bool(int(mac[:2], 16) & 2)
 
@@ -361,9 +366,9 @@ def build_state():
                         series = t[key + "stream"][-n:]
                         for k, v in enumerate(series):
                             bands[b][key][n - len(series) + k] += live.mbit(v)
-            hist = [(r["ts"], int(r["utilization_pct"])) for r in slow["aps"]
-                    if r["band"] == i["name"] and r["utilization_pct"] and (r["ap"] == "fritz.box") == (ap == "FRITZ!Box")]
-            util = i.get("channel_utilization")
+            hist = [(r["ts"], load_pct(r["utilization_pct"])) for r in slow["aps"]
+                    if r["band"] == i["name"] and load_pct(r["utilization_pct"]) and (r["ap"] == "fritz.box") == (ap == "FRITZ!Box")]
+            util = load_pct(i.get("channel_utilization"))
             recent = [v for ts, v in hist if ts >= now - 1800] + ([util] if util is not None else [])
             bands[b]["aps"].append({"ap": ap, "channel": i["current_channel"], "util": util, "noise": i.get("anpi"),
                                     "clients": clients, "util_avg30": round(sum(recent) / len(recent)) if recent else None,
@@ -700,6 +705,7 @@ def selftest():
     apply_raised([], r, 1500 + ACK_FORGET_S - 1); apply_raised(al, r, 1500 + ACK_FORGET_S); assert al[0]["raised"] == 1000000  # brief gap
     apply_raised([], r, 9000); assert r == {}; apply_raised(al, r, 9100); assert al[0]["raised"] == 9100000  # gone long: starts anew
     al = [{"id": "y", "since": 500000}]; apply_raised(al, r, 9100); assert al[0]["raised"] == 500000  # acknowledged before: since then
+    assert load_pct("37") == 37 and load_pct(12) == 12 and load_pct("0") is None and load_pct(0) is None and load_pct("") is None and load_pct(None) is None
     assert net_issue_kind("Internetverbindung wurde getrennt.") == "disconnected"
     assert net_issue_kind("DSL-Synchronisierung beginnt (Training).") == "dsl_resync"
     assert net_issue_kind("Internetverbindung IPv6 wurde getrennt, Präfix nicht mehr gültig.") is None
