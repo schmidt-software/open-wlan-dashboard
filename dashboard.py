@@ -36,6 +36,7 @@ ROAM_WINDOW_S = 10
 RECONNECT_WINDOW_S = 600   # a logoff is a drop only if the device is back this soon; longer = standby or switched off
 ACK_FORGET_S = 600     # a confirmation is dropped once its problem has been gone this long
 ACK_FILE = os.path.join(DIR, "acks.json")
+RAISED_FILE = os.path.join(DIR, "alerts.json")  # when each current alert first appeared
 # Local, git-ignored settings (contains MAC addresses), e.g. {"never_always_on": ["AA:BB:CC:DD:EE:FF"]}:
 # devices listed there are never treated as always-on, so they raise no offline or weak-signal alerts.
 CONFIG_FILE = os.path.join(DIR, "config.local.json")
@@ -155,6 +156,18 @@ def apply_acks(alerts, acks, now):
                         until=round(v["until"] * 1000) if v and v.get("until") else None))
     status = max((a["level"] for a in out if a["state"] == "active"), key=LEVEL.get, default="ok")
     return out, status
+
+
+def apply_raised(alerts, raised, now):
+    """Stamp each alert with the time it first appeared. Mutates `raised` ({id: [first, last_seen]}); an alert
+    gone for ACK_FORGET_S starts anew when it comes back."""
+    ids = {a["id"] for a in alerts}
+    for k, (_, last) in list(raised.items()):
+        if k not in ids and now - last > ACK_FORGET_S:
+            del raised[k]
+    for a in alerts:  # an alert acknowledged earlier existed at least since then
+        raised[a["id"]] = [raised.get(a["id"], [min(now, a["since"] / 1000) if a.get("since") else now])[0], now]
+        a["raised"] = round(raised[a["id"]][0] * 1000)
 
 
 def apply_device_states(devices, alerts):
@@ -507,19 +520,19 @@ def cached_state():
 _ack_lock = threading.Lock()
 
 
-def load_acks():
+def load_acks(path=ACK_FILE):
     try:
-        with open(ACK_FILE) as f:
+        with open(path) as f:
             return json.load(f)
     except (FileNotFoundError, ValueError):
         return {}
 
 
-def save_acks(acks):
-    tmp = ACK_FILE + ".tmp"
+def save_acks(acks, path=ACK_FILE):
+    tmp = path + ".tmp"
     with open(tmp, "w") as f:
         json.dump(acks, f, indent=1)
-    os.replace(tmp, ACK_FILE)
+    os.replace(tmp, path)
 
 
 def current_state():
@@ -530,6 +543,9 @@ def current_state():
         alerts, status = apply_acks(state["alerts"], acks, time.time())
         if json.dumps(acks, sort_keys=True) != before:
             save_acks(acks)
+        raised = load_acks(RAISED_FILE)
+        apply_raised(alerts, raised, time.time())
+        save_acks(raised, RAISED_FILE)
     out = dict(state, alerts=alerts, status=status, devices=apply_device_states(state["devices"], alerts))
     del out["details"]
     return out
@@ -679,6 +695,11 @@ def selftest():
     h = [{"start": 9000, "end": 9100}, {"start": 1000, "end": 1100}]
     assert prio_state(h, 9105) == (True, 2) and prio_state(h, 9200) == (False, 2) and prio_state(h, 90000) == (False, 1)
     assert prio_state([{"start": 9000}], 9500) == (True, 1) and prio_state([], 9500) == (False, 0) and prio_state(None, 9500) == (False, None)
+    r, al = {}, [{"id": "x"}]
+    apply_raised(al, r, 1000); apply_raised(al, r, 1500); assert al[0]["raised"] == 1000000  # keeps the first time
+    apply_raised([], r, 1500 + ACK_FORGET_S - 1); apply_raised(al, r, 1500 + ACK_FORGET_S); assert al[0]["raised"] == 1000000  # brief gap
+    apply_raised([], r, 9000); assert r == {}; apply_raised(al, r, 9100); assert al[0]["raised"] == 9100000  # gone long: starts anew
+    al = [{"id": "y", "since": 500000}]; apply_raised(al, r, 9100); assert al[0]["raised"] == 500000  # acknowledged before: since then
     assert net_issue_kind("Internetverbindung wurde getrennt.") == "disconnected"
     assert net_issue_kind("DSL-Synchronisierung beginnt (Training).") == "dsl_resync"
     assert net_issue_kind("Internetverbindung IPv6 wurde getrennt, Präfix nicht mehr gültig.") is None
