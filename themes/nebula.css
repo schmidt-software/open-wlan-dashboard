@@ -26,7 +26,7 @@ html[data-theme="nebula"]{
  & .main>.bar i{background:linear-gradient(90deg,#a855f7,#e879f9,#60a5fa) !important;border-radius:6px;box-shadow:0 0 14px rgba(232,121,249,.6)}
  & .inner::before,& .inner::after{display:none}
  & .inner{padding:20px 8px 14px 22px}
- & h1{color:#f5ecff;font-weight:700;text-transform:uppercase;letter-spacing:.3em;font-size:clamp(30px,4.6vw,56px);text-shadow:0 0 22px rgba(192,132,252,.7),0 0 44px rgba(232,121,249,.35)}
+ & h1{color:#f5ecff;font-weight:700;text-transform:uppercase;letter-spacing:.18em;font-size:clamp(28px,3.8vw,46px);text-shadow:0 0 22px rgba(192,132,252,.7),0 0 44px rgba(232,121,249,.35)}
  & .sub{color:#d8cdf3;text-transform:uppercase;letter-spacing:.2em;font-size:13px}
  & .themesel{text-transform:none;letter-spacing:.1em}
  & .themesel select{background:rgba(18,10,38,.85);border:1px solid rgba(167,139,250,.5);color:#e9d5ff;border-radius:8px;padding:6px 10px}
