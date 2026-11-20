@@ -42,7 +42,6 @@ credentials/*
 *.log
 acks.json
 alerts.json
-config.local.json
 __pycache__/
 *.pyc
 .claude_fritz

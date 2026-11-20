@@ -1,45 +1,45 @@
 #!/usr/bin/env python3
-"""Local WLAN health dashboard for a FRITZ!Box mesh (box + repeater), read-only.
+"""Local WLAN health dashboard for a FRITZ!Box mesh (box + any number of mesh routers), read-only.
 
 Shows internet line, band load, traffic, per-device link quality and recent WLAN events,
 and raises alerts early: always-on devices going offline, reconnect loops, weak signals,
-crowded or noisy channels, a weak repeater uplink, DSL problems. History (24 h) comes from
+crowded or noisy channels, a weak mesh uplink, DSL problems. Settings come from .env (see .env.example). History (24 h) comes from
 the files collect.py writes into this directory. Serves http://127.0.0.1:8765 (local only).
 
 Run: python3 dashboard.py        Self-test: python3 dashboard.py --selftest
 """
-import csv, datetime as dt, html, json, os, re, sys, threading, time, urllib.error, urllib.parse, urllib.request
+import csv, datetime as dt, html, json, os, re, sys, tempfile, threading, time, urllib.error, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import live  # FRITZ!Box access helpers: login, REST api, mesh, landevices, mbit, last, own_ip
+import settings  # .env, see .env.example
 from collect import merge_new  # same duplicate rule as the collector
 
 DIR = os.path.dirname(os.path.abspath(__file__))
 WEB_DIR = os.path.join(DIR, "web")        # page, base design (starship console), script
 THEME_DIR = os.path.join(DIR, "themes")   # one CSS file per theme, see README
 LAYOUT_DIR = os.path.join(DIR, "layouts") # one CSS file per layout (arrangement only, colours come from the theme)
-PORT = 8765
-POLL_S = 15            # page refresh interval; the box is queried at most this often
-
-# Alert thresholds - adjust to taste
-UTIL_WARN, UTIL_CRIT = 50, 70                  # channel utilization in % (mean of the last 30 min)
-NOISE_WARN = -85                               # dBm; values above mean a noisy channel
-RSSI_WARN, RSSI_CRIT = -75, -80                # dBm; only for always-on devices
-DROPS_WARN, DROPS_CRIT = 4, 10                 # disconnects per hour, roaming excluded; always-on devices
-UPLINK_RSSI_WARN, UPLINK_RATE_WARN = -70, 400  # repeater uplink on 5 GHz: dBm, Mbit/s
-SNR_WARN = 6.0                                 # DSL noise margin in dB
-ALWAYS_ON_SHARE, ALWAYS_ON_MIN_SAMPLES = 0.9, 8
-COLLECTOR_STALE_MIN = 40
-REBOOT_ALERT_H = 24    # show a box restart this long
-ROAM_WINDOW_S = 10
-RECONNECT_WINDOW_S = 600   # a logoff is a drop only if the device is back this soon; longer = standby or switched off
-ACK_FORGET_S = 600     # a confirmation is dropped once its problem has been gone this long
+S = settings.get        # every setting below can be changed in .env; .env.example explains them
+PORT = live.PORT
+POLL_S = S("POLL_S", 15)                       # page refresh interval; the box is queried at most this often
+UTIL_WARN, UTIL_CRIT = S("UTIL_WARN", 50), S("UTIL_CRIT", 70)            # channel load in % (mean of the last 30 min)
+NOISE_WARN = S("NOISE_WARN", -85)                                        # dBm; values above mean a noisy channel
+RSSI_WARN, RSSI_CRIT = S("RSSI_WARN", -75), S("RSSI_CRIT", -80)          # dBm; only for always-on devices
+DROPS_WARN, DROPS_CRIT = S("DROPS_WARN", 4), S("DROPS_CRIT", 10)         # disconnects per hour, roaming excluded
+UPLINK_RSSI_WARN, UPLINK_RATE_WARN = S("UPLINK_RSSI_WARN", -70), S("UPLINK_RATE_WARN", 400)  # mesh uplink on 5 GHz
+SNR_WARN = S("SNR_WARN", 6.0)                                            # DSL noise margin in dB
+ALWAYS_ON_SHARE, ALWAYS_ON_MIN_SAMPLES = S("ALWAYS_ON_SHARE", 0.9), S("ALWAYS_ON_MIN_SAMPLES", 8)
+COLLECTOR_STALE_MIN = S("COLLECTOR_STALE_MIN", 40)
+REBOOT_ALERT_H = S("REBOOT_ALERT_H", 24)       # show a box restart this long
+ROAM_WINDOW_S = S("ROAM_WINDOW_S", 10)
+RECONNECT_WINDOW_S = S("RECONNECT_WINDOW_S", 600)  # a logoff is a drop only if the device is back this soon
+ACK_FORGET_S = S("ACK_FORGET_S", 600)          # a confirmation is dropped once its problem has been gone this long
+# devices never treated as always-on (no offline or weak-signal alerts), e.g. a game console that is often off
+NEVER_ALWAYS_ON = {m.upper() for m in S("NEVER_ALWAYS_ON", [])}
+MESH_NAMES = settings.mesh_names()             # display names for mesh nodes, see .env.example
 ACK_FILE = os.path.join(DIR, "acks.json")
 RAISED_FILE = os.path.join(DIR, "alerts.json")  # when each current alert first appeared
-# Local, git-ignored settings (contains MAC addresses), e.g. {"never_always_on": ["AA:BB:CC:DD:EE:FF"]}:
-# devices listed there are never treated as always-on, so they raise no offline or weak-signal alerts.
-CONFIG_FILE = os.path.join(DIR, "config.local.json")
 
 LEVEL = {"info": 0, "warn": 1, "crit": 2}
 # box "net" log lines (German box UI) that mean the internet was down, with a language-neutral kind for the page;
@@ -57,7 +57,7 @@ def parse_event(date, clock, msg):
     if not m:
         return None
     return {"ts": dt.datetime.strptime(f"{date} {clock}", "%d.%m.%y %H:%M:%S").timestamp(),
-            "mac": m["mac"], "name": m["name"], "ap": "Repeater" if m["rep"] else "FRITZ!Box",
+            "mac": m["mac"], "name": m["name"], "ap": m["rep"] or "",  # mesh node name in the box, "" = the box itself
             "band": "2.4" if m["band"] == "2,4" else "5", "up": m["what"] == "angemeldet"}
 
 
@@ -77,6 +77,51 @@ def classify(events):
             back = any(o["up"] and 0 <= o["ts"] - e["ts"] <= RECONNECT_WINDOW_S for o in evs)
             e["kind"] = "roam" if moved else "drop" if back else "off"
     return events
+
+
+def ap_names(m, overrides=None):
+    """{name in the box: display name} for the mesh nodes; "" stands for the box itself (its log lines carry no
+    [name] prefix). The master is 'FRITZ!Box', the others keep their name in the box; MESH_NAMES overrides both."""
+    over = MESH_NAMES if overrides is None else overrides
+    out = {}
+    for n in m["nodes"]:
+        if n.get("is_meshed"):
+            raw, master = n["device_name"], n.get("mesh_role") == "master"
+            out[raw] = over.get(raw) or ("FRITZ!Box" if master else n.get("device_friendly_name") or raw)
+            if master:
+                out[""] = out[raw]
+    out.setdefault("", over.get("", "FRITZ!Box"))
+    return {**{k: v for k, v in over.items() if k not in out}, **out}  # overrides also name nodes gone from the mesh
+
+
+def ap_label(names, raw):
+    return names.get(raw or "", raw)
+
+
+def mesh_uplinks(m, names):
+    """How each mesh node except the master reaches the mesh: [{ap, band ('5', '2.4', 'LAN' or None), rssi, down, up}].
+    WLAN links are read at the parent's access point (rssi there, down = parent -> node); the best link counts."""
+    meshed = {n["uid"]: n for n in m["nodes"] if n.get("is_meshed")}
+    rate = lambda v: round(v / 1000) if v and v > 1000 else None
+    rank, best = {"LAN": 3, "5": 2, "2.4": 1}, {}
+    for n in meshed.values():
+        for i in n["node_interfaces"]:
+            for l in i.get("node_links", []):
+                a, b = l["node_1_uid"], l["node_2_uid"]
+                if l["state"] != "CONNECTED" or a not in meshed or b not in meshed or a == b:
+                    continue
+                if l["type"] == "LAN":
+                    found = [(x, {"band": "LAN", "rssi": None, "down": None, "up": None}) for x in (a, b)]
+                elif l["node_interface_1_uid"] == i["uid"] and i["name"].startswith("AP:"):
+                    found = [(b, {"band": "5" if "5G" in i["name"] else "2.4", "rssi": l["rx_rcpi"] if l.get("rx_rcpi") not in (None, 255) else None,
+                                  "down": rate(l.get("cur_data_rate_tx")), "up": rate(l.get("cur_data_rate_rx"))})]
+                else:
+                    continue
+                for uid, c in found:
+                    if uid not in best or rank[c["band"]] > rank[best[uid]["band"]]:
+                        best[uid] = c
+    return [dict(best.get(uid, {"band": None, "rssi": None, "down": None, "up": None}), ap=names[n["device_name"]])
+            for uid, n in meshed.items() if n.get("mesh_role") != "master"]
 
 
 def load_pct(v):
@@ -189,15 +234,6 @@ def apply_device_states(devices, alerts):
     return out
 
 
-def load_config():
-    try:
-        with open(CONFIG_FILE) as f:
-            cfg = json.load(f)
-    except FileNotFoundError:
-        return {"never_always_on": set()}
-    return {"never_always_on": {m.upper() for m in cfg.get("never_always_on", [])}}
-
-
 def wifi_gen(modes):
     for m, g in (("be", "Wi-Fi 7"), ("ax", "Wi-Fi 6"), ("ac", "Wi-Fi 5"), ("n", "Wi-Fi 4")):
         if m in modes:
@@ -307,9 +343,9 @@ def slow_data():
 
 def build_state():
     now = time.time()
-    cfg = load_config()
     m, mon, devs, slow = live.mesh(), live.api("monitor/online/0"), live.landevices(), slow_data()
     meshed = {n["uid"] for n in m["nodes"] if n.get("is_meshed")}
+    names = ap_names(m)
     mac_of = {i["uid"]: i.get("mac_address") for n in m["nodes"] for i in n["node_interfaces"]}
     iface_of = {i["uid"]: (n, i) for n in m["nodes"] for i in n["node_interfaces"]}
     details = {}
@@ -332,11 +368,9 @@ def build_state():
     t_axis = [round((t_last - (n - 1 - k) * step) * 1000) for k in range(n)]
 
     bands = {b: {"band": b, "aps": [], "down": [0.0] * n, "up": [0.0] * n} for b in ("2.4", "5")}
-    devices, uplink = {}, None
-    for node in m["nodes"]:
-        if node["uid"] not in meshed:
-            continue
-        ap = "FRITZ!Box" if node.get("mesh_role") == "master" else "Repeater"
+    devices = {}
+    for node in sorted((n for n in m["nodes"] if n["uid"] in meshed), key=lambda n: (n.get("mesh_role") != "master", names[n["device_name"]].lower())):
+        ap = names[node["device_name"]]
         for i in node["node_interfaces"]:
             if i["type"] != "WLAN" or not i["name"].startswith("AP:") or not i.get("current_channel"):
                 continue
@@ -347,9 +381,7 @@ def build_state():
                     continue
                 rssi = l["rx_rcpi"] if l.get("rx_rcpi") not in (None, 255) else None
                 rate = lambda v: round(v / 1000) if v and v > 1000 else None
-                if l["node_2_uid"] in meshed:  # the repeater's own uplink to the box
-                    if b == "5":
-                        uplink = {"rssi": rssi, "down": rate(l.get("cur_data_rate_tx")), "up": rate(l.get("cur_data_rate_rx"))}
+                if l["node_2_uid"] in meshed:  # another mesh node's uplink, see mesh_uplinks
                     continue
                 clients += 1
                 mac = mac_of.get(l["node_interface_2_uid"])
@@ -367,7 +399,7 @@ def build_state():
                         for k, v in enumerate(series):
                             bands[b][key][n - len(series) + k] += live.mbit(v)
             hist = [(r["ts"], load_pct(r["utilization_pct"])) for r in slow["aps"]
-                    if r["band"] == i["name"] and load_pct(r["utilization_pct"]) and (r["ap"] == "fritz.box") == (ap == "FRITZ!Box")]
+                    if r["band"] == i["name"] and load_pct(r["utilization_pct"]) and r["ap"] == node["device_name"]]
             util = load_pct(i.get("channel_utilization"))
             recent = [v for ts, v in hist if ts >= now - 1800] + ([util] if util is not None else [])
             bands[b]["aps"].append({"ap": ap, "channel": i["current_channel"], "util": util, "noise": i.get("anpi"),
@@ -381,13 +413,13 @@ def build_state():
         ld = by_mac.get(mac, {})
         last_row = max((r for r in slow["links"] if r["mac"] == mac), key=lambda r: r["ts"])
         devices[mac] = {"mac": mac, "name": ld.get("friendly_name") or last_row["device"] or mac, "online": False,
-                        "ap": "Repeater" if "repeater" in last_row["ap"] else "FRITZ!Box", "band": "5" if "5G" in last_row["band"] else "2.4",
+                        "ap": ap_label(names, last_row["ap"]), "band": "5" if "5G" in last_row["band"] else "2.4",
                         "rssi": None, "rate_down": None, "rate_up": None, "recorded": False, "traffic_down": None, "traffic_up": None,
                         "last_seen": round(last_row["ts"] * 1000)}
         details[mac] = device_detail(mac, ld, {}, {}, {}, None)
     for d in devices.values():
         d["always_on"], d["share"] = always_on(d["mac"], slow["links"], since)
-        if d["mac"] in cfg["never_always_on"]:
+        if d["mac"] in NEVER_ALWAYS_ON:
             d["always_on"] = False
         evs = [e for e in slow["events"] if e["mac"] == d["mac"]]
         d["drops_1h"] = sum(1 for e in evs if e["kind"] == "drop" and e["ts"] >= now - 3600)
@@ -406,10 +438,12 @@ def build_state():
                                     band=b["band"], ap=a["ap"], channel=a["channel"], pct=a["util_avg30"]))
             if a["noise"] is not None and a["noise"] > NOISE_WARN:
                 alerts.append(alert(f"noise:{b['band']}:{a['ap']}", "warn", "noise", band=b["band"], ap=a["ap"], noise=a["noise"], channel=a["channel"]))
-    if uplink is None:
-        alerts.append(alert("uplink", "crit", "uplink_none"))
-    elif (uplink["rssi"] is not None and uplink["rssi"] < UPLINK_RSSI_WARN) or (uplink["down"] or 0) < UPLINK_RATE_WARN:
-        alerts.append(alert("uplink", "warn", "uplink_weak", rssi=uplink["rssi"], rate=uplink["down"]))
+    uplinks = mesh_uplinks(m, names)
+    for u in uplinks:  # a node on 2.4 GHz only counts as unconnected over 5 GHz, as before
+        if u["band"] in (None, "2.4"):
+            alerts.append(alert(f"uplink:{u['ap']}", "crit", "uplink_none", ap=u["ap"]))
+        elif u["band"] == "5" and ((u["rssi"] is not None and u["rssi"] < UPLINK_RSSI_WARN) or (u["down"] or 0) < UPLINK_RATE_WARN):
+            alerts.append(alert(f"uplink:{u['ap']}", "warn", "uplink_weak", ap=u["ap"], rssi=u["rssi"], rate=u["down"]))
     dsl, ip = slow["dsl"], slow["ip"]
     if dsl.get("NewStatus") != "Up":
         alerts.append(alert("dsl", "crit", "dsl", status=dsl.get("NewStatus")))
@@ -432,17 +466,17 @@ def build_state():
         alerts.append(alert("update", "info", "update", version=slow["ui"].get("NewX_AVM-DE_Version")))
     alerts.sort(key=lambda a: -LEVEL[a["level"]])
 
-    names = {d["mac"]: d["name"] for d in devices}
-    names.update({x["mac"]: x.get("friendly_name") for x in devs.values() if x.get("friendly_name")})
+    dev_names = {d["mac"]: d["name"] for d in devices}
+    dev_names.update({x["mac"]: x.get("friendly_name") for x in devs.values() if x.get("friendly_name")})
     wan = {k: live.mbit(sum(live.last(c[k + "stream"]) for c in mon["categories"])) for k in ("down", "up")}
     return {
         "time": round(now * 1000), "status": max((a["level"] for a in alerts), key=LEVEL.get, default="ok"),
-        "alerts": alerts, "t_axis": t_axis, "bands": list(bands.values()), "uplink": uplink,
+        "alerts": alerts, "t_axis": t_axis, "bands": list(bands.values()), "uplinks": uplinks, "ap_names": names,
         "internet": {"connected": ip.get("NewConnectionStatus") == "Connected", "uptime_s": int(ip.get("NewUptime") or 0),
                      "dsl_up": dsl.get("NewStatus") == "Up", "sync_down": int(dsl.get("NewDownstreamCurrRate") or 0) / 1000,
                      "sync_up": int(dsl.get("NewUpstreamCurrRate") or 0) / 1000, "snr": snr, "traffic": wan},
         "devices": sorted(devices, key=lambda d: (-d["level"], not d["online"], d["band"], d["name"].lower())),
-        "events": [{"ts": round(e["ts"] * 1000), "name": names.get(e["mac"]) or e["name"], "ap": e["ap"], "band": e["band"],
+        "events": [{"ts": round(e["ts"] * 1000), "name": dev_names.get(e["mac"]) or e["name"], "ap": ap_label(names, e["ap"]), "band": e["band"],
                     "kind": e["kind"]} for e in slow["events"][-25:][::-1]],
         "collector_age_min": round((now - last_sample) / 60) if last_sample else None,
         "details": details,  # served per device by /device, not in /data
@@ -566,9 +600,9 @@ def device_view(mac):
     num = lambda v: None if v in ("", "255", None) else int(v)
     mbit = lambda v: round(int(v) / 1000) if v and int(v) > 1000 else None
     hist = [[round(r["ts"] * 1000), num(r["rssi_dbm"]), num(r["snr_db"]), mbit(r["rate_tx_kbit"]), mbit(r["rate_rx_kbit"]),
-             "Repeater" if "repeater" in r["ap"].lower() else "FRITZ!Box", "5" if "5G" in r["band"] else "2.4"]
+             ap_label(state["ap_names"], r["ap"]), "5" if "5G" in r["band"] else "2.4"]
             for r in slow["links"] if r["mac"] == mac]
-    events = [{"ts": round(e["ts"] * 1000), "ap": e["ap"], "band": e["band"], "kind": e["kind"]}
+    events = [{"ts": round(e["ts"] * 1000), "ap": ap_label(state["ap_names"], e["ap"]), "band": e["band"], "kind": e["kind"]}
               for e in slow["events"] if e["mac"] == mac][::-1]
     return dict(d, detail=cached_state()["details"].get(mac, {}), hist=hist, events=events, time=state["time"],
                 t_axis=state["t_axis"], thr_rssi=state["thr_rssi"])
@@ -640,7 +674,7 @@ def selftest():
           parse_event("13.11.26", "22:20:00", "WLAN-Gerät hat sich abgemeldet (2,4 GHz), VR200-EG, IP ---, MAC 00:00:5E:00:53:02."),
           parse_event("13.11.26", "22:31:00", "WLAN-Gerät angemeldet (2,4 GHz), 72 Mbit/s, VR200-EG, IP ---, MAC 00:00:5E:00:53:02.")]
     assert all(ev), "log line not parsed"
-    assert ev[1]["ap"] == "Repeater" and ev[0]["ap"] == "FRITZ!Box" and ev[2]["band"] == "2.4" and ev[1]["up"]
+    assert ev[1]["ap"] == "fritzrepeaterschlafzimmer" and ev[0]["ap"] == "" and ev[2]["band"] == "2.4" and ev[1]["up"]
     kinds = [e["kind"] for e in classify(ev)]
     assert kinds == ["roam", "login", "drop", "login", "off", "login"], kinds  # box->repeater is roaming; quick relogin is a drop; back after 11 min is standby
     assert is_random_mac("02:00:00:00:00:01") and not is_random_mac("00:00:5E:00:53:01")
@@ -705,12 +739,31 @@ def selftest():
     apply_raised([], r, 1500 + ACK_FORGET_S - 1); apply_raised(al, r, 1500 + ACK_FORGET_S); assert al[0]["raised"] == 1000000  # brief gap
     apply_raised([], r, 9000); assert r == {}; apply_raised(al, r, 9100); assert al[0]["raised"] == 9100000  # gone long: starts anew
     al = [{"id": "y", "since": 500000}]; apply_raised(al, r, 9100); assert al[0]["raised"] == 500000  # acknowledged before: since then
+    # mesh with any number of nodes: box, a repeater on 5 GHz, one on a LAN cable, one without a link
+    node = lambda uid, name, role, ifs, friendly="": {"uid": uid, "device_name": name, "device_friendly_name": friendly, "is_meshed": True, "mesh_role": role, "node_interfaces": ifs}
+    wl = lambda uid, a, ai, b, rcpi, tx: {"uid": uid, "type": "WLAN", "state": "CONNECTED", "node_1_uid": a, "node_interface_1_uid": ai, "node_2_uid": b, "rx_rcpi": rcpi, "cur_data_rate_tx": tx, "cur_data_rate_rx": tx}
+    lan = {"uid": "l3", "type": "LAN", "state": "CONNECTED", "node_1_uid": "n1", "node_interface_1_uid": "i1l", "node_2_uid": "n3"}
+    mesh = {"nodes": [node("n1", "fritz.box", "master", [{"uid": "i15", "name": "AP:5G:0", "node_links": [wl("l2", "n1", "i15", "n2", -72, 866000)]},
+                                                          {"uid": "i1l", "name": "LAN:1", "node_links": [lan]}]),
+                      node("n2", "rep-a", "slave", [], "Repeater A"), node("n3", "rep-b", "slave", [{"uid": "i3l", "name": "LAN:1", "node_links": [lan]}]),
+                      node("n4", "rep-c", "slave", [])]}
+    nm = ap_names(mesh, {"rep-b": "Cellar", "gone": "Old"})
+    assert nm == {"fritz.box": "FRITZ!Box", "": "FRITZ!Box", "rep-a": "Repeater A", "rep-b": "Cellar", "rep-c": "rep-c", "gone": "Old"}, nm
+    assert ap_label(nm, "") == "FRITZ!Box" and ap_label(nm, "unknown") == "unknown"
+    ups = {u["ap"]: u for u in mesh_uplinks(mesh, nm)}
+    assert set(ups) == {"Repeater A", "Cellar", "rep-c"} and ups["Repeater A"]["band"] == "5" and ups["Repeater A"]["rssi"] == -72
+    assert ups["Repeater A"]["down"] == 866 and ups["Cellar"]["band"] == "LAN" and ups["rep-c"]["band"] is None
+    env = os.path.join(tempfile.mkdtemp(), ".env")
+    open(env, "w").write('# comment\nFRITZ_HOST = "10.0.0.1"\nPOLL_S=30\nNEVER_ALWAYS_ON=aa:bb, cc:dd\nMESH_NAMES=rep-a=Attic,rep-b=Cellar\nbroken line\n')
+    vals = settings.read_env(env)
+    assert settings.get("FRITZ_HOST", "x", vals) == "10.0.0.1" and settings.get("POLL_S", 15, vals) == 30 and settings.get("MISSING", 7, vals) == 7
+    assert settings.get("NEVER_ALWAYS_ON", [], vals) == ["aa:bb", "cc:dd"] and settings.mesh_names(vals) == {"rep-a": "Attic", "rep-b": "Cellar"}
+    assert settings.read_env(env + ".missing") == {}
     assert load_pct("37") == 37 and load_pct(12) == 12 and load_pct("0") is None and load_pct(0) is None and load_pct("") is None and load_pct(None) is None
     assert net_issue_kind("Internetverbindung wurde getrennt.") == "disconnected"
     assert net_issue_kind("DSL-Synchronisierung beginnt (Training).") == "dsl_resync"
     assert net_issue_kind("Internetverbindung IPv6 wurde getrennt, Präfix nicht mehr gültig.") is None
     assert net_issue_kind("Internetverbindung wurde erfolgreich hergestellt. IP-Adresse: 192.0.2.1") is None
-    import tempfile
     with tempfile.TemporaryDirectory() as tmp:
         for f, head in (("b.css", "/* theme: Zeta; starship */"), ("a.css", "/* theme: Alpha */"), ("starship.css", "/* theme: Starship Console */"),
                         ("noname.css", "html{}"), ("Bad Name.css", "/* theme: X */"), ("notes.txt", "")):

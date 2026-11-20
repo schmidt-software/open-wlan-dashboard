@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local live view of real WLAN traffic per band and device (FRITZ!Box + mesh repeater), read-only.
+"""Local live view of real WLAN traffic per band and device (FRITZ!Box + mesh routers), read-only.
 
 Combines the FRITZ!Box online monitor (measured internet traffic per device, 5 s samples)
 with the mesh topology (which device is on which band / access point).
@@ -9,10 +9,10 @@ import atexit, hashlib, json, os, re, socket, threading, time, urllib.error, url
 import xml.etree.ElementTree as ET
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-BOX = "192.168.178.1"
-USER = "claude"
-PW = open(os.path.expanduser("~/.claude_fritz")).readline().strip()
-PORT = 8765
+import settings
+
+BOX, USER, PW = settings.BOX, settings.USER, settings.password()
+PORT = settings.get("DASHBOARD_PORT", 8765)
 
 _mgr = urllib.request.HTTPPasswordMgrWithDefaultRealm()
 _mgr.add_password(None, f"http://{BOX}:49000", USER, PW)
@@ -105,7 +105,8 @@ def sample():
     for node in m["nodes"]:
         if node["uid"] not in meshed:
             continue
-        ap = "FRITZ!Box" if node.get("mesh_role") == "master" else "Repeater"
+        ap = settings.mesh_names().get(node["device_name"]) or ("FRITZ!Box" if node.get("mesh_role") == "master"
+                                                                else node.get("device_friendly_name") or node["device_name"])
         for i in node["node_interfaces"]:
             if i["type"] != "WLAN" or not i["name"].startswith("AP:") or not i.get("current_channel"):
                 continue
@@ -167,7 +168,7 @@ function chart(b,title,secs,W){const H=220,L=44,B=20,pw=W-L-6,ph=H-B-6,n=b.down.
 function card(b,title,secs,W){const u=b.util,rec=b.devices.filter(d=>d.recorded);
  const now={down:rec.reduce((a,d)=>a+d.down,0),up:rec.reduce((a,d)=>a+d.up,0)};
  let s='<h2>'+title+'</h2>'+tiles(now)+chart(b,title,secs,W);
- s+='<div class="foot">'+b.devices.length+' Geräte, davon '+rec.length+' mit Messwerten · Kanalauslastung FRITZ!Box '+(u['FRITZ!Box']??'–')+' %, Repeater '+(u['Repeater']??'–')+' %</div>';
+ s+='<div class="foot">'+b.devices.length+' Geräte, davon '+rec.length+' mit Messwerten · Kanalauslastung '+Object.entries(u).map(([a,v])=>esc(a)+' '+(v||'–')+' %').join(', ')+'</div>';
  s+='<table><thead><tr><th>Gerät</th><th>Download</th><th>Upload</th></tr></thead><tbody>';
  for(const d of b.devices)s+='<tr><td>'+esc(d.name)+'<small>'+d.ap+'</small></td>'+(d.recorded?'<td>'+fmt(d.down)+'</td><td>'+fmt(d.up)+'</td>':'<td class="na" colspan="2">keine Aufzeichnung</td>')+'</tr>';
  return s+'</tbody></table>'}

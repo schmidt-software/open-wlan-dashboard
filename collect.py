@@ -8,9 +8,9 @@ Meant to run every 15 minutes via launchd.
 import csv, datetime, hashlib, json, os, re, urllib.parse, urllib.request
 import xml.etree.ElementTree as ET
 
-BOX = "192.168.178.1"
-USER = "claude"
-PW = open(os.path.expanduser("~/.claude_fritz")).readline().strip()
+import settings
+
+BOX, USER, PW = settings.BOX, settings.USER, settings.password()
 DIR = os.path.dirname(os.path.abspath(__file__))
 JITTER_S = 2  # the box shows the same log line with a time ±1 s off between reads (seen after a restart)
 

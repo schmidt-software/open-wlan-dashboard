@@ -2,16 +2,16 @@
 
 # WLAN Dashboard
 
-Local, read-only health dashboard for a FRITZ!Box mesh (FRITZ!Box + FRITZ!Repeater).
+Local, read-only health dashboard for a FRITZ!Box mesh (FRITZ!Box + any number of FRITZ!Repeaters or other mesh routers).
 It shows the internet line, channel load and traffic per band, link quality per device
 and recent WLAN events, and raises alerts early:
 
 - always-on devices going offline
-- reconnect loops (roaming between box and repeater is not counted, nor is a device that stays away
+- reconnect loops (roaming between access points is not counted, nor is a device that stays away
   longer than 10 minutes, e.g. in standby)
 - weak signal of always-on devices
 - crowded or noisy channels
-- weak repeater uplink
+- weak or missing uplink of each mesh router (5 GHz, 2.4 GHz or LAN cable)
 - DSL / internet interruptions, radar interruptions on 5 GHz
 - FRITZ!Box restarts in the last 24 h (flagged as a likely crash when the box sent an error report)
 - stopped history collection, available FRITZ!OS updates
@@ -66,13 +66,14 @@ reads from the FRITZ!Box.
 | `layouts/*.css` | One file per layout (arrangement only); the layout menu is built from this folder |
 | `collect.py` | Collector for the 24 h history: WLAN log, link quality per device, channel load. Run every 15 min |
 | `live.py` | FRITZ!Box access helpers used by the dashboard (also a minimal standalone traffic view) |
+| `settings.py`, `.env.example` | Settings: copy `.env.example` to `.env` and adjust, see [Settings](#settings) |
 | `launchd/local.wlan-test.collect.plist` | macOS LaunchAgent template that runs `collect.py` every 15 min |
 
 ## Requirements
 
 - Python 3.9 or newer, standard library only (the `python3` that ships with macOS is enough)
 - macOS for the bundled LaunchAgent; on other systems run `collect.py` every 15 min with cron or similar
-- FRITZ!Box with FRITZ!Repeater mesh; tested with a FRITZ!Box 7530 AX and a FRITZ!Repeater 2700 on FRITZ!OS 8.50
+- FRITZ!Box with any number of mesh routers; tested with a FRITZ!Box 7530 AX and one FRITZ!Repeater 2700 on FRITZ!OS 8.50
 - A current browser (the themes use CSS nesting)
 
 Known limitation: the traffic figures come from the FRITZ!Box online monitor. During large
@@ -89,8 +90,8 @@ actually arrives there (observed up to about three times).
    printf '%s\n' 'the-password' > ~/.claude_fritz && chmod 600 ~/.claude_fritz
    ```
 
-   The user name `claude` and the box address `192.168.178.1` are set at the top of
-   `live.py` and `collect.py`.
+   Box address, user name and password file are settings, see [Settings](#settings); the
+   defaults are `192.168.178.1`, `claude` and `~/.claude_fritz`.
 3. Start the history collector every 15 minutes (macOS):
 
    ```sh
@@ -170,7 +171,7 @@ Most of a theme is setting these variables; the base design uses them everywhere
 | `--good`, `--warn`, `--crit`, `--info` | status colours: OK (green), warning (**yellow**), critical (**red**), info |
 | `--on-warn` | text on the yellow warning colour (keep it dark) |
 | `--thr` | warning threshold line in the charts (optional, defaults to `--warn`); set a darker tone on light backgrounds |
-| `--s1`, `--s2` | the two chart lines (download/upload, box/repeater) |
+| `--s1`, `--s2` | the first two chart lines (download/upload, the first two access points) |
 | `--grid`, `--axis` | chart grid and axis lines |
 | `--font`, `--head` | body font; font for headings, numbers and the side bar |
 | `--big` | font size of the big numbers in summary cards (default 40px); themes set this instead of styling `.big` directly |
@@ -205,23 +206,30 @@ and any other value would show it there again.
   Light themes need darker accent colours for text (card titles, table headers) than for fills.
 - Check the overview, a device detail page (click a device) and a phone-width window.
 
-## Tuning
+## Settings
 
-Alert thresholds are constants at the top of `dashboard.py` (channel load, noise, signal,
-reconnects per hour and the reconnect window, repeater uplink, DSL noise margin, "always-on" detection).
+All settings live in `.env` next to `dashboard.py`: copy `.env.example` to `.env` and change what you
+need. Every setting is optional and has the default shown in `.env.example`; an environment variable of
+the same name wins over the file. `.env` is git-ignored because it may hold the password and MAC addresses.
 
-Devices that should never count as always-on (e.g. a game console or a tablet that is often
-switched off) go into `config.local.json` next to `dashboard.py`; they then raise no offline
-or weak-signal alerts. The file is git-ignored because it contains MAC addresses:
+- **FRITZ!Box access:** `FRITZ_HOST`, `FRITZ_USER`, and the password either as `FRITZ_PASSWORD` or
+  (default) in the file `FRITZ_PASSWORD_FILE`.
+- **Mesh routers:** the box shows as "FRITZ!Box", every other mesh router with its name from the box.
+  `MESH_NAMES=fritzrepeaterkeller=Cellar,...` gives them shorter names. Charts, key figures and the
+  device list show one entry per router, and each router's uplink is checked on its own.
+- **Dashboard:** `DASHBOARD_PORT`, `POLL_S` (refresh interval). The dashboard always binds to `127.0.0.1` only.
+- **Alert thresholds:** channel load, noise, signal, disconnects per hour, mesh uplink, DSL noise margin,
+  collector and restart times, and the windows for roaming and reconnects.
+- **Always-on detection:** `ALWAYS_ON_SHARE`, `ALWAYS_ON_MIN_SAMPLES`, and `NEVER_ALWAYS_ON`, a
+  comma-separated list of MAC addresses that never count as always-on (e.g. a game console that is
+  often switched off); they raise no offline or weak-signal alerts.
 
-```json
-{ "never_always_on": ["AA:BB:CC:DD:EE:FF"] }
-```
+Restart `dashboard.py` after changing `.env`; the collector reads it on its next run.
 
 ## Private data — never commit
 
 The collector and the dashboard write MAC addresses, device names and network events into
-this directory (`*.csv`, `*.jsonl`, `*.log`, `acks.json`, `alerts.json`, `config.local.json`). They are excluded via
+this directory (`*.csv`, `*.jsonl`, `*.log`, `acks.json`, `alerts.json`) and the settings in `.env`. They are excluded via
 `.gitignore`, as is the password file. Python standard library only, no dependencies.
 
 ## License

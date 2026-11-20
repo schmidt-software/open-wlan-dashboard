@@ -42,36 +42,42 @@ function render(d){
  $('upd').textContent=T('upd',{time:hms(d.time),poll:__POLL_S__})+(d.collector_age_min!=null?T('upd.hist',{min:d.collector_age_min}):'');
  $('sd').textContent=(trek?T('stardate')+' '+stardate(d.time):new Date(d.time).toLocaleDateString(loc(),{weekday:'long',day:'numeric',month:'long',year:'numeric'}))+' · '+T('mesh');
  $('r-status').style.setProperty('--c',st[2]);$('r-status').classList.toggle('warn',d.status=='warn');pill('r-status',st[1]);
- const i=d.internet,u=d.uplink,ap=(b,n)=>b.aps.find(a=>a.ap==n)||{},maxU=b=>{const u=b.aps.map(a=>a.util).filter(v=>v!=null);return u.length?Math.max(...u):null},pct=v=>v==null?'–':num(v)+' %';
+ const i=d.internet,ul=d.uplinks||[],PAL=['var(--s1)','var(--s2)','var(--li)','var(--pe)','var(--sk)','var(--tan)'],maxU=b=>{const u=b.aps.map(a=>a.util).filter(v=>v!=null);return u.length?Math.max(...u):null},pct=v=>v==null?'–':num(v)+' %';
  pill('r-inet',num(i.sync_down,1));pill('r-24',pct(maxU(d.bands[0])));pill('r-5',pct(maxU(d.bands[1])));
  pill('r-dev',d.devices.filter(x=>x.online).length);pill('r-log',d.events.length?hm(d.events[0].ts):'–');
  renderAlerts(d.alerts);
  const kpi=(c,h,big,sm)=>'<div class="kpi" style="--c:'+c+'"><h3>'+h+'</h3><div class="big">'+big+'</div><div class="sm">'+sm+'</div></div>';
- const bandK=(b,c)=>{const f=ap(b,'FRITZ!Box'),r=ap(b,'Repeater');return kpi(c,T('k.util',{band:bl(b.band)}),pct(f.util).replace(' ','&nbsp;')+' <small>/&nbsp;'+pct(r.util).replace(' ','&nbsp;')+'</small>',T('k.util.sm',{n:(f.clients||0)+(r.clients||0),ch:f.channel??'–'}))};
+ const nb=v=>pct(v).replace(' ','&nbsp;');  // one value per access point, the box first
+ const bandK=(b,c)=>{const a=b.aps;return kpi(c,T('k.util',{band:bl(b.band)}),(a.length?nb(a[0].util):'–')+(a.length>1?' <small>/&nbsp;'+a.slice(1).map(x=>nb(x.util)).join(' / ')+'</small>':''),
+  T('k.util.sm',{aps:a.map(x=>esc(x.ap)).join(' / '),n:a.reduce((s,x)=>s+(x.clients||0),0),ch:[...new Set(a.map(x=>x.channel))].join(', ')||'–'}))};
+ const upl=x=>esc(x.ap)+': '+(x.band=='LAN'?'LAN':x.band?num(x.rssi)+' dBm · '+bl(x.band):T('k.uplink.none')),weak=ul.filter(x=>x.band!='LAN').sort((a,b)=>(a.down??-1)-(b.down??-1))[0];
  $('kpis').innerHTML=kpi('var(--pe)',T('k.inet'),T(i.connected&&i.dsl_up?'connected':'disconnected'),T('k.inet.sm',{dur:dur(i.uptime_s),down:num(i.sync_down,1),up:num(i.sync_up,1),snr:num(i.snr,1)}))
   +kpi('var(--o2)',T('k.traffic'),'↓ '+rate(i.traffic.down),T('k.traffic.sm',{up:rate(i.traffic.up)}))
   +bandK(d.bands[0],'var(--li)')+bandK(d.bands[1],'var(--pw)')
-  +kpi('var(--sk)',T('k.uplink'),u?num(u.down)+' <small>Mbit/s</small>':T('disconnected'),u?T('k.uplink.sm',{rssi:num(u.rssi)}):T('k.uplink.none'));
- for(const b of d.bands){const id=b.band=='2.4'?'s-24':'s-5',c=b.band=='2.4'?'var(--li)':'var(--pw)',f=ap(b,'FRITZ!Box'),r=ap(b,'Repeater');
-  $(id).innerHTML='<h2 class="hb" style="--c:'+c+'">'+T('radio',{band:bl(b.band)})+'</h2><h4>'+T('ch.load')+'</h4>'+legend([['FRITZ!Box','var(--s1)'],['Repeater','var(--s2)'],[T('threshold',{v:d.thr_util+' %'}),'var(--thr,var(--warn))']])+'<div class="chart" id="u'+b.band+'"></div>'
+  +kpi('var(--sk)',T('k.uplink'),!ul.length?'–':!weak?'LAN':weak.down!=null?num(weak.down)+' <small>Mbit/s</small>':T('disconnected'),ul.length?ul.map(upl).join(' · '):T('k.uplink.single'));  // weakest radio link shown big
+ for(const b of d.bands){const id=b.band=='2.4'?'s-24':'s-5',c=b.band=='2.4'?'var(--li)':'var(--pw)';
+  $(id).innerHTML='<h2 class="hb" style="--c:'+c+'">'+T('radio',{band:bl(b.band)})+'</h2><h4>'+T('ch.load')+'</h4>'+legend(b.aps.map((a,k)=>[a.ap,PAL[k%PAL.length]]).concat([[T('threshold',{v:d.thr_util+' %'}),'var(--thr,var(--warn))']]))+'<div class="chart" id="u'+b.band+'"></div>'
    +'<h4 style="margin-top:12px">'+T('inet.traffic')+'</h4>'+legend([['Download','var(--s1)'],['Upload','var(--s2)']])+'<div class="chart" id="t'+b.band+'"></div>'
-   +'<div class="note">'+T('noise.note',{box:num(f.noise),rep:num(r.noise)})+'</div>';
+   +'<div class="note">'+T('noise.note',{list:b.aps.map(a=>esc(a.ap)+' '+num(a.noise)+' dBm').join(' · ')})+'</div>';
   const t1=d.time,t0=t1-86400000,tk=[0,6,12,18,24].map(h=>t0+h*3600000);
-  lineChart($('u'+b.band),[{label:'FRITZ!Box',color:'var(--s1)',pts:f.util_hist||[]},{label:'Repeater',color:'var(--s2)',pts:r.util_hist||[]}],
+  lineChart($('u'+b.band),b.aps.map((a,k)=>({label:a.ap,color:PAL[k%PAL.length],pts:a.util_hist||[]})),
    {t0,t1,ticks:tk,max:100,thr:d.thr_util,fmt:v=>v+' %',fmtAxis:v=>v+' %',long:true,snap:1800000,aria:T('aria.util',{band:bl(b.band)})});
   const ta=d.t_axis,z=k=>ta.map((t,j)=>[t,b[k][j]]);
   lineChart($('t'+b.band),[{label:'Download',color:'var(--s1)',pts:z('down')},{label:'Upload',color:'var(--s2)',pts:z('up')}],
    {t0:ta[0],t1:ta[ta.length-1],ticks:[ta[0],ta[Math.floor(ta.length/2)],ta[ta.length-1]],minMax:0.1,fmt:rate,fmtAxis:v=>v&&v<1?num(v*1000)+' k':num(v),aria:T('aria.traffic',{band:bl(b.band)})})}
- $('devs').innerHTML='<table><thead><tr>'+['status','device','conn'].map(k=>'<th class="l">'+T('th.'+k)+'</th>').join('')+['signal','rate','traffic','drops1','drops24','roams'].map(k=>'<th>'+T('th.'+k)+'</th>').join('')+'</tr></thead><tbody>'
-  +d.devices.map(x=>{const s=sb(x);return '<tr class="click'+(x.quiet?' quiet" title="'+T(x.quiet=='muted'?'tip.muted':'tip.acked'):'')+'" data-mac="'+esc(x.mac)+'" tabindex="0" style="--c:'+s[2]+'"><td class="l"><span class="st">'+s[1]+'</span></td>'
+ const devRow=x=>{const s=sb(x);return '<tr class="click'+(x.quiet?' quiet" title="'+T(x.quiet=='muted'?'tip.muted':'tip.acked'):'')+'" data-mac="'+esc(x.mac)+'" tabindex="0" style="--c:'+s[2]+'"><td class="l"><span class="st">'+s[1]+'</span></td>'
    +'<td class="l"><a href="#dev='+esc(x.mac)+'">'+esc(x.name)+'</a>'+(x.always_on?' <span class="mut" title="'+T('always.tip')+'">· '+T('always')+'</span>':'')
    +(x.prio_now?' <b title="'+T('prio.tip')+'">· '+T('prio')+'</b>':x.prio_24h?' <span class="mut" title="'+T('prio.tip')+'">· '+T('prio.24',{n:x.prio_24h})+'</span>':'')+'</td>'
-   +'<td class="l">'+(x.online?bl(x.band)+' · '+x.ap:T('last.seen',{t:x.last_seen?hm(x.last_seen):'–'}))+'</td>'
+   +'<td class="l">'+(x.online?bl(x.band):T('last.seen',{t:x.last_seen?hm(x.last_seen):'–'}))+'</td>'
    +'<td>'+(x.rssi==null?'–':x.rssi+' dBm')+'</td><td>'+num(x.rate_down)+' / '+num(x.rate_up)+'</td>'
    +'<td>'+(x.recorded?rate(x.traffic_down)+' / '+rate(x.traffic_up):'<span class="mut">'+T('not.recorded')+'</span>')+'</td>'
-   +'<td>'+x.drops_1h+'</td><td>'+x.drops_24h+'</td><td>'+x.roams_24h+'</td></tr>'}).join('')+'</tbody></table>'
+   +'<td>'+x.drops_1h+'</td><td>'+x.drops_24h+'</td><td>'+x.roams_24h+'</td></tr>'};
+ const aps=[...new Set(d.bands.flatMap(b=>b.aps.map(a=>a.ap)).concat(d.devices.filter(x=>x.online).map(x=>x.ap)))];
+ const groups=aps.map(a=>[a,d.devices.filter(x=>x.online&&x.ap==a)]).concat([[T('st.offline'),d.devices.filter(x=>!x.online)]]).filter(g=>g[1].length);
+ $('devs').innerHTML='<table><thead><tr>'+['status','device','conn'].map(k=>'<th class="l">'+T('th.'+k)+'</th>').join('')+['signal','rate','traffic','drops1','drops24','roams'].map(k=>'<th>'+T('th.'+k)+'</th>').join('')+'</tr></thead>'
+  +groups.map(([name,list])=>'<tbody><tr class="grp"><th class="l" colspan="9">'+esc(name)+' ('+list.length+')'+'</th></tr>'+list.map(devRow).join('')+'</tbody>').join('')+'</table>'
   +'<div class="note">'+T('dev.note')+'</div>';
- $('evs').innerHTML='<div class="log">'+d.events.map(e=>'<div class="t">'+hm(e.ts)+'</div><div>'+esc(e.name)+' '+T('ev.'+e.kind)+'</div><div class="mut">'+bl(e.band)+' · '+e.ap+'</div>').join('')+'</div>'}
+ $('evs').innerHTML='<div class="log">'+d.events.map(e=>'<div class="t">'+hm(e.ts)+'</div><div>'+esc(e.name)+' '+T('ev.'+e.kind)+'</div><div class="mut">'+bl(e.band)+' · '+esc(e.ap)+'</div>').join('')+'</div>'}
 
 let lastAlerts='',mutedOpen=false;
 const btn=(lbl,act,ids,c,h)=>'<button class="btn" type="button" style="--b:'+c+'" data-act="'+act+'" data-ids="'+esc(JSON.stringify(ids))+'"'+(h?' data-h="'+h+'"':'')+'>'+lbl+'</button>';
@@ -98,7 +104,7 @@ const yes=v=>v==null?'–':T(v?'yes':'no');
 function renderDetail(x){const D=x.detail||{},s=sb(x);
  const kpi=(c,h,big,sm)=>'<div class="kpi" style="--c:'+c+'"><h3>'+h+'</h3><div class="big">'+big+'</div><div class="sm">'+sm+'</div></div>';
  const places={};for(const r of x.hist)places[r[5]+' · '+bl(r[6])]=(places[r[5]+' · '+bl(r[6])]||0)+1;
- const where=Object.entries(places).sort((a,b)=>b[1]-a[1]).map(([p,n])=>p+' '+Math.round(100*n/x.hist.length)+' %').join(', ')||'–';
+ const where=Object.entries(places).sort((a,b)=>b[1]-a[1]).map(([p,n])=>esc(p)+' '+Math.round(100*n/x.hist.length)+' %').join(', ')||'–';
  const mut=t=>' <span class="mut">· '+t+'</span>';
  const info=[[T('i.name'),esc(x.name)],[T('i.host'),esc(D.hostname??'–')],['IPv4',esc(D.ip??'–')+(D.static_ip?mut(T('i.fixed')):'')],
   ['IPv6',D.ipv6&&D.ipv6.length?D.ipv6.map(esc).join('<br>'):'–'],['MAC',esc(x.mac)+(D.random_mac?mut(T('i.random')):'')],
@@ -114,7 +120,7 @@ function renderDetail(x){const D=x.detail||{},s=sb(x);
  let h='<div class="dhead"><a class="btn" href="#s-dev" style="--b:var(--sk)">← '+T('back')+'</a><span class="alarm'+(s[2]=='var(--warn)'?' warn':'')+'" style="--c:'+s[2]+'">'+esc(s[1])+'</span></div>'
   +'<h2 class="hb" style="--c:var(--sk)">'+esc(x.name)+'</h2>';
  if(x.alerts.length)h+=alertRows(x.alerts);
- h+='<div class="kpis">'+kpi('var(--li)',T('d.conn'),x.online?bl(x.band):T('st.offline'),x.online?T('d.conn.sm',{ap:x.ap,ch:D.channel??'–'}):T('last.seen',{t:x.last_seen?date(x.last_seen):'–'}))
+ h+='<div class="kpis">'+kpi('var(--li)',T('d.conn'),x.online?bl(x.band):T('st.offline'),x.online?T('d.conn.sm',{ap:esc(x.ap),ch:D.channel??'–'}):T('last.seen',{t:x.last_seen?date(x.last_seen):'–'}))
   +kpi('var(--pw)',T('th.signal'),x.rssi==null?'–':x.rssi+' <small>dBm</small>',T('d.signal.sm',{snr:D.snr==null?'–':D.snr+' dB',avail:D.avail==null?'–':D.avail+' %'}))
   +kpi('var(--o2)',T('th.rate'),num(x.rate_down)+' <small>/ '+num(x.rate_up)+' Mbit/s</small>',T('d.rate.sm',{down:num(D.max_down),up:num(D.max_up)}))
   +kpi('var(--pe)',T('k.traffic'),x.recorded?'↓ '+rate(x.traffic_down):'–',x.recorded?'↑ '+rate(x.traffic_up):T('not.recorded'))
@@ -124,7 +130,7 @@ function renderDetail(x){const D=x.detail||{},s=sb(x);
   +(D.traffic?'<h4 style="margin-top:12px">'+T('d.traffic10')+'</h4>'+legend([['Download','var(--s1)'],['Upload','var(--s2)']])+'<div class="chart" id="dtraf"></div>':'')
   +'<div class="note">'+T('d.hist.note')+'</div></section>'
   +'<section class="panel"><h2 class="hb" style="--c:var(--li)">'+T('d.data')+'</h2><dl class="info">'+info.map(i=>'<dt>'+i[0]+'</dt><dd>'+i[1]+'</dd>').join('')+'</dl></section></div>';
- h+='<h2 class="hb" style="--c:var(--tan)">'+T('d.events24')+'</h2>'+(x.events.length?'<div class="log" style="grid-template-columns:96px minmax(0,1fr) auto">'+x.events.map(e=>'<div class="t">'+until(e.ts)+'</div><div>'+T('ev.'+e.kind)+'</div><div class="mut">'+bl(e.band)+' · '+e.ap+'</div>').join('')+'</div>':'<div class="mut">'+T('d.no.events')+'</div>');
+ h+='<h2 class="hb" style="--c:var(--tan)">'+T('d.events24')+'</h2>'+(x.events.length?'<div class="log" style="grid-template-columns:96px minmax(0,1fr) auto">'+x.events.map(e=>'<div class="t">'+until(e.ts)+'</div><div>'+T('ev.'+e.kind)+'</div><div class="mut">'+bl(e.band)+' · '+esc(e.ap)+'</div>').join('')+'</div>':'<div class="mut">'+T('d.no.events')+'</div>');
  $('s-detail').innerHTML=h;
  const t1=x.time,t0=t1-86400000,tk=[0,6,12,18,24].map(h=>t0+h*3600000),col=i=>x.hist.filter(r=>r[i]!=null).map(r=>[r[0],r[i]]);
  lineChart($('dsig'),[{label:'Signal',color:'var(--s1)',pts:col(1)}],{t0,t1,ticks:tk,min:-100,max:-20,thr:x.thr_rssi,fmt:v=>v+' dBm',fmtAxis:v=>v,long:true,snap:1800000,aria:T('aria.sig')});
