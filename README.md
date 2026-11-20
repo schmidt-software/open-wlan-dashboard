@@ -1,6 +1,6 @@
-![WLAN Dashboard – local WiFi health monitoring](assets/banner.png)
+![Open WLAN Dashboard – local WiFi health monitoring](assets/banner.png)
 
-# WLAN Dashboard
+# Open WLAN Dashboard
 
 A local, read-only health dashboard for a FRITZ!Box mesh: the FRITZ!Box and any number of
 FRITZ!Repeaters or other mesh routers. It shows the internet line, channel load and traffic per band,
@@ -89,8 +89,8 @@ The screenshots show demo data, no real devices.
 4. Start the history collector every 15 minutes (macOS):
 
    ```sh
-   sed "s#/path/to/wlan-dashboard#$PWD#g" launchd/local.wlan-test.collect.plist > ~/Library/LaunchAgents/local.wlan-test.collect.plist
-   launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/local.wlan-test.collect.plist
+   sed "s#/path/to/open-wlan-dashboard#$PWD#g" launchd/local.open-wlan-dashboard.collect.plist > ~/Library/LaunchAgents/local.open-wlan-dashboard.collect.plist
+   launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/local.open-wlan-dashboard.collect.plist
    ```
 
    On the first run macOS asks for "Local Network" access for `python3`; allow it
@@ -108,19 +108,19 @@ Self-test: `python3 dashboard.py --selftest`
 Instead of steps 4 and 5 you can run the dashboard and the collector in containers:
 
 ```sh
-cp .env.example .env && chmod 600 .env   # then set FRITZ_PASSWORD and OWN_IP in .env
+cp .env.example .env && chmod 600 .env   # then set OWD_FRITZ_PASSWORD and OWD_IP in .env
 docker compose up -d
 ```
 
 Open http://127.0.0.1:8765. `compose.yaml` starts two services from one image: the dashboard and the
 collector, which runs every 15 minutes. They share the volume `data` for history and alert states.
 
-- **Password:** set `FRITZ_PASSWORD` in `.env`, or mount your password file read-only and point
-  `FRITZ_PASSWORD_FILE` to it.
-- **`OWN_IP`:** the LAN address of the computer that runs Docker. A container sees its own address, so
+- **Password:** set `OWD_FRITZ_PASSWORD` in `.env`, or mount your password file read-only and point
+  `OWD_FRITZ_PASSWORD_FILE` to it.
+- **`OWD_IP`:** the LAN address of the computer that runs Docker. A container sees its own address, so
   without this setting the box's traffic figures for that computer are not matched.
 - **`TZ`:** the time zone of the box log, `Europe/Berlin` unless set in `.env`.
-- **Access:** the port is published on `127.0.0.1` of the host only; `DASHBOARD_PORT` in `.env` changes it.
+- **Access:** the port is published on `127.0.0.1` of the host only; `OWD_DASHBOARD_PORT` in `.env` changes it.
 - **Update:** `docker compose up -d --build`. **Stop:** `docker compose down` (add `-v` to delete the history).
 
 The image contains the code only (see `.dockerignore`), runs as an unprivileged user and runs the
@@ -129,7 +129,7 @@ self-test while it is built.
 **Update:** pull the new version and restart `dashboard.py`; the collector picks up the new code on
 its next run. Your `.env`, history and alert states stay.
 
-**Stop the collector:** `launchctl bootout gui/$(id -u)/local.wlan-test.collect`
+**Stop the collector:** `launchctl bootout gui/$(id -u)/local.open-wlan-dashboard.collect`
 
 ## Settings
 
@@ -137,32 +137,32 @@ All settings live in `.env` next to `dashboard.py`. Every setting is optional an
 in [`.env.example`](.env.example), which also explains each one; an environment variable of the same
 name wins over the file. Restart `dashboard.py` after a change; the collector reads `.env` on its next run.
 
-- **FRITZ!Box access:** `FRITZ_HOST`, `FRITZ_USER`, and the password either as `FRITZ_PASSWORD` or
-  (default) in the file `FRITZ_PASSWORD_FILE`.
-- **Mesh routers:** `MESH_NAMES=fritzrepeaterkeller=Cellar,...` gives routers shorter names, by their
+- **FRITZ!Box access:** `OWD_FRITZ_HOST`, `OWD_FRITZ_USER`, and the password either as `OWD_FRITZ_PASSWORD` or
+  (default) in the file `OWD_FRITZ_PASSWORD_FILE`.
+- **Mesh routers:** `OWD_MESH_NAMES=fritzrepeaterkeller=Cellar,...` gives routers shorter names, by their
   name in the box (as in the box's WLAN log).
-- **Dashboard:** `DASHBOARD_PORT`, `POLL_S` (refresh interval in seconds), `DATA_DIR` (where history and
-  alert states are written). The dashboard listens on `127.0.0.1` (`DASHBOARD_BIND`; only the Docker
+- **Dashboard:** `OWD_DASHBOARD_PORT`, `OWD_POLL_S` (refresh interval in seconds), `OWD_DATA_DIR` (where history and
+  alert states are written). The dashboard listens on `127.0.0.1` (`OWD_DASHBOARD_BIND`; only the Docker
   image changes it, and compose still publishes the port on this computer only).
-- **Docker:** `OWN_IP` and `TZ`, see [Docker](#docker).
+- **Docker:** `OWD_IP` and `TZ`, see [Docker](#docker).
 - **Alert thresholds:** channel load, noise, signal, disconnects per hour, mesh uplink, DSL noise margin,
   collector and restart times, and the time windows for roaming and reconnects.
-- **Always-on detection:** `ALWAYS_ON_SHARE`, `ALWAYS_ON_MIN_SAMPLES`, and `NEVER_ALWAYS_ON`, a
+- **Always-on detection:** `OWD_ALWAYS_ON_SHARE`, `OWD_ALWAYS_ON_MIN_SAMPLES`, and `OWD_NEVER_ALWAYS_ON`, a
   comma-separated list of MAC addresses that never count as always-on (e.g. a game console that is
   often switched off); they raise no offline or weak-signal alerts.
 
 ## How it works
 
 - `dashboard.py` is a small web server (Python standard library only) on `http://127.0.0.1` and the
-  port from `DASHBOARD_PORT`. Nothing outside this computer can reach it.
+  port from `OWD_DASHBOARD_PORT`. Nothing outside this computer can reach it.
 - It logs in to the FRITZ!Box with its own user and only reads; it never changes settings.
-- On every refresh (`POLL_S`, default 15 s; several open tabs share one query) it reads the mesh
+- On every refresh (`OWD_POLL_S`, default 15 s; several open tabs share one query) it reads the mesh
   topology with the link quality of every WLAN device, the online monitor for traffic, the network
   device list, DSL and internet status and the box log.
 - The FRITZ!Box is the mesh master and reports the whole mesh, so mesh routers are never queried
   directly. This is why any number of them works.
 - The 24 h history (signal, rate and channel load over time, WLAN log events) comes from `collect.py`,
-  which runs every 15 minutes and appends to `links.csv`, `aps.csv` and `events.jsonl` in `DATA_DIR`.
+  which runs every 15 minutes and appends to `links.csv`, `aps.csv` and `events.jsonl` in `OWD_DATA_DIR`.
 - Alert acknowledgements and the time each alert first appeared are kept in `acks.json` and `alerts.json`.
 - The page (`web/index.html`, `web/app.js`) fetches `/data` and draws its charts itself, without
   external JavaScript libraries.
@@ -181,7 +181,7 @@ name wins over the file. Restart `dashboard.py` after a change; the collector re
 | `web/i18n.js` | All page texts in English and German, see [Translations](#translations) |
 | `themes/*.css` | One file per theme; the theme menu is built from this folder |
 | `layouts/*.css` | One file per layout; the layout menu is built from this folder |
-| `launchd/local.wlan-test.collect.plist` | macOS LaunchAgent template that runs `collect.py` every 15 minutes |
+| `launchd/local.open-wlan-dashboard.collect.plist` | macOS LaunchAgent template that runs `collect.py` every 15 minutes |
 | `Dockerfile`, `compose.yaml`, `.dockerignore` | Container image and the two services, see [Docker](#docker) |
 
 ## Troubleshooting and known limitations
@@ -193,7 +193,7 @@ name wins over the file. Restart `dashboard.py` after a change; the collector re
   Such readings are shown as "–" and left out of means and charts.
 - **"History collection stopped" alert:** the collector only runs while the computer is awake. Check
   `collect.log` and the "Local Network" permission for `python3`.
-- **Login fails:** check `FRITZ_HOST`, `FRITZ_USER` and the password in `.env` or the password file,
+- **Login fails:** check `OWD_FRITZ_HOST`, `OWD_FRITZ_USER` and the password in `.env` or the password file,
   and that the FRITZ!Box user may access FRITZ!Box settings.
 
 ## Themes
@@ -328,7 +328,7 @@ To add a language:
 ## Private data — never commit
 
 The collector and the dashboard write MAC addresses, device names and network events into this
-directory or `DATA_DIR` (`*.csv`, `*.jsonl`, `*.log`, `acks.json`, `alerts.json`), and `.env` may hold
+directory or `OWD_DATA_DIR` (`*.csv`, `*.jsonl`, `*.log`, `acks.json`, `alerts.json`), and `.env` may hold
 the password and MAC addresses. All of them are excluded via `.gitignore`, and `.dockerignore` keeps
 them out of the Docker image. Keep the password file outside the
 repository. Screenshots for the repository use demo data only.

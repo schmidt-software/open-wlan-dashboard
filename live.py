@@ -12,7 +12,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import settings
 
 BOX, USER = settings.BOX, settings.USER
-PORT = settings.get("DASHBOARD_PORT", 8765)
+PORT = settings.get("OWD_DASHBOARD_PORT", 8765)
 
 _opener = None
 _sid = None
@@ -83,7 +83,7 @@ def own_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         s.connect((BOX, 80))
-        return settings.get("OWN_IP", "") or s.getsockname()[0]  # OWN_IP: the host's address when run in a container
+        return settings.get("OWD_IP", "") or s.getsockname()[0]  # OWD_IP: the host's address when run in a container
     finally:
         s.close()
 

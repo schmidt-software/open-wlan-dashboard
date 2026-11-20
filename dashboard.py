@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local WLAN health dashboard for a FRITZ!Box mesh (box + any number of mesh routers), read-only.
+"""Open WLAN Dashboard: local WLAN health dashboard for a FRITZ!Box mesh (box + any number of mesh routers), read-only.
 
 Shows internet line, band load, traffic, per-device link quality and recent WLAN events,
 and raises alerts early: always-on devices going offline, reconnect loops, weak signals,
@@ -22,21 +22,21 @@ THEME_DIR = os.path.join(DIR, "themes")   # one CSS file per theme, see README
 LAYOUT_DIR = os.path.join(DIR, "layouts") # one CSS file per layout (arrangement only, colours come from the theme)
 S = settings.get        # every setting below can be changed in .env; .env.example explains them
 PORT = live.PORT
-POLL_S = S("POLL_S", 15)                       # page refresh interval; the box is queried at most this often
-UTIL_WARN, UTIL_CRIT = S("UTIL_WARN", 50), S("UTIL_CRIT", 70)            # channel load in % (mean of the last 30 min)
-NOISE_WARN = S("NOISE_WARN", -85)                                        # dBm; values above mean a noisy channel
-RSSI_WARN, RSSI_CRIT = S("RSSI_WARN", -75), S("RSSI_CRIT", -80)          # dBm; only for always-on devices
-DROPS_WARN, DROPS_CRIT = S("DROPS_WARN", 4), S("DROPS_CRIT", 10)         # disconnects per hour, roaming excluded
-UPLINK_RSSI_WARN, UPLINK_RATE_WARN = S("UPLINK_RSSI_WARN", -70), S("UPLINK_RATE_WARN", 400)  # mesh uplink on 5 GHz
-SNR_WARN = S("SNR_WARN", 6.0)                                            # DSL noise margin in dB
-ALWAYS_ON_SHARE, ALWAYS_ON_MIN_SAMPLES = S("ALWAYS_ON_SHARE", 0.9), S("ALWAYS_ON_MIN_SAMPLES", 8)
-COLLECTOR_STALE_MIN = S("COLLECTOR_STALE_MIN", 40)
-REBOOT_ALERT_H = S("REBOOT_ALERT_H", 24)       # show a box restart this long
-ROAM_WINDOW_S = S("ROAM_WINDOW_S", 10)
-RECONNECT_WINDOW_S = S("RECONNECT_WINDOW_S", 600)  # a logoff is a drop only if the device is back this soon
-ACK_FORGET_S = S("ACK_FORGET_S", 600)          # a confirmation is dropped once its problem has been gone this long
+POLL_S = S("OWD_POLL_S", 15)                       # page refresh interval; the box is queried at most this often
+UTIL_WARN, UTIL_CRIT = S("OWD_UTIL_WARN", 50), S("OWD_UTIL_CRIT", 70)            # channel load in % (mean of the last 30 min)
+NOISE_WARN = S("OWD_NOISE_WARN", -85)                                        # dBm; values above mean a noisy channel
+RSSI_WARN, RSSI_CRIT = S("OWD_RSSI_WARN", -75), S("OWD_RSSI_CRIT", -80)          # dBm; only for always-on devices
+DROPS_WARN, DROPS_CRIT = S("OWD_DROPS_WARN", 4), S("OWD_DROPS_CRIT", 10)         # disconnects per hour, roaming excluded
+UPLINK_RSSI_WARN, UPLINK_RATE_WARN = S("OWD_UPLINK_RSSI_WARN", -70), S("OWD_UPLINK_RATE_WARN", 400)  # mesh uplink on 5 GHz
+SNR_WARN = S("OWD_SNR_WARN", 6.0)                                            # DSL noise margin in dB
+ALWAYS_ON_SHARE, ALWAYS_ON_MIN_SAMPLES = S("OWD_ALWAYS_ON_SHARE", 0.9), S("OWD_ALWAYS_ON_MIN_SAMPLES", 8)
+COLLECTOR_STALE_MIN = S("OWD_COLLECTOR_STALE_MIN", 40)
+REBOOT_ALERT_H = S("OWD_REBOOT_ALERT_H", 24)       # show a box restart this long
+ROAM_WINDOW_S = S("OWD_ROAM_WINDOW_S", 10)
+RECONNECT_WINDOW_S = S("OWD_RECONNECT_WINDOW_S", 600)  # a logoff is a drop only if the device is back this soon
+ACK_FORGET_S = S("OWD_ACK_FORGET_S", 600)          # a confirmation is dropped once its problem has been gone this long
 # devices never treated as always-on (no offline or weak-signal alerts), e.g. a game console that is often off
-NEVER_ALWAYS_ON = {m.upper() for m in S("NEVER_ALWAYS_ON", [])}
+NEVER_ALWAYS_ON = {m.upper() for m in S("OWD_NEVER_ALWAYS_ON", [])}
 MESH_NAMES = settings.mesh_names()             # display names for mesh nodes, see .env.example
 ACK_FILE = os.path.join(settings.DATA_DIR, "acks.json")
 RAISED_FILE = os.path.join(settings.DATA_DIR, "alerts.json")  # when each current alert first appeared
@@ -81,7 +81,7 @@ def classify(events):
 
 def ap_names(m, overrides=None):
     """{name in the box: display name} for the mesh nodes; "" stands for the box itself (its log lines carry no
-    [name] prefix). The master is 'FRITZ!Box', the others keep their name in the box; MESH_NAMES overrides both."""
+    [name] prefix). The master is 'FRITZ!Box', the others keep their name in the box; OWD_MESH_NAMES overrides both."""
     over = MESH_NAMES if overrides is None else overrides
     out = {}
     for n in m["nodes"]:
@@ -668,13 +668,13 @@ class Handler(BaseHTTPRequestHandler):
 
 def selftest():
     ev = [parse_event("13.11.26", "22:00:00", "WLAN-Gerät wurde abgemeldet (5 GHz), iPhone, IP 192.168.178.118, MAC 02:00:00:00:00:01."),
-          parse_event("13.11.26", "22:00:01", "[fritzrepeaterschlafzimmer] WLAN-Gerät angemeldet (5 GHz), 1201 Mbit/s, PC-02, IP 192.168.178.118, MAC 02:00:00:00:00:01."),
-          parse_event("13.11.26", "22:10:00", "[fritzrepeaterschlafzimmer] WLAN-Gerät hat sich abgemeldet (2,4 GHz), PC-00, IP 192.168.178.29, MAC 00:00:5E:00:53:01."),
-          parse_event("13.11.26", "22:10:02", "[fritzrepeaterschlafzimmer] WLAN-Gerät angemeldet (2,4 GHz), 72 Mbit/s, PC-00, IP 192.168.178.29, MAC 00:00:5E:00:53:01."),
+          parse_event("13.11.26", "22:00:01", "[fritzrepeater1] WLAN-Gerät angemeldet (5 GHz), 1201 Mbit/s, PC-02, IP 192.168.178.118, MAC 02:00:00:00:00:01."),
+          parse_event("13.11.26", "22:10:00", "[fritzrepeater1] WLAN-Gerät hat sich abgemeldet (2,4 GHz), PC-00, IP 192.168.178.29, MAC 00:00:5E:00:53:01."),
+          parse_event("13.11.26", "22:10:02", "[fritzrepeater1] WLAN-Gerät angemeldet (2,4 GHz), 72 Mbit/s, PC-00, IP 192.168.178.29, MAC 00:00:5E:00:53:01."),
           parse_event("13.11.26", "22:20:00", "WLAN-Gerät hat sich abgemeldet (2,4 GHz), VR200-EG, IP ---, MAC 00:00:5E:00:53:02."),
           parse_event("13.11.26", "22:31:00", "WLAN-Gerät angemeldet (2,4 GHz), 72 Mbit/s, VR200-EG, IP ---, MAC 00:00:5E:00:53:02.")]
     assert all(ev), "log line not parsed"
-    assert ev[1]["ap"] == "fritzrepeaterschlafzimmer" and ev[0]["ap"] == "" and ev[2]["band"] == "2.4" and ev[1]["up"]
+    assert ev[1]["ap"] == "fritzrepeater1" and ev[0]["ap"] == "" and ev[2]["band"] == "2.4" and ev[1]["up"]
     kinds = [e["kind"] for e in classify(ev)]
     assert kinds == ["roam", "login", "drop", "login", "off", "login"], kinds  # box->repeater is roaming; quick relogin is a drop; back after 11 min is standby
     assert is_random_mac("02:00:00:00:00:01") and not is_random_mac("00:00:5E:00:53:01")
@@ -754,10 +754,10 @@ def selftest():
     assert set(ups) == {"Repeater A", "Cellar", "rep-c"} and ups["Repeater A"]["band"] == "5" and ups["Repeater A"]["rssi"] == -72
     assert ups["Repeater A"]["down"] == 866 and ups["Cellar"]["band"] == "LAN" and ups["rep-c"]["band"] is None
     env = os.path.join(tempfile.mkdtemp(), ".env")
-    open(env, "w").write('# comment\nFRITZ_HOST = "10.0.0.1"\nPOLL_S=30\nNEVER_ALWAYS_ON=aa:bb, cc:dd\nMESH_NAMES=rep-a=Attic,rep-b=Cellar\nbroken line\n')
+    open(env, "w").write('# comment\nOWD_FRITZ_HOST = "10.0.0.1"\nOWD_POLL_S=30\nOWD_NEVER_ALWAYS_ON=aa:bb, cc:dd\nOWD_MESH_NAMES=rep-a=Attic,rep-b=Cellar\nbroken line\n')
     vals = settings.read_env(env)
-    assert settings.get("FRITZ_HOST", "x", vals) == "10.0.0.1" and settings.get("POLL_S", 15, vals) == 30 and settings.get("MISSING", 7, vals) == 7
-    assert settings.get("NEVER_ALWAYS_ON", [], vals) == ["aa:bb", "cc:dd"] and settings.mesh_names(vals) == {"rep-a": "Attic", "rep-b": "Cellar"}
+    assert settings.get("OWD_FRITZ_HOST", "x", vals) == "10.0.0.1" and settings.get("OWD_POLL_S", 15, vals) == 30 and settings.get("MISSING", 7, vals) == 7
+    assert settings.get("OWD_NEVER_ALWAYS_ON", [], vals) == ["aa:bb", "cc:dd"] and settings.mesh_names(vals) == {"rep-a": "Attic", "rep-b": "Cellar"}
     assert settings.read_env(env + ".missing") == {}
     assert load_pct("37") == 37 and load_pct(12) == 12 and load_pct("0") is None and load_pct(0) is None and load_pct("") is None and load_pct(None) is None
     assert net_issue_kind("Internetverbindung wurde getrennt.") == "disconnected"

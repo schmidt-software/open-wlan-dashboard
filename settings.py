@@ -46,24 +46,24 @@ def get(key, default, vals=None):
 
 
 def password():
-    """FRITZ_PASSWORD, or the first line of FRITZ_PASSWORD_FILE. Read on first login, so the self-test needs none."""
-    pw = get("FRITZ_PASSWORD", "")
+    """OWD_FRITZ_PASSWORD, or the first line of OWD_FRITZ_PASSWORD_FILE. Read on first login, so the self-test needs none."""
+    pw = get("OWD_FRITZ_PASSWORD", "")
     if pw:
         return pw
-    path = os.path.expanduser(get("FRITZ_PASSWORD_FILE", "~/.claude_fritz"))
+    path = os.path.expanduser(get("OWD_FRITZ_PASSWORD_FILE", "~/.claude_fritz"))
     try:
         with open(path) as f:
             return f.readline().strip()
     except FileNotFoundError:
-        raise RuntimeError(f"no FRITZ!Box password: set FRITZ_PASSWORD or put it into {path}") from None
+        raise RuntimeError(f"no FRITZ!Box password: set OWD_FRITZ_PASSWORD or put it into {path}") from None
 
 
 def mesh_names(vals=None):
-    """MESH_NAMES=box-name=Label,other-name=Label: display names for mesh nodes by their name in the box."""
-    return dict(p.split("=", 1) for p in get("MESH_NAMES", [], vals) if "=" in p)
+    """OWD_MESH_NAMES=box-name=Label,other-name=Label: display names for mesh nodes by their name in the box."""
+    return dict(p.split("=", 1) for p in get("OWD_MESH_NAMES", [], vals) if "=" in p)
 
 
-BOX = get("FRITZ_HOST", "192.168.178.1")
-USER = get("FRITZ_USER", "claude")
-DATA_DIR = os.path.expanduser(get("DATA_DIR", DIR))   # history, alert states (private data)
-BIND = get("DASHBOARD_BIND", "127.0.0.1")            # 0.0.0.0 only inside a container, see compose.yaml
+BOX = get("OWD_FRITZ_HOST", "192.168.178.1")
+USER = get("OWD_FRITZ_USER", "claude")
+DATA_DIR = os.path.expanduser(get("OWD_DATA_DIR", DIR))   # history, alert states (private data)
+BIND = get("OWD_DASHBOARD_BIND", "127.0.0.1")            # 0.0.0.0 only inside a container, see compose.yaml

@@ -2,15 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-  <key>Label</key><string>local.wlan-test.collect</string>
+  <key>Label</key><string>local.open-wlan-dashboard.collect</string>
   <key>ProgramArguments</key>
   <array>
     <string>/usr/bin/python3</string>
-    <string>/path/to/wlan-dashboard/collect.py</string>
+    <string>/path/to/open-wlan-dashboard/collect.py</string>
   </array>
   <key>StartInterval</key><integer>900</integer>
   <key>RunAtLoad</key><true/>
-  <key>StandardOutPath</key><string>/path/to/wlan-dashboard/collect.log</string>
-  <key>StandardErrorPath</key><string>/path/to/wlan-dashboard/collect.log</string>
+  <key>StandardOutPath</key><string>/path/to/open-wlan-dashboard/collect.log</string>
+  <key>StandardErrorPath</key><string>/path/to/open-wlan-dashboard/collect.log</string>
 </dict>
 </plist>

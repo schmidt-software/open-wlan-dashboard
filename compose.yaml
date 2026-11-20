@@ -1,9 +1,9 @@
-# WLAN Dashboard with Docker: docker compose up -d, then open http://127.0.0.1:8765
-# Settings come from .env (see .env.example). In a container also set there: FRITZ_PASSWORD (or mount
-# the password file and set FRITZ_PASSWORD_FILE), OWN_IP (this computer's LAN address) and TZ.
+# Open WLAN Dashboard with Docker: docker compose up -d, then open http://127.0.0.1:8765
+# Settings come from .env (see .env.example). In a container also set there: OWD_FRITZ_PASSWORD (or mount
+# the password file and set OWD_FRITZ_PASSWORD_FILE), OWD_IP (this computer's LAN address) and TZ.
 x-common: &common
   build: .
-  image: wlan-dashboard
+  image: open-wlan-dashboard
   env_file: [{path: .env, required: false}]   # values under environment win over it
   volumes:
     - data:/data
@@ -14,17 +14,17 @@ services:
     <<: *common
     environment:
       TZ: ${TZ:-Europe/Berlin}   # the box log has local times
-      DATA_DIR: /data
-      DASHBOARD_BIND: 0.0.0.0    # inside the container only, see ports
-      DASHBOARD_PORT: 8765       # inside the container; DASHBOARD_PORT in .env picks the port on this computer
+      OWD_DATA_DIR: /data
+      OWD_DASHBOARD_BIND: 0.0.0.0    # inside the container only, see ports
+      OWD_DASHBOARD_PORT: 8765       # inside the container; OWD_DASHBOARD_PORT in .env picks the port on this computer
     ports:
-      - "127.0.0.1:${DASHBOARD_PORT:-8765}:8765"   # reachable from this computer only
+      - "127.0.0.1:${OWD_DASHBOARD_PORT:-8765}:8765"   # reachable from this computer only
 
   collector:   # the 24 h history: one run every 15 minutes
     <<: *common
     environment:
       TZ: ${TZ:-Europe/Berlin}
-      DATA_DIR: /data
+      OWD_DATA_DIR: /data
     command: ["sh", "-c", "while true; do python3 collect.py; sleep 900; done"]
 
 volumes:

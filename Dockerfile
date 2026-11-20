@@ -1,9 +1,9 @@
-# WLAN Dashboard: dashboard and collector in one image, see compose.yaml.
+# Open WLAN Dashboard: dashboard and collector in one image, see compose.yaml.
 FROM python:3.13-slim
 
 ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 \
-    DATA_DIR=/data \
-    DASHBOARD_BIND=0.0.0.0
+    OWD_DATA_DIR=/data \
+    OWD_DASHBOARD_BIND=0.0.0.0
 
 WORKDIR /app
 # code only; .dockerignore keeps .env, history and other private files out of the image

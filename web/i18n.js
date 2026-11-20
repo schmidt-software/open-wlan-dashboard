@@ -1,7 +1,7 @@
 // Page texts by language. {name} is filled in by T() in app.js; alert texts are a.<key>.t (title) and a.<key>.d (detail).
 const I18N={
 en:{
- "title":"WLAN Monitor",
+ "title":"Open WLAN Dashboard",
  "nav":"Sections",
  "loading":"Loading …",
  "connecting":"Connecting to the FRITZ!Box …",
@@ -175,7 +175,7 @@ en:{
  "mesh":"FRITZ!Box mesh"
 },
 de:{
- "title":"WLAN-Überwachung",
+ "title":"Open WLAN Dashboard",
  "nav":"Bereiche",
  "loading":"Lade …",
  "connecting":"Verbinde mit der FRITZ!Box …",

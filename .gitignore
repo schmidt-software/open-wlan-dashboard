@@ -36,7 +36,7 @@ credentials/*
 !credentials/README.md
 # <<< agentlas local project state <<<
 
-# >>> wlan-dashboard local data (private: MAC addresses, device names, network events) >>>
+# >>> open-wlan-dashboard local data (private: MAC addresses, device names, network events) >>>
 *.csv
 *.jsonl
 *.log
@@ -46,4 +46,4 @@ __pycache__/
 *.pyc
 .claude_fritz
 .DS_Store
-# <<< wlan-dashboard local data <<<
+# <<< open-wlan-dashboard local data <<<
