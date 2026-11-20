@@ -115,13 +115,20 @@ docker compose up -d
 Open http://127.0.0.1:8765. `compose.yaml` starts two services from one image: the dashboard and the
 collector, which runs every 15 minutes. They share the volume `data` for history and alert states.
 
+By default compose builds the image from the source. Every release also publishes a ready image for
+`linux/amd64`, `linux/arm64` and `linux/arm/v7` (e.g. a Raspberry Pi with a 32-bit system) under [Packages](https://github.com/schmidt-software/open-wlan-dashboard/pkgs/container/open-wlan-dashboard),
+tagged with the version (`2.0.0`, `2.0`, `2`) and `latest`. To use it, set in `.env`
+`OWD_IMAGE=ghcr.io/schmidt-software/open-wlan-dashboard:2` and run
+`docker compose pull && docker compose up -d`.
+
 - **Password:** set `OWD_FRITZ_PASSWORD` in `.env`, or mount your password file read-only and point
   `OWD_FRITZ_PASSWORD_FILE` to it.
 - **`OWD_IP`:** the LAN address of the computer that runs Docker. A container sees its own address, so
   without this setting the box's traffic figures for that computer are not matched.
 - **`TZ`:** the time zone of the box log, `Europe/Berlin` unless set in `.env`.
 - **Access:** the port is published on `127.0.0.1` of the host only; `OWD_DASHBOARD_PORT` in `.env` changes it.
-- **Update:** `docker compose up -d --build`. **Stop:** `docker compose down` (add `-v` to delete the history).
+- **Update:** `docker compose up -d --build`, or with a release image `docker compose pull && docker compose up -d`.
+  **Stop:** `docker compose down` (add `-v` to delete the history).
 
 The image contains the code only (see `.dockerignore`), runs as an unprivileged user and runs the
 self-test while it is built.
@@ -183,6 +190,7 @@ name wins over the file. Restart `dashboard.py` after a change; the collector re
 | `layouts/*.css` | One file per layout; the layout menu is built from this folder |
 | `launchd/local.open-wlan-dashboard.collect.plist` | macOS LaunchAgent template that runs `collect.py` every 15 minutes |
 | `Dockerfile`, `compose.yaml`, `.dockerignore` | Container image and the two services, see [Docker](#docker) |
+| `.github/workflows/docker.yml` | Builds and publishes the Docker image for every release |
 
 ## Troubleshooting and known limitations
 

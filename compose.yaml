@@ -3,7 +3,7 @@
 # the password file and set OWD_FRITZ_PASSWORD_FILE), OWD_IP (this computer's LAN address) and TZ.
 x-common: &common
   build: .
-  image: open-wlan-dashboard
+  image: ${OWD_IMAGE:-open-wlan-dashboard}   # or a release image, see README (Docker)
   env_file: [{path: .env, required: false}]   # values under environment win over it
   volumes:
     - data:/data
