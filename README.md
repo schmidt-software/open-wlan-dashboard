@@ -42,6 +42,8 @@ replaces the theme's side bar ornaments with its own form for the status values;
 stay with the theme. A layout file starts with `/* layout: Name; de: German name */` and puts its rules
 under `html[data-layout="<id>"]:not(#_)`; the `:not(#_)` lifts them above the theme rules.
 
+![Six of the 20 layouts with the Modern Desktop theme (demo data)](assets/screenshots/layouts.jpg)
+
 The page is available in English and German, with English as the default. A language menu next
 to the theme menu lets you switch, and your choice is remembered per browser.
 
@@ -219,7 +221,7 @@ or weak-signal alerts. The file is git-ignored because it contains MAC addresses
 ## Private data — never commit
 
 The collector and the dashboard write MAC addresses, device names and network events into
-this directory (`*.csv`, `*.jsonl`, `*.log`, `acks.json`, `config.local.json`). They are excluded via
+this directory (`*.csv`, `*.jsonl`, `*.log`, `acks.json`, `alerts.json`, `config.local.json`). They are excluded via
 `.gitignore`, as is the password file. Python standard library only, no dependencies.
 
 ## License
